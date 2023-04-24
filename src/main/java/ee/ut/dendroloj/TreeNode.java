@@ -37,16 +37,16 @@ class CallTreeNode extends TreeNode {
         return this;
     }
 
-    protected boolean hasReturned(){
+    protected boolean hasReturned() {
         return hasReturned;
     }
 
     @Override
-    public Stream<CallTreeNode> childStream(){
+    public Stream<CallTreeNode> childStream() {
         return super.childStream().map(c -> (CallTreeNode) c);
     }
 
-    public String argumentString(){
+    public String argumentString() {
         return Arrays.deepToString(callArguments).replaceAll("\\[\\]", "");
     }
 }
@@ -77,15 +77,15 @@ abstract class TreeNode {
 
     public abstract TreeNode done(Object arg, Throwable throwable);
 
-    public Stream<? extends TreeNode> childStream(){
+    public Stream<? extends TreeNode> childStream() {
         return children.stream();
     }
 
-    public int childCount(){
+    public int childCount() {
         return children.size();
     }
 
-    protected void setThrown(Throwable thrown){
+    protected void setThrown(Throwable thrown) {
         this.thrown = thrown;
     }
 

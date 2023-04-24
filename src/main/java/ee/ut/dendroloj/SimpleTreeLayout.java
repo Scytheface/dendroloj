@@ -14,12 +14,13 @@ class SimpleTreeLayout {
 
     protected static Graph graph = null;
 
-    protected static void setGraph(Graph graph){
+    protected static void setGraph(Graph graph) {
         SimpleTreeLayout.graph = graph;
         Viewer v = graph.display();
         v.disableAutoLayout();
 
     }
+
     private record nodeMetaWrapper(CallTreeNode node, List<nodeMetaWrapper> children, double reservedWidth) {
     }
 
@@ -41,7 +42,7 @@ class SimpleTreeLayout {
 
     }
 
-    private static void updateGraph(nodeMetaWrapper meta, double x, double y, CallTreeNode parent){
+    private static void updateGraph(nodeMetaWrapper meta, double x, double y, CallTreeNode parent) {
         double leftBoundary = x - meta.reservedWidth / 2;
 
         CallTreeNode current = meta.node;
@@ -56,7 +57,7 @@ class SimpleTreeLayout {
         double reserve = meta.reservedWidth / meta.children.size();
         double padding = reserve / 2;
         for (int i = 0; i < meta.children.size(); i++)
-            updateGraph(meta.children().get(i), leftBoundary + padding + (reserve * i), y-1, current);
+            updateGraph(meta.children().get(i), leftBoundary + padding + (reserve * i), y - 1, current);
 
         if (parent != null) {
             String parentId = parent.toString();

@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 
 class DebuggerTracer {
 
-    static void init(){
+    static void init() {
         boolean inDebugger = java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().stream().anyMatch(s -> s.contains("jdwp"));
         System.out.println(System.getProperties());
         long pid = ProcessHandle.current().pid();
@@ -29,7 +29,7 @@ class DebuggerTracer {
             while ((line = reader.readLine()) != null) {
                 System.out.println("wat = " + line);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

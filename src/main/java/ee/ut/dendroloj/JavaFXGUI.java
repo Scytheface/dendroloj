@@ -29,9 +29,6 @@ class JavaFXGUI {
         SimpleTreeLayout.setGraph(graph);
 
 
-
-
-
         //v.disableAutoLayout();
     }
 }

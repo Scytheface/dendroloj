@@ -7,11 +7,11 @@ public class Dendrologist {
         wakeUp(true);
     }
 
-    public static void wakeUp(boolean visualize){
+    public static void wakeUp(boolean visualize) {
         init(visualize);
     }
 
-    private static void init(boolean visualize){
+    private static void init(boolean visualize) {
         if (awake) return;
         initTracing();
         if (visualize)
@@ -19,12 +19,12 @@ public class Dendrologist {
         awake = true;
     }
 
-    private static void initTracing(){
+    private static void initTracing() {
         DebuggerTracer.init();
         AgentTracer.init();
     }
 
-    private static void initGraphics(){
+    private static void initGraphics() {
         JavaFXGUI.init();
     }
 }
