@@ -28,9 +28,6 @@ public class Katsed {
     public static void main(String[] args) {
         Dendrologist.wakeUp();
 
-
-        fib(4);
-
-
+        fib(10);
     }
 }

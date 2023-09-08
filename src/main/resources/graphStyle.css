@@ -5,6 +5,7 @@ edge .returned {
 edge {
     text-alignment: center;
     text-background-mode: plain;
+    text-background-color: rgba(255, 255, 255, 180);
     text-padding: 3;
     text-offset: 5, 0;
 }
@@ -12,6 +13,7 @@ edge {
 node {
     text-alignment: at-right;
     text-background-mode: plain;
+    text-background-color: rgba(255, 255, 255, 180);
     text-padding: 3;
     text-offset: 5, 0;
 }

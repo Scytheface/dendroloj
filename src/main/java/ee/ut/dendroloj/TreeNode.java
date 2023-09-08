@@ -47,7 +47,9 @@ class CallTreeNode extends TreeNode {
     }
 
     public String argumentString() {
-        return Arrays.deepToString(callArguments).replaceAll("\\[\\]", "");
+        if (callArguments.length == 0) return "";
+        String args = Arrays.deepToString(callArguments);
+        return '(' + args.substring(1, args.length() - 1) + ')';
     }
 }
 
