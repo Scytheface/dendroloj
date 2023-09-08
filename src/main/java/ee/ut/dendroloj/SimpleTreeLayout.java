@@ -18,31 +18,29 @@ class SimpleTreeLayout {
         SimpleTreeLayout.graph = graph;
         Viewer v = graph.display();
         v.disableAutoLayout();
-
     }
 
-    private record nodeMetaWrapper(CallTreeNode node, List<nodeMetaWrapper> children, double reservedWidth) {
+    private record NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
     }
 
     protected static void updateGraph(MetaTreeNode root) {
-        root.childStream().map(c -> wrap((CallTreeNode) c)).forEach(meta -> updateGraph(meta, 0, 0, null));
-
+        root.childStream()
+                .map(c -> wrap((CallTreeNode) c))
+                .forEach(meta -> updateGraph(meta, 0, 0, Math.max(1.0, meta.reservedWidth / 20), null));
     }
 
-    private static nodeMetaWrapper wrap(CallTreeNode node) {
-
+    private static NodeMetaWrapper wrap(CallTreeNode node) {
         AtomicReference<Double> sum = new AtomicReference<>(0d);
-        List<nodeMetaWrapper> children = node.childStream().map(c -> {
-            nodeMetaWrapper childWrapper = wrap(c);
+        List<NodeMetaWrapper> children = node.childStream().map(c -> {
+            NodeMetaWrapper childWrapper = wrap(c);
             sum.set(sum.get() + childWrapper.reservedWidth);
             return childWrapper;
         }).toList();
 
-        return new nodeMetaWrapper(node, children, Math.max(1d, sum.get()));
-
+        return new NodeMetaWrapper(node, children, Math.max(1d, sum.get()));
     }
 
-    private static void updateGraph(nodeMetaWrapper meta, double x, double y, CallTreeNode parent) {
+    private static void updateGraph(NodeMetaWrapper meta, double x, double y, double layerHeight, CallTreeNode parent) {
         double leftBoundary = x - meta.reservedWidth / 2;
 
         CallTreeNode current = meta.node;
@@ -57,7 +55,7 @@ class SimpleTreeLayout {
         double reserve = meta.reservedWidth / meta.children.size();
         double padding = reserve / 2;
         for (int i = 0; i < meta.children.size(); i++)
-            updateGraph(meta.children().get(i), leftBoundary + padding + (reserve * i), y - 1, current);
+            updateGraph(meta.children().get(i), leftBoundary + padding + (reserve * i), y - layerHeight, layerHeight, current);
 
         if (parent != null) {
             String parentId = parent.toString();
@@ -66,7 +64,6 @@ class SimpleTreeLayout {
             Edge edgeTo = graph.getEdge(toEdgeID);
             if (edgeTo == null)
                 edgeTo = graph.addEdge(toEdgeID, graph.getNode(parentId), node, true);
-
 
             if (current.hasReturned()) {
                 edgeTo.setAttribute("ui.class", "returned");
