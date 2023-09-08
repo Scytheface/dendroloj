@@ -30,14 +30,10 @@ class SimpleTreeLayout {
     }
 
     private static NodeMetaWrapper wrap(CallTreeNode node) {
-        AtomicReference<Double> sum = new AtomicReference<>(0d);
-        List<NodeMetaWrapper> children = node.childStream().map(c -> {
-            NodeMetaWrapper childWrapper = wrap(c);
-            sum.set(sum.get() + childWrapper.reservedWidth);
-            return childWrapper;
-        }).toList();
+        List<NodeMetaWrapper> children = node.childStream().map(SimpleTreeLayout::wrap).toList();
+        double sum = children.stream().mapToDouble(c -> c.reservedWidth).sum();
 
-        return new NodeMetaWrapper(node, children, Math.max(1d, sum.get()));
+        return new NodeMetaWrapper(node, children, Math.max(1d, sum));
     }
 
     private static void updateGraph(NodeMetaWrapper meta, double x, double y, double layerHeight, CallTreeNode parent) {
