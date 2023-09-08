@@ -20,7 +20,7 @@ public class Dendrologist {
     }
 
     private static void initTracing() {
-        DebuggerTracer.init();
+        // DebuggerTracer.init();
         AgentTracer.init();
     }
 
