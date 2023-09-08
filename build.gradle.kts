@@ -1,29 +1,15 @@
-import java.io.ByteArrayOutputStream
+import groovy.lang.Closure
 
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("java")
     id("org.openjfx.javafxplugin") version "0.0.13"
-}
-
-fun runCommand(vararg args: String): String {
-    val os = ByteArrayOutputStream()
-    project.exec {
-        commandLine = args.asList()
-        standardOutput = os
-    }
-    return os.toString().trim()
+    id("com.palantir.git-version") version "3.0.0"
 }
 
 group = "ee.ut.dendroloj"
-val headDescription = runCommand("git", "describe", "--all", "--always", "--candidates=1",  "--match", "master", "--dirty")
-version = if (headDescription == "heads/master") {
-    // If we are on master branch and there are no uncommitted changes, set version to the number of commits counting from the first commit on this branch.
-    "v" + runCommand("git", "rev-list", "HEAD" , "--first-parent", "--count")
-} else {
-    // Otherwise set version to git commit hash with -dirty suffix if there are uncommitted changes.
-    runCommand("git", "rev-parse", "--short", "HEAD") + if (headDescription.endsWith("-dirty")) "-dirty" else "";
-}
+val gitVersion: Closure<String> by extra
+version = gitVersion()
 
 repositories {
     mavenCentral()
@@ -55,8 +41,8 @@ tasks {
         mergeServiceFiles() // Merge service files
         manifest {
             attributes(
-                    "Manifest-Version" to "1.0",
-                    "Implementation-Version" to project.version,
+                "Manifest-Version" to "1.0",
+                "Implementation-Version" to project.version,
             )
         }
     }
