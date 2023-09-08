@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("java")
@@ -34,12 +32,13 @@ tasks.test {
 }
 
 tasks {
-    val shadowJar by existing(ShadowJar::class) {
+    shadowJar {
         archiveClassifier.set("") // Set classifier to empty to replace the default JAR
         mergeServiceFiles() // Merge service files
         manifest {
             attributes(
-                    "Manifest-Version" to "1.0"
+                    "Manifest-Version" to "1.0",
+                    "Implementation-Version" to project.version,
             )
         }
     }
