@@ -32,6 +32,7 @@ dependencies {
 javafx {
     version = "13"
     modules("javafx.controls", "javafx.fxml")
+    setPlatform("windows") // Dependencies are manually included for each platform. The platform is set explicitly here to ensure reproducible builds.
 }
 
 tasks.test {
