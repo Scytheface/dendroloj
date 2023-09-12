@@ -22,6 +22,9 @@ dependencies {
     implementation("org.graphstream:gs-ui-javafx:2.0")
     implementation("net.java.dev.jna:jna:5.12.1")
     implementation("net.java.dev.jna:jna-platform:5.12.1")
+    implementation("org.openjfx:javafx-graphics:13.0.2:win")
+    implementation("org.openjfx:javafx-graphics:13.0.2:linux")
+    implementation("org.openjfx:javafx-graphics:13.0.2:mac")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
@@ -29,7 +32,6 @@ dependencies {
 javafx {
     version = "13"
     modules("javafx.controls", "javafx.fxml")
-    setPlatform("windows") // TODO: Support multiple platforms
 }
 
 tasks.test {
@@ -42,8 +44,8 @@ tasks {
         mergeServiceFiles() // Merge service files
         manifest {
             attributes(
-                "Manifest-Version" to "1.0",
-                "Implementation-Version" to project.version,
+                    "Manifest-Version" to "1.0",
+                    "Implementation-Version" to project.version,
             )
         }
     }
