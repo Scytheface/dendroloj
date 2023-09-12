@@ -49,7 +49,7 @@ class CallTreeNode extends TreeNode {
     public String argumentString() {
         if (callArguments.length == 0) return "";
         String args = Arrays.deepToString(callArguments);
-        return '(' + args.substring(1, args.length() - 1) + ')';
+        return (Dendrologist.showMethodNames ? signature : "") + '(' + args.substring(1, args.length() - 1) + ')';
     }
 }
 

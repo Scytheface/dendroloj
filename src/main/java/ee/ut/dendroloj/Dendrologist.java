@@ -1,21 +1,39 @@
 package ee.ut.dendroloj;
 
 public class Dendrologist {
+
     private static boolean awake = false;
 
+    protected static boolean showMethodNames = true;
+
+    private Dendrologist() {
+    }
+
+    /**
+     * Wakes up dendrologist with default configuration.
+     */
     public static void wakeUp() {
-        wakeUp(true);
+        init(1.0, true);
     }
 
-    public static void wakeUp(boolean visualize) {
-        init(visualize);
+    /**
+     * Wakes up dendrologist with custom configuration.
+     *
+     * @param uiScale         sets scaling multiplier for UI elements (text and nodes). default: 1.0
+     * @param showMethodNames if enabled shows method name for each method call. default: true
+     */
+    public static void wakeUp(double uiScale, boolean showMethodNames) {
+        init(uiScale, showMethodNames);
     }
 
-    private static void init(boolean visualize) {
+    private static void init(double uiScale, boolean showMethodNames) {
         if (awake) return;
+
+        Dendrologist.showMethodNames = showMethodNames;
+
         initTracing();
-        if (visualize)
-            initGraphics();
+        initGraphics(uiScale);
+
         awake = true;
     }
 
@@ -24,8 +42,8 @@ public class Dendrologist {
         AgentTracer.init();
     }
 
-    private static void initGraphics() {
-        JavaFXGUI.init();
+    private static void initGraphics(double uiScale) {
+        GraphGUI.init(uiScale);
     }
 }
 

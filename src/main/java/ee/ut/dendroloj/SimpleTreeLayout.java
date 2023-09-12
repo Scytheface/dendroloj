@@ -14,19 +14,17 @@ class SimpleTreeLayout {
 
     protected static Graph graph = null;
 
-    protected static void setGraph(Graph graph) {
+    public static void setGraph(Graph graph) {
         SimpleTreeLayout.graph = graph;
-        Viewer v = graph.display();
-        v.disableAutoLayout();
     }
 
-    private record NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
-    }
-
-    protected static void updateGraph(MetaTreeNode root) {
+    public static void updateGraph(MetaTreeNode root) {
         root.childStream()
                 .map(c -> wrap((CallTreeNode) c))
                 .forEach(meta -> updateGraph(meta, 0, 0, Math.max(1.0, meta.reservedWidth / 20), null));
+    }
+
+    private record NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
     }
 
     private static NodeMetaWrapper wrap(CallTreeNode node) {
