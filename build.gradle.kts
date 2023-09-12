@@ -3,7 +3,7 @@ import groovy.lang.Closure
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("java")
-    id("org.openjfx.javafxplugin") version "0.0.13"
+    id("org.openjfx.javafxplugin") version "0.1.0"
     id("com.palantir.git-version") version "3.0.0"
 }
 
@@ -29,6 +29,7 @@ dependencies {
 javafx {
     version = "13"
     modules("javafx.controls", "javafx.fxml")
+    setPlatform("windows") // TODO: Support multiple platforms
 }
 
 tasks.test {
