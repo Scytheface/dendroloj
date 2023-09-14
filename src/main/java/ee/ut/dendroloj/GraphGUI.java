@@ -31,11 +31,11 @@ class GraphGUI {
                     text-padding: %f;
                     text-offset: 5, 0;
                 }
-                                
+
                 edge .returned {
                     fill-color: gray;
                 }
-                                
+
                 node {
                     size: %fpx;
                     text-size: %f;
@@ -45,17 +45,21 @@ class GraphGUI {
                     text-padding: %f;
                     text-offset: 5, 0;
                 }
-                                
+
                 node .error {
                     fill-color: #fa4c29;
                 }
-                
+
                 node:selected {
                     fill-color: #0096ff;
                 }
                 """, Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
-        SimpleTreeLayout.setGraph(graph);
+        JSlider stepSlider = new JSlider();
+        stepSlider.setPaintTicks(true);
+        stepSlider.setMajorTickSpacing(1);
+
+        SimpleTreeLayout.init(graph, stepSlider);
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
@@ -149,10 +153,11 @@ class GraphGUI {
 
         JFrame root = new JFrame();
         root.setTitle("dendroloj");
-        root.setLayout(new BorderLayout());
-        root.add(viewComponent, BorderLayout.CENTER);
         root.setSize(800, 600);
         root.setLocationRelativeTo(null);
+        root.setLayout(new BorderLayout());
+        root.add(viewComponent, BorderLayout.CENTER);
+        root.add(stepSlider, BorderLayout.SOUTH);
         root.addWindowListener((WindowListener) viewComponent);
         root.addComponentListener((ComponentListener) viewComponent);
         root.setVisible(true);

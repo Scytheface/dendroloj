@@ -8,8 +8,7 @@ import java.util.concurrent.Executors;
 
 class TraceProcessor {
 
-    static MetaTreeNode root = new MetaTreeNode();
-    static TreeNode node = root;
+    private static TreeNode node = SimpleTreeLayout.root;
 
     // Executor used to run the actual update logic.
     // This is used to prevent debuggers from stepping to execution logic when you step in at the start of a @Grow method.
@@ -20,7 +19,7 @@ class TraceProcessor {
         // long threadId = Thread.currentThread().getId();
         exec.submit(() -> {
             node = node.addChild(new CallTreeNode(method.getName(), callArguments, method.getParameters()));
-            SimpleTreeLayout.updateGraph(root);
+            SimpleTreeLayout.addStepAndUpdateGraph();
         }).get();
     }
 
@@ -28,7 +27,7 @@ class TraceProcessor {
         // long threadId = Thread.currentThread().getId();
         exec.submit(() -> {
             node = node.done(returnValue, throwable).getParent();
-            SimpleTreeLayout.updateGraph(root);
+            SimpleTreeLayout.addStepAndUpdateGraph();
         }).get();
     }
 
