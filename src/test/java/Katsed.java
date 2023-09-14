@@ -26,8 +26,9 @@ public class Katsed {
     }
 
     public static void main(String[] args) {
-        Dendrologist.wakeUp();
+        Dendrologist.wakeUp(1.5, true);
 
         fib(8);
+        //new OhtlikAsi("A").fib(5, new OhtlikAsi("B"));
     }
 }
