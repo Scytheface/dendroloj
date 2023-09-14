@@ -6,18 +6,13 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 class CallTreeNode extends TreeNode {
-
     private final String signature;
     private final Object[] callArguments;
     private final Parameter[] methodType;
 
     private boolean hasReturned = false;
-
-    public Object getReturnValue() {
-        return returnValue;
-    }
-
     private Object returnValue = null;
+    private Throwable thrown = null;
 
     public CallTreeNode(String signature, Object[] callArguments, Parameter[] methodType) {
         this.signature = signature;
@@ -25,20 +20,28 @@ class CallTreeNode extends TreeNode {
         this.methodType = methodType;
     }
 
-    public void setReturnValue(Object returnValue) {
-        this.returnValue = returnValue;
+    public Object[] getCallArguments() {
+        return callArguments;
     }
 
-    @Override
-    public TreeNode done(Object returnValue, Throwable throwable) {
-        setReturnValue(returnValue);
-        setThrown(throwable);
-        hasReturned = true;
-        return this;
+    public Object getReturnValue() {
+        return returnValue;
+    }
+
+    public Throwable getThrown() {
+        return thrown;
     }
 
     protected boolean hasReturned() {
         return hasReturned;
+    }
+
+    @Override
+    public TreeNode done(Object returnValue, Throwable throwable) {
+        this.returnValue = returnValue;
+        this.thrown = throwable;
+        hasReturned = true;
+        return this;
     }
 
     @Override
@@ -47,24 +50,29 @@ class CallTreeNode extends TreeNode {
     }
 
     public String argumentString() {
-        String args = Arrays.deepToString(callArguments);
-        return (Dendrologist.showMethodNames ? signature : "") + '(' + args.substring(1, args.length() - 1) + ')';
+        return (Dendrologist.showMethodNames ? signature : "") + '(' + valuesToString(callArguments) + ')';
+    }
+
+    public String returnValueString() {
+        return valuesToString(new Object[]{returnValue});
+    }
+
+    private static String valuesToString(Object[] values) {
+        String formatted = Arrays.deepToString(values);
+        return formatted.substring(1, formatted.length() - 1);
     }
 }
 
 class MetaTreeNode extends TreeNode {
     @Override
     public MetaTreeNode done(Object arg, Throwable throwable) {
-        setThrown(throwable);
         throw new UnsupportedOperationException(String.format("done() called on MetaTreeNode with argument: %s, throwable: %s", arg, throwable));
     }
 }
 
 abstract class TreeNode {
     private TreeNode parent = null;
-    private ArrayList<TreeNode> children = new ArrayList<>();
-
-    private Throwable thrown = null;
+    private final ArrayList<TreeNode> children = new ArrayList<>();
 
     public TreeNode addChild(TreeNode child) {
         children.add(child);
@@ -76,8 +84,6 @@ abstract class TreeNode {
         return parent;
     }
 
-    public abstract TreeNode done(Object arg, Throwable throwable);
-
     public Stream<? extends TreeNode> childStream() {
         return children.stream();
     }
@@ -86,11 +92,5 @@ abstract class TreeNode {
         return children.size();
     }
 
-    protected void setThrown(Throwable thrown) {
-        this.thrown = thrown;
-    }
-
-    public Throwable getThrown() {
-        return thrown;
-    }
+    public abstract TreeNode done(Object arg, Throwable throwable);
 }

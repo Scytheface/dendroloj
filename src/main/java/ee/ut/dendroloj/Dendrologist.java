@@ -2,6 +2,8 @@ package ee.ut.dendroloj;
 
 public class Dendrologist {
 
+    // TODO: Add methods to show an arbitrary graphs and graphs constructed from user-supplied tree classes (A&A 'Tipp' and similar).
+
     private static boolean awake = false;
 
     protected static boolean showMethodNames = true;

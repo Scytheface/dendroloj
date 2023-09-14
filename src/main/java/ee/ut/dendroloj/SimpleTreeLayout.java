@@ -9,7 +9,6 @@ import org.graphstream.graph.Node;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 
 class SimpleTreeLayout {
@@ -93,6 +92,9 @@ class SimpleTreeLayout {
 
     private static void updateGraph(NodeMetaWrapper meta, boolean hideNewElements, List<Element> newElements,
                                     double x, double y, double layerHeight, CallTreeNode parent) {
+        // Currently mutable arguments and returns values show the value they had when they were first added to the graph.
+        // TODO: Show old values of mutable values when scrolling through history?
+
         double leftBoundary = x - meta.reservedWidth / 2;
 
         CallTreeNode current = meta.node;
@@ -115,10 +117,15 @@ class SimpleTreeLayout {
                     leftBoundary + padding + (reserve * i), y - layerHeight, layerHeight, current);
         }
 
+        if (current.hasReturned() && current.getThrown() != null) {
+            node.setAttribute("ui.class", "error");
+        }
+
         if (parent != null) {
             String parentId = parent.toString();
             String toEdgeID = parentId + nodeId;
             String fromEdgeID = nodeId + parentId;
+
             Edge edgeTo = graph.getEdge(toEdgeID);
             if (edgeTo == null) {
                 edgeTo = graph.addEdge(toEdgeID, graph.getNode(parentId), node, true);
@@ -131,20 +138,17 @@ class SimpleTreeLayout {
             if (current.hasReturned()) {
                 edgeTo.setAttribute("ui.class", "returned");
                 if (current.getThrown() != null) {
-                    node.setAttribute("ui.class", "error");
                     return;
                 }
                 Edge edgeFrom = graph.getEdge(fromEdgeID);
                 if (edgeFrom == null) {
                     edgeFrom = graph.addEdge(fromEdgeID, node, graph.getNode(parentId), true);
+                    edgeFrom.setAttribute("label", current.returnValueString());
                     if (hideNewElements) {
                         edgeFrom.setAttribute("ui.hide");
                     }
                     newElements.add(edgeFrom);
                 }
-                Object returnValue = current.getReturnValue();
-                if (returnValue != null)
-                    edgeFrom.setAttribute("label", returnValue.toString());
             }
         }
     }

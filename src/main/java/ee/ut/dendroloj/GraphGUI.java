@@ -48,7 +48,7 @@ class GraphGUI {
                     text-offset: 5, 0;
                 }
 
-                node .error {
+                node.error {
                     fill-color: #fa4c29;
                 }
 
