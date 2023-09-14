@@ -49,6 +49,10 @@ class GraphGUI {
                 node .error {
                     fill-color: #fa4c29;
                 }
+                
+                node:selected {
+                    fill-color: #0096ff;
+                }
                 """, Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
         SimpleTreeLayout.setGraph(graph);
@@ -80,6 +84,7 @@ class GraphGUI {
                         elementMoving(curElement, event);
                         viewComponent.repaint(); // Doing this makes moving elements appear much smoother.
                     } else {
+                        // TODO: This enables selecting nodes, but there is nothing that can be done with these selected nodes
                         view.selectionGrowsAt(event.getX(), event.getY());
                     }
                 }
