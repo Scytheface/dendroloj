@@ -13,7 +13,7 @@
 2. Enne oma rekursiivse meetodi välja kutsumist kutsu välja `Dendrologist.wakeUp()`.
 3. Käivita programm ja aken rekursioonipuuga avaneb automaatselt.
 
-Näide rekrusiivsel Fibonacci arvude arvutamise meetodil:
+Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
 
 
