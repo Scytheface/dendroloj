@@ -36,6 +36,9 @@ class SimpleTreeLayout {
     }
 
     public static void addStepAndUpdateGraph() {
+        // This method causes massive performance issues and extremely high memory usage for relatively small graphs.
+        // TODO: Investigate why and fix it. (Running Katsed.juhuslikHargnemine(8) with Dendrologist enabled provides a reproduction of the issue.)
+
         boolean isLatestStepActive = activeStep == steps.size() - 1;
         if (isLatestStepActive) {
             activeStep += 1;
@@ -92,6 +95,8 @@ class SimpleTreeLayout {
 
     private static void updateGraph(NodeMetaWrapper meta, boolean hideNewElements, List<Element> newElements,
                                     double x, double y, double layerHeight, CallTreeNode parent) {
+        // TODO: Fix issues with laying out multiple call graphs at the same time.
+
         // Currently mutable arguments and returns values show the value they had when they were first added to the graph.
         // TODO: Show old values of mutable values when scrolling through history?
 

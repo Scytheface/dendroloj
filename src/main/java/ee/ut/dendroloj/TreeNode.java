@@ -54,7 +54,8 @@ class CallTreeNode extends TreeNode {
     }
 
     public String returnValueString() {
-        return valuesToString(new Object[]{returnValue});
+        // TODO: Is there a way to distinguish a null return value from returning nothing (return type void).
+        return returnValue == null ? "" : valuesToString(new Object[]{returnValue});
     }
 
     private static String valuesToString(Object[] values) {
