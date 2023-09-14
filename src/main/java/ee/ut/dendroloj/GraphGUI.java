@@ -4,11 +4,13 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.geom.Point2;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.camera.Camera;
 import org.graphstream.ui.view.util.MouseManager;
+import org.graphstream.ui.view.util.ShortcutManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +67,7 @@ class GraphGUI {
         View view = viewer.addDefaultView(false);
         Component viewComponent = (Component) view;
 
-        // GraphStream DefaultMouseManager but with event handling enabled only for left click to prevent interference with panning.
+        // GraphStream DefaultMouseManager but with event handling enabled only for left click, to prevent interference with panning.
         MouseManager restrictedDefaultMouseManager = new DefaultMouseManager() {
             @Override
             public void mousePressed(MouseEvent event) {
@@ -95,6 +97,19 @@ class GraphGUI {
             }
         };
         view.setMouseManager(restrictedDefaultMouseManager);
+
+        // Replace shortcut manager with one that does nothing, to disable built-in shortcuts.
+        // Supported shortcuts are added directly to root pane as key bindings.
+        ShortcutManager noopShortcutManager = new ShortcutManager() {
+            @Override
+            public void init(GraphicGraph graph, View view) {
+            }
+
+            @Override
+            public void release() {
+            }
+        };
+        view.setShortcutManager(noopShortcutManager);
 
         MouseAdapter zoomAndPanAdapter = new MouseAdapter() {
             private static final double ZOOM_FACTOR = 1.25;
@@ -155,11 +170,24 @@ class GraphGUI {
         root.setTitle("dendroloj");
         root.setSize(800, 600);
         root.setLocationRelativeTo(null);
+
         root.setLayout(new BorderLayout());
         root.add(viewComponent, BorderLayout.CENTER);
         root.add(stepSlider, BorderLayout.SOUTH);
         root.addWindowListener((WindowListener) viewComponent);
         root.addComponentListener((ComponentListener) viewComponent);
+
+        // Add shortcuts
+        InputMap inputMap = root.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK), "resetZoom");
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_0, KeyEvent.CTRL_DOWN_MASK), "resetZoom");
+        root.getRootPane().getActionMap().put("resetZoom", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                view.getCamera().resetView();
+            }
+        });
+
         root.setVisible(true);
     }
 }
