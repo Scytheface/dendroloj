@@ -13,7 +13,9 @@
 2. Enne oma rekursiivse meetodi välja kutsumist kutsu välja `Dendrologist.wakeUp()`.
 3. Käivita programm ja aken rekursioonipuuga avaneb automaatselt.
 
-Vt. ka näide failis [Katsed.java](/src/test/java/Katsed.java).
+Näide rekrusiivsel Fibonacci arvude arvutamise meetodil:
+![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
+
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 Kui tahad, et dendroloj toimiks sel ajal kui silur programmi jooksutamise pausile on pannud siis paremklõpsa *breakpointil* ja vali 'Suspend: Thread' ja seejärel vajuta 'Make Default'. Kui sul on mitu *breakpointi* juba lisatud siis pead 'Suspend: Thread' valima kõigil, kuid uute *breakpointide* lisamisel seda enam käsitsi vahetama ei pea.
