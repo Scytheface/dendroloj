@@ -37,7 +37,7 @@ class SimpleTreeLayout {
 
     public static void addStepAndUpdateGraph() {
         // This method causes massive performance issues and extremely high memory usage for relatively small graphs.
-        // TODO: Investigate why and fix it. (Running Katsed.juhuslikHargnemine(8) with Dendrologist enabled provides a reproduction of the issue.)
+        // TODO: Investigate why and fix it. (Running Katsed.fib(16) with Dendrologist enabled provides a reproduction of the issue.)
 
         boolean isLatestStepActive = activeStep == steps.size() - 1;
         if (isLatestStepActive) {

@@ -47,10 +47,9 @@ public class Katsed {
     }
 
     public static void main(String[] args) {
-        Dendrologist.wakeUp(1.0, true);
+        Dendrologist.wakeUp();
 
-        // juhuslikHargnemine(8);
-        // fib(8);
-        pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        fib(16);
+        // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
     }
 }
