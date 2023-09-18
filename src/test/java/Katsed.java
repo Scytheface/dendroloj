@@ -49,7 +49,8 @@ public class Katsed {
     public static void main(String[] args) {
         Dendrologist.wakeUp();
 
-        fib(16);
+        // fib(16);
+        fib(5);
         // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
     }
 }

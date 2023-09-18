@@ -122,8 +122,7 @@ class GraphGUI {
                 event.consume();
 
                 // Zoom towards cursor with scroll wheel. Adapted from https://stackoverflow.com/a/52929241.
-                int i = event.getWheelRotation();
-                double factor = Math.pow(ZOOM_FACTOR, i);
+                double factor = Math.pow(ZOOM_FACTOR, event.getPreciseWheelRotation());
                 Camera cam = view.getCamera();
                 double zoom = cam.getViewPercent() * factor;
                 Point2 pxCenter = cam.transformGuToPx(cam.getViewCenter().x, cam.getViewCenter().y, 0);
