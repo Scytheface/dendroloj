@@ -123,6 +123,8 @@ class GraphGUI {
                 event.consume();
 
                 // Zoom towards cursor with scroll wheel. Adapted from https://stackoverflow.com/a/52929241.
+                // Note: This is smooth on touchpad when scrolling with two fingers, but not when pinching.
+                // TODO: Figure out why. If possible make scrolling by pinching smooth as well.
                 double factor = Math.pow(ZOOM_FACTOR, event.getPreciseWheelRotation());
                 Camera cam = view.getCamera();
                 double zoom = cam.getViewPercent() * factor;
