@@ -6,6 +6,12 @@ plugins {
     id("com.palantir.git-version") version "3.0.0"
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 group = "ee.ut.dendroloj"
 val gitVersion: Closure<String> by extra
 version = gitVersion()
