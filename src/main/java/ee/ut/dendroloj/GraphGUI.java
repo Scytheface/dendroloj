@@ -12,6 +12,7 @@ import org.graphstream.ui.view.camera.Camera;
 import org.graphstream.ui.view.util.MouseManager;
 import org.graphstream.ui.view.util.ShortcutManager;
 
+import java.util.Locale;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -23,7 +24,7 @@ class GraphGUI {
         Graph graph = new SingleGraph("DendroloJ");
         graph.setAttribute("ui.quality");
         graph.setAttribute("ui.antialias");
-        graph.setAttribute("ui.stylesheet", String.format("""                 
+        graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT, """                 
                 edge {
                     size: %fpx;
                     text-size: %f;
