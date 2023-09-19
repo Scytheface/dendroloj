@@ -6,35 +6,45 @@ public class Dendrologist {
 
     private static boolean awake = false;
 
+    // Startup settings
+    private static double uiScale = 1.0;
+
+    // Runtime settings
     protected static boolean showMethodNames = true;
 
     private Dendrologist() {
     }
 
     /**
-     * Wakes up dendrologist with default configuration.
+     * Sets multiplier for size of UI elements (text, nodes, etc.).
+     * <p>
+     * Default: {@code 1.0}
      */
-    public static void wakeUp() {
-        init(1.0, true);
+    public static void setUIScale(double uiScale) {
+        Dendrologist.uiScale = uiScale;
     }
 
     /**
-     * Wakes up dendrologist with custom configuration.
-     *
-     * @param uiScale         sets scaling multiplier for UI elements (text and nodes). default: 1.0
-     * @param showMethodNames if enabled shows method name for each method call. default: true
+     * Sets whether to show method names in call tree or not.
+     * <p>
+     * Default: {@code true}
      */
-    public static void wakeUp(double uiScale, boolean showMethodNames) {
-        init(uiScale, showMethodNames);
+    public static void setShowMethodNames(boolean showMethodNames) {
+        Dendrologist.showMethodNames = showMethodNames;
     }
 
-    private static void init(double uiScale, boolean showMethodNames) {
+    /**
+     * Wakes up dendrologist.
+     */
+    public static void wakeUp() {
+        init();
+    }
+
+    private static void init() {
         if (awake) return;
 
-        Dendrologist.showMethodNames = showMethodNames;
-
         initTracing();
-        initGraphics(uiScale);
+        initGraphics();
 
         awake = true;
     }
@@ -44,7 +54,7 @@ public class Dendrologist {
         AgentTracer.init();
     }
 
-    private static void initGraphics(double uiScale) {
+    private static void initGraphics() {
         GraphGUI.init(uiScale);
     }
 }
