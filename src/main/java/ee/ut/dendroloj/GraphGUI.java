@@ -25,39 +25,27 @@ class GraphGUI {
         Graph graph = new SingleGraph("DendroloJ");
         graph.setAttribute("ui.quality");
         graph.setAttribute("ui.antialias");
-        graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT, """                 
-                edge {
-                    size: %fpx;
-                    text-size: %f;
-                    text-alignment: center;
-                    text-background-mode: plain;
-                    text-background-color: rgba(255, 255, 255, 180);
-                    text-padding: %f;
-                    text-offset: 5, 0;
-                }
-
-                edge .returned {
-                    fill-color: gray;
-                }
-
-                node {
-                    size: %fpx;
-                    text-size: %f;
-                    text-alignment: at-right;
-                    text-background-mode: plain;
-                    text-background-color: rgba(255, 255, 255, 180);
-                    text-padding: %f;
-                    text-offset: 5, 0;
-                }
-
-                node.error {
-                    fill-color: #fa4c29;
-                }
-
-                node:selected {
-                    fill-color: #0096ff;
-                }
-                """, Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
+        graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
+                "edge {" +
+                        " size: %fpx; text-size: %f; text-alignment: center;" +
+                        " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
+                        " text-padding: %f; text-offset: 5, 0;" +
+                        "}" +
+                        "edge .returned {" +
+                        " fill-color: gray;" +
+                        "}" +
+                        "node {" +
+                        " size: %fpx; text-size: %f; text-alignment: at-right;" +
+                        " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
+                        " text-padding: %f; text-offset: 5, 0;" +
+                        "}" +
+                        "node.error {" +
+                        " fill-color: #fa4c29;" +
+                        "}" +
+                        "node:selected {" +
+                        " fill-color: #0096ff;" +
+                        "}",
+                Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
         JSlider stepSlider = new JSlider();
         stepSlider.setPaintTicks(true);

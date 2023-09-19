@@ -9,6 +9,7 @@ import org.graphstream.graph.Node;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 class SimpleTreeLayout {
@@ -83,11 +84,20 @@ class SimpleTreeLayout {
         activeStep = newActiveStep;
     }
 
-    private record NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
+    private static class NodeMetaWrapper {
+        public final CallTreeNode node;
+        public final List<NodeMetaWrapper> children;
+        public final double reservedWidth;
+
+        public NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
+            this.node = node;
+            this.children = children;
+            this.reservedWidth = reservedWidth;
+        }
     }
 
     private static NodeMetaWrapper wrap(CallTreeNode node) {
-        List<NodeMetaWrapper> children = node.childStream().map(SimpleTreeLayout::wrap).toList();
+        List<NodeMetaWrapper> children = node.childStream().map(SimpleTreeLayout::wrap).collect(Collectors.toList());
         double sum = children.stream().mapToDouble(c -> c.reservedWidth).sum();
 
         return new NodeMetaWrapper(node, children, Math.max(1d, sum));
@@ -118,7 +128,7 @@ class SimpleTreeLayout {
         double reserve = meta.reservedWidth / meta.children.size();
         double padding = reserve / 2;
         for (int i = 0; i < meta.children.size(); i++) {
-            updateGraph(meta.children().get(i), hideNewElements, newElements,
+            updateGraph(meta.children.get(i), hideNewElements, newElements,
                     leftBoundary + padding + (reserve * i), y - layerHeight, layerHeight, current);
         }
 
