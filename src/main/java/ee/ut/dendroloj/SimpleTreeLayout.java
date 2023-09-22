@@ -47,7 +47,7 @@ class SimpleTreeLayout {
         List<Element> newElements = new ArrayList<>();
         double x = 0.0;
         for (CallTreeNode node : root.getChildren()) {
-            x += updateGraph(node, !isLatestStepActive, newElements, x, 0.0, 1.0, null) + 1.0;
+            x += updateGraph(node, !isLatestStepActive, newElements, x, 0.0, 1.0, null).width + 1.0;
         }
         steps.add(newElements);
 
@@ -83,8 +83,8 @@ class SimpleTreeLayout {
         activeStep = newActiveStep;
     }
 
-    private static double updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements,
-                                    double x, double y, double minWidth, CallTreeNode parent) {
+    private static LayoutResult updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements,
+                                            double x, double y, double minWidth, CallTreeNode parent) {
         // Currently mutable arguments and return values show the value they had when they were first added to the graph.
         // TODO: Show old values of mutable values when scrolling through history?
 
@@ -133,16 +133,43 @@ class SimpleTreeLayout {
             }
         }
 
-        double childrenMinWidth = Math.max(0.4, Math.min(1.0, 1.0 - (current.getChildren().size() - 2) * 0.2));
-        double width = 0.0;
-        for (CallTreeNode child : current.getChildren()) {
-            width += updateGraph(child, hideNewElements, newElements, x + width, y - 2.0, childrenMinWidth, current);;
+        double width = 0.0, firstChildOffset = 0.0, lastChildOffset = 0.0;
+        final List<CallTreeNode> children = current.getChildren();
+        if (children.isEmpty()) {
+            width = minWidth;
+        } else {
+            final boolean isShallow = current.getChildren().stream().allMatch(child -> child.getChildren().isEmpty());
+            final double childrenMinWidth = isShallow ? Math.max(0.4, Math.min(1.0, 1.0 - (current.getChildren().size() - 2) * 0.2)) : 1.0;
+
+            final int leftReferenceNode = (children.size() - 1) / 2;
+            final int rightReferenceNode = children.size() / 2;
+
+            for (int i = 0; i < children.size(); i++) {
+                LayoutResult result = updateGraph(children.get(i), hideNewElements, newElements, x + width, y - 2.0, childrenMinWidth, current);
+                if (i == leftReferenceNode) {
+                    firstChildOffset = width + result.offset;
+                }
+                if (i == rightReferenceNode) {
+                    lastChildOffset = width + result.offset;
+                }
+                width += result.width;
+            }
         }
-        if (width < minWidth) width = minWidth;
 
-        node.setAttribute("xy", x + 0.5 * width, y);
+        double offset = 0.5 * (firstChildOffset + lastChildOffset);
+        node.setAttribute("xy", x + offset, y);
 
-        return width;
+        return new LayoutResult(width, offset);
+    }
+
+    private static class LayoutResult {
+        public final double width;
+        public final double offset;
+
+        public LayoutResult(double width, double offset) {
+            this.width = width;
+            this.offset = offset;
+        }
     }
 }
 

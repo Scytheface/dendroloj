@@ -17,6 +17,12 @@ public class Katsed {
     }
 
     @Grow
+    static int fib3(int n) {
+        if (n < 2) return n;
+        return fib3(n - 3) + fib3(n - 2) + fib3(n - 1);
+    }
+
+    @Grow
     static void tree(int w, int h) {
         if (h <= 1) {
             return;
@@ -61,11 +67,12 @@ public class Katsed {
 
         Dendrologist.wakeUp();
 
-        unbalancedTree(5, 4);
-        tree(5, 4);
+        unbalancedTree(6, 3);
+        tree(5, 3);
+        // fib3(6);
 
         // fib(16);
-        // fib(5);
+        // fib(8);
         // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
     }
 }
