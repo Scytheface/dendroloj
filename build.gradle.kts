@@ -43,6 +43,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("") // Set classifier to empty to replace the default JAR
         mergeServiceFiles() // Merge service files
+        from(sourceSets.main.get().allSource) // Include sources for API documentation and source viewing in IDE-s
         manifest {
             attributes(
                     "Manifest-Version" to "1.0",
