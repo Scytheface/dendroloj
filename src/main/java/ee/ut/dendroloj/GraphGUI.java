@@ -22,7 +22,7 @@ class GraphGUI {
         System.setProperty("org.graphstream.ui", "swing");
         System.setProperty("sun.java2d.uiScale", "1");
 
-        Graph graph = new SingleGraph("DendroloJ");
+        Graph graph = new SingleGraph("dendroloj");
         graph.setAttribute("ui.quality");
         graph.setAttribute("ui.antialias");
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
