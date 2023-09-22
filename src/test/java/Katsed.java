@@ -17,13 +17,22 @@ public class Katsed {
     }
 
     @Grow
-    static void juhuslikHargnemine(int n) {
-        if (n == 0) {
+    static void tree(int w, int h) {
+        if (h <= 1) {
             return;
         }
-        for (int i = 0; i < 6; i++) {
-            if (Math.random() < 0.4)
-                juhuslikHargnemine(n - 1);
+        for (int i = 0; i < w; i++) {
+            tree(w, h - 1);
+        }
+    }
+
+    @Grow
+    static void unbalancedTree(int w, int h) {
+        if (h <= 1) {
+            return;
+        }
+        for (int i = 0; i < w; i++) {
+            unbalancedTree(i, h - 1);
         }
     }
 
@@ -52,8 +61,11 @@ public class Katsed {
 
         Dendrologist.wakeUp();
 
+        unbalancedTree(5, 4);
+        tree(5, 4);
+
         // fib(16);
-        fib(5);
+        // fib(5);
         // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
     }
 }

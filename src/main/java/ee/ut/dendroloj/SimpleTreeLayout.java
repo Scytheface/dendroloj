@@ -9,7 +9,6 @@ import org.graphstream.graph.Node;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 class SimpleTreeLayout {
@@ -46,10 +45,10 @@ class SimpleTreeLayout {
         }
 
         List<Element> newElements = new ArrayList<>();
-        root.childStream()
-                .map(c -> wrap((CallTreeNode) c))
-                .forEach(meta -> updateGraph(meta, !isLatestStepActive, newElements,
-                        0, 0, Math.max(1.0, meta.reservedWidth / 20), null));
+        double x = 0.0;
+        for (CallTreeNode node : root.getChildren()) {
+            x += updateGraph(node, !isLatestStepActive, newElements, x, 0.0, 1.0, null) + 1.0;
+        }
         steps.add(newElements);
 
         internalSliderChange = true;
@@ -84,36 +83,12 @@ class SimpleTreeLayout {
         activeStep = newActiveStep;
     }
 
-    private static class NodeMetaWrapper {
-        public final CallTreeNode node;
-        public final List<NodeMetaWrapper> children;
-        public final double reservedWidth;
-
-        public NodeMetaWrapper(CallTreeNode node, List<NodeMetaWrapper> children, double reservedWidth) {
-            this.node = node;
-            this.children = children;
-            this.reservedWidth = reservedWidth;
-        }
-    }
-
-    private static NodeMetaWrapper wrap(CallTreeNode node) {
-        List<NodeMetaWrapper> children = node.childStream().map(SimpleTreeLayout::wrap).collect(Collectors.toList());
-        double sum = children.stream().mapToDouble(c -> c.reservedWidth).sum();
-
-        return new NodeMetaWrapper(node, children, Math.max(1d, sum));
-    }
-
-    private static void updateGraph(NodeMetaWrapper meta, boolean hideNewElements, List<Element> newElements,
-                                    double x, double y, double layerHeight, CallTreeNode parent) {
-        // TODO: Fix issues with laying out multiple call graphs at the same time.
-
-        // Currently mutable arguments and returns values show the value they had when they were first added to the graph.
+    private static double updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements,
+                                    double x, double y, double minWidth, CallTreeNode parent) {
+        // Currently mutable arguments and return values show the value they had when they were first added to the graph.
         // TODO: Show old values of mutable values when scrolling through history?
 
-        double leftBoundary = x - meta.reservedWidth / 2;
-
-        CallTreeNode current = meta.node;
-        String nodeId = current.toString();
+        String nodeId = current.getId();
         Node node = graph.getNode(nodeId);
         if (node == null) {
             node = graph.addNode(nodeId);
@@ -123,27 +98,19 @@ class SimpleTreeLayout {
             }
             newElements.add(node);
         }
-        node.setAttribute("xy", x, y);
-
-        double reserve = meta.reservedWidth / meta.children.size();
-        double padding = reserve / 2;
-        for (int i = 0; i < meta.children.size(); i++) {
-            updateGraph(meta.children.get(i), hideNewElements, newElements,
-                    leftBoundary + padding + (reserve * i), y - layerHeight, layerHeight, current);
-        }
 
         if (current.hasReturned() && current.getThrown() != null) {
             node.setAttribute("ui.class", "error");
         }
 
         if (parent != null) {
-            String parentId = parent.toString();
-            String toEdgeID = parentId + nodeId;
-            String fromEdgeID = nodeId + parentId;
+            String parentId = parent.getId();
+            String toEdgeId = parentId + nodeId;
+            String fromEdgeId = nodeId + parentId;
 
-            Edge edgeTo = graph.getEdge(toEdgeID);
+            Edge edgeTo = graph.getEdge(toEdgeId);
             if (edgeTo == null) {
-                edgeTo = graph.addEdge(toEdgeID, graph.getNode(parentId), node, true);
+                edgeTo = graph.addEdge(toEdgeId, graph.getNode(parentId), node, true);
                 if (hideNewElements) {
                     edgeTo.setAttribute("ui.hide");
                 }
@@ -152,20 +119,30 @@ class SimpleTreeLayout {
 
             if (current.hasReturned()) {
                 edgeTo.setAttribute("ui.class", "returned");
-                if (current.getThrown() != null) {
-                    return;
-                }
-                Edge edgeFrom = graph.getEdge(fromEdgeID);
-                if (edgeFrom == null) {
-                    edgeFrom = graph.addEdge(fromEdgeID, node, graph.getNode(parentId), true);
-                    edgeFrom.setAttribute("label", current.returnValueString());
-                    if (hideNewElements) {
-                        edgeFrom.setAttribute("ui.hide");
+                if (current.getThrown() == null) {
+                    Edge edgeFrom = graph.getEdge(fromEdgeId);
+                    if (edgeFrom == null) {
+                        edgeFrom = graph.addEdge(fromEdgeId, node, graph.getNode(parentId), true);
+                        edgeFrom.setAttribute("label", current.returnValueString());
+                        if (hideNewElements) {
+                            edgeFrom.setAttribute("ui.hide");
+                        }
+                        newElements.add(edgeFrom);
                     }
-                    newElements.add(edgeFrom);
                 }
             }
         }
+
+        double childrenMinWidth = Math.max(0.4, Math.min(1.0, 1.0 - (current.getChildren().size() - 2) * 0.2));
+        double width = 0.0;
+        for (CallTreeNode child : current.getChildren()) {
+            width += updateGraph(child, hideNewElements, newElements, x + width, y - 2.0, childrenMinWidth, current);;
+        }
+        if (width < minWidth) width = minWidth;
+
+        node.setAttribute("xy", x + 0.5 * width, y);
+
+        return width;
     }
 }
 

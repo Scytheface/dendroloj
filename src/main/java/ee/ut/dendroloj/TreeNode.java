@@ -3,7 +3,7 @@ package ee.ut.dendroloj;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.List;
 
 class CallTreeNode extends TreeNode {
     private final String signature;
@@ -44,11 +44,6 @@ class CallTreeNode extends TreeNode {
         return this;
     }
 
-    @Override
-    public Stream<CallTreeNode> childStream() {
-        return super.childStream().map(c -> (CallTreeNode) c);
-    }
-
     public String argumentString() {
         return (Dendrologist.showMethodNames ? signature : "") + '(' + valuesToString(callArguments) + ')';
     }
@@ -73,11 +68,16 @@ class MetaTreeNode extends TreeNode {
 
 abstract class TreeNode {
     private TreeNode parent = null;
-    private final ArrayList<TreeNode> children = new ArrayList<>();
+    private final List<CallTreeNode> children = new ArrayList<>();
 
-    public TreeNode addChild(TreeNode child) {
+    public String getId() {
+        // TODO: This value is actually not guaranteed to be unique. Figure out a way to guarantee uniqueness.
+        return Integer.toHexString(System.identityHashCode(this));
+    }
+
+    public TreeNode addChild(CallTreeNode child) {
         children.add(child);
-        child.parent = this;
+        ((TreeNode) child).parent = this;
         return child;
     }
 
@@ -85,12 +85,8 @@ abstract class TreeNode {
         return parent;
     }
 
-    public Stream<? extends TreeNode> childStream() {
-        return children.stream();
-    }
-
-    public int childCount() {
-        return children.size();
+    public List<CallTreeNode> getChildren() {
+        return children;
     }
 
     public abstract TreeNode done(Object arg, Throwable throwable);
