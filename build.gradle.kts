@@ -51,7 +51,7 @@ tasks {
         manifest {
             attributes(
                 "Manifest-Version" to "1.0",
-                "Implementation-Title" to "dendroloj",
+                "Implementation-Title" to project.name,
                 "Implementation-Version" to project.version,
             )
         }
