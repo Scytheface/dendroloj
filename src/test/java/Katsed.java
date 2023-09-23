@@ -1,7 +1,10 @@
 import ee.ut.dendroloj.Dendrologist;
 import ee.ut.dendroloj.Grow;
 
+import java.awt.*;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Katsed {
     @Grow
@@ -10,8 +13,15 @@ public class Katsed {
         return 1 + unaarne(x - 1, y);
     }
 
+    private static final Set<Integer> seenValues = new HashSet<>();
+
     @Grow
     static int fib(int n) {
+        if (seenValues.contains(n)) {
+            //Dendrologist.colorCurrentCall(Color.MAGENTA);
+        }
+        seenValues.add(n);
+
         if (n < 2) return n;
         return fib(n - 2) + fib(n - 1);
     }
@@ -63,16 +73,16 @@ public class Katsed {
 
     public static void main(String[] args) {
         Dendrologist.setUIScale(1.5);
-        Dendrologist.setShowMethodNames(false);
+        Dendrologist.setShowMethodNames(true);
 
         Dendrologist.wakeUp();
 
-        unbalancedTree(6, 3);
-        tree(5, 3);
+        // unbalancedTree(6, 3);
+        // tree(5, 3);
         // fib3(6);
 
         // fib(16);
-        // fib(8);
-        // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        fib(8);
+        pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
     }
 }

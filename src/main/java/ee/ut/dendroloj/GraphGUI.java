@@ -27,7 +27,8 @@ class GraphGUI {
         graph.setAttribute("ui.antialias");
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
-                        " size: %fpx; text-size: %f; text-alignment: center;" +
+                        " size: %fpx;" +
+                        " text-size: %f; text-alignment: center;" +
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
                         " text-padding: %f; text-offset: 5, 0;" +
                         "}" +
@@ -35,7 +36,9 @@ class GraphGUI {
                         " fill-color: gray;" +
                         "}" +
                         "node {" +
-                        " size: %fpx; text-size: %f; text-alignment: at-right;" +
+                        " size: %fpx;" +
+                        " fill-mode: dyn-plain;" +
+                        " text-size: %f; text-alignment: at-right;" +
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
                         " text-padding: %f; text-offset: 5, 0;" +
                         "}" +
@@ -43,6 +46,7 @@ class GraphGUI {
                         " fill-color: #fa4c29;" +
                         "}" +
                         "node:selected {" +
+                        " fill-mode: plain;" +
                         " fill-color: #0096ff;" +
                         "}",
                 Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
@@ -51,7 +55,7 @@ class GraphGUI {
         stepSlider.setPaintTicks(true);
         stepSlider.setMajorTickSpacing(1);
 
-        SimpleTreeLayout.init(graph, stepSlider);
+        CallTreeLayout.init(graph, stepSlider);
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);

@@ -1,23 +1,22 @@
 package ee.ut.dendroloj;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class CallTreeNode extends TreeNode {
-    private final String signature;
+    private final Method method;
     private final Object[] callArguments;
-    private final Parameter[] methodType;
 
     private boolean hasReturned = false;
     private Object returnValue = null;
     private Throwable thrown = null;
 
-    public CallTreeNode(String signature, Object[] callArguments, Parameter[] methodType) {
-        this.signature = signature;
+    public CallTreeNode(Method method, Object[] callArguments) {
+        this.method = method;
         this.callArguments = callArguments;
-        this.methodType = methodType;
     }
 
     public Object[] getCallArguments() {
@@ -45,7 +44,7 @@ class CallTreeNode extends TreeNode {
     }
 
     public String argumentString() {
-        return (Dendrologist.showMethodNames ? signature : "") + '(' + valuesToString(callArguments) + ')';
+        return (Dendrologist.showMethodNames ? method.getName() : "") + '(' + valuesToString(callArguments) + ')';
     }
 
     public String returnValueString() {

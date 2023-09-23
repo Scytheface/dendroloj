@@ -8,8 +8,6 @@ import java.util.concurrent.Executors;
 
 class TraceProcessor {
 
-    private static TreeNode node = SimpleTreeLayout.root;
-
     // Executor used to run the actual update logic.
     // This is used to prevent debuggers from stepping to execution logic when you step in at the start of a @Grow method.
     // Using a single threaded executor eliminates most possible race conditions.
@@ -37,19 +35,13 @@ class TraceProcessor {
     public static void processEntry(Method method, Object[] callArguments) throws ExecutionException, InterruptedException {
         // To avoid recursion during toString calls on arguments, check if we are already in the graph processing thread and exit early if so.
         if (Thread.currentThread().getName().equals(PROCESSOR_THREAD_NAME)) return;
-        exec.submit(() -> {
-            node = node.addChild(new CallTreeNode(method.getName(), callArguments, method.getParameters()));
-            SimpleTreeLayout.addStepAndUpdateGraph();
-        }).get();
+        exec.submit(() -> CallTreeLayout.processCall(method, callArguments)).get();
     }
 
     public static void processExit(Object returnValue, Throwable throwable) throws ExecutionException, InterruptedException {
         // To avoid recursion during toString calls on arguments, check if we are already in the graph processing thread and exit early if so.
         if (Thread.currentThread().getName().equals(PROCESSOR_THREAD_NAME)) return;
-        exec.submit(() -> {
-            node = node.done(returnValue, throwable).getParent();
-            SimpleTreeLayout.addStepAndUpdateGraph();
-        }).get();
+        exec.submit(() -> CallTreeLayout.processReturn(returnValue, throwable)).get();
     }
 
 }

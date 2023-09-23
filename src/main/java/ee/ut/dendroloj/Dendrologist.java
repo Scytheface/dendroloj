@@ -1,5 +1,7 @@
 package ee.ut.dendroloj;
 
+import java.awt.*;
+
 public class Dendrologist {
 
     // TODO: Add methods to show an arbitrary graphs and graphs constructed from user-supplied tree classes (A&A 'Tipp' and similar).
@@ -38,6 +40,16 @@ public class Dendrologist {
      */
     public static void wakeUp() {
         init();
+    }
+
+    /**
+     * Colors the node corresponding to the current method call in the given color.
+     * <p>
+     * Note: This should be called inside a {@link Grow @Grow} annotated method or a method called by a {@link Grow @Grow} annotated method.
+     */
+    // TODO: Make this API public
+    private static void colorCurrentCall(Color color) {
+        CallTreeLayout.colorCurrentNode(color);
     }
 
     private static void init() {

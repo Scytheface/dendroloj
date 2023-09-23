@@ -7,13 +7,16 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
 import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 
-class SimpleTreeLayout {
+class CallTreeLayout {
 
     public static final MetaTreeNode root = new MetaTreeNode();
+    private static TreeNode currentNode = CallTreeLayout.root;
 
     private static Graph graph = null;
     private static JSlider stepSlider = null;
@@ -24,8 +27,8 @@ class SimpleTreeLayout {
     private static int activeStep = -1;
 
     public static void init(Graph graph, JSlider stepSlider) {
-        SimpleTreeLayout.graph = graph;
-        SimpleTreeLayout.stepSlider = stepSlider;
+        CallTreeLayout.graph = graph;
+        CallTreeLayout.stepSlider = stepSlider;
         stepSlider.setMinimum(0);
         stepSlider.setMaximum(0);
         stepSlider.addChangeListener(event -> {
@@ -35,7 +38,24 @@ class SimpleTreeLayout {
         });
     }
 
-    public static void addStepAndUpdateGraph() {
+    public static void processCall(Method method, Object[] callArguments) {
+        currentNode = currentNode.addChild(new CallTreeNode(method, callArguments));
+        addStepAndUpdateGraph();
+    }
+
+    public static void processReturn(Object returnValue, Throwable throwable) {
+        currentNode = currentNode.done(returnValue, throwable).getParent();
+        addStepAndUpdateGraph();
+    }
+
+    public static void colorCurrentNode(Color color) {
+        Node node = graph.getNode(currentNode.getId());
+        if (node != null) {
+            node.setAttribute("ui.color", color);
+        }
+    }
+
+    private static void addStepAndUpdateGraph() {
         // This method causes massive performance issues and extremely high memory usage for relatively small graphs.
         // TODO: Investigate why and fix it. (Running Katsed.fib(16) with Dendrologist enabled provides a reproduction of the issue.)
 
