@@ -69,5 +69,6 @@ public class Dendrologist {
     private static void initGraphics() {
         GraphGUI.init(uiScale);
     }
+
 }
 
