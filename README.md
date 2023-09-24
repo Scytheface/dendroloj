@@ -39,6 +39,12 @@ Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda 
 * `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimis on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
 * `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis, kui need erinevad väärtustest väljakutsel.
 
+
+### Tippude värvimine
+
+`@Grow` annotatsiooniga meetodites (ja meetodites mis kutsutakse välja `@Grow` annotatsiooniga meetodites) saab kasutada `Dendrologist.paint(color)` meetodit, et värvida rekursioonipuus sellele väljakutsele vastav tipp antud värvi. See on kasulik näiteks selleks, et tähistada rekursioonipuus huvipakkuvaid tippe.
+
+
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 
 Kui tahad, et dendroloj toimiks sel ajal kui silur programmi jooksutamise pausile on pannud siis paremklõpsa *breakpointil* ja vali 'Suspend: Thread' ja seejärel vajuta 'Make Default'. Kui sul on mitu *breakpointi* juba lisatud siis pead 'Suspend: Thread' valima kõigil, kuid uute *breakpointide* lisamisel seda enam käsitsi vahetama ei pea.
