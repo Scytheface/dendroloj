@@ -12,7 +12,7 @@
 
 1. Lisa meetoditele mille rekursioonipuud tahad visualiseerida `@Grow` annotatsioon.
 2. Enne oma rekursiivse meetodi välja kutsumist kutsu välja `Dendrologist.wakeUp()`.
-3. Käivita programm ja aken rekursioonipuuga avaneb automaatselt.
+3. Käita programm ja aken rekursioonipuuga avaneb automaatselt.
 
 Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
@@ -36,7 +36,7 @@ Hiire rullikuga saab suumida sisse ja välja. Paremat hiireklahvi all hoides saa
 Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas dendroloj rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
 
 * `Dendrologist.setUIScale(uiScale)` seab kordaja millega korrutatakse kõikide graafiliste elementide mõõtmed. See on kasulik ennekõike kui vaikesuurusega tekst on lugemiseks liiga väike.
-* `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimis on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
+* `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimisi on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
 * `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis, kui need erinevad väärtustest väljakutsel.
 
 
