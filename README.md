@@ -31,6 +31,9 @@ Paremat hiireklahvi all hoides saab liigutada vaadet.
 `Ctrl+R` või `Ctrl+0` taastab algse vaate asukoha ja suurenduse.
 
 
+## Lisavõimalused
+
+
 ### Seadistamine
 
 Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas dendroloj rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
