@@ -72,9 +72,26 @@ public class Katsed {
         }
     }
 
+    @Grow
+    public static int abi2(int[] a, int i, int n) {
+        //i - nii palju on massiivis elemente olemas
+        //keerukus Teeta(3^n)
+        if (n == 0)
+            return 1;
+        // i elementi on paigas
+        a[i] = 0;
+        int summa = abi2(a, i + 1, n - 1);
+        a[i] = 1;
+        summa += abi2(a, i + 1, n - 1);
+        a[i] = 2;
+        summa += abi2(a, i + 1, n - 1);
+        return summa;
+    }
+
     public static void main(String[] args) {
         Dendrologist.setUIScale(1.5);
         Dendrologist.setShowMethodNames(false);
+        Dendrologist.setArgumentCapture(true, true);
 
         Dendrologist.wakeUp();
 
@@ -83,7 +100,9 @@ public class Katsed {
         // fib3(6);
 
         // fib(16);
-        fib(8);
-        pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        // fib(8);
+        // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+
+        abi2(new int[3], 0, 3);
     }
 }

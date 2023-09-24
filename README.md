@@ -24,7 +24,7 @@ Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda 
 
 * `Dendrologist.setUIScale(uiScale)` seab kordaja millega korrutatakse kõikide graafiliste elementide mõõtmed. See on kasulik ennekõike kui vaikesuurusega tekst on lugemiseks liiga väike.
 * `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimis on see sees). See on kasulik, et vähendada visuaalset müra, kui meetodi nimi on pikk või väljakutseid on palju.
-
+* `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis kui need erinevad väärtustest väljakutsel.
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 

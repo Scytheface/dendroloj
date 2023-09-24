@@ -11,6 +11,7 @@ import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 class CallTreeLayout {
@@ -115,15 +116,31 @@ class CallTreeLayout {
         Node node = graph.getNode(nodeId);
         if (node == null) {
             node = graph.addNode(nodeId);
-            node.setAttribute("label", current.argumentString());
+            if (Dendrologist.captureArgsDuringCall) {
+                node.setAttribute("label", current.argumentString());
+            }
             if (hideNewElements) {
                 node.setAttribute("ui.hide");
             }
             newElements.add(node);
         }
 
-        if (current.hasReturned() && current.getThrown() != null) {
-            node.setAttribute("ui.class", "error");
+        if (current.hasReturned() && !node.hasAttribute("_returned")) {
+            node.setAttribute("_returned", true);
+
+            if (current.getThrown() != null) {
+                node.setAttribute("ui.class", "error");
+            }
+
+            if (Dendrologist.captureArgsDuringReturn) {
+                String oldArgumentString = (String) node.getAttribute("label");
+                String newArgumentString = current.argumentString();
+                if (oldArgumentString == null || oldArgumentString.isEmpty()) {
+                    node.setAttribute("label", newArgumentString);
+                } else if (!newArgumentString.equals(oldArgumentString)) {
+                    node.setAttribute("label", oldArgumentString + "\n" + newArgumentString);
+                }
+            }
         }
 
         if (parent != null) {

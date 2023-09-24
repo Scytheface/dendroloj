@@ -1,6 +1,7 @@
 package ee.ut.dendroloj;
 
 import java.awt.*;
+import java.nio.file.DirectoryNotEmptyException;
 
 public class Dendrologist {
 
@@ -13,6 +14,8 @@ public class Dendrologist {
 
     // Runtime settings
     protected static boolean showMethodNames = true;
+    protected static boolean captureArgsDuringCall = true;
+    protected static boolean captureArgsDuringReturn = true;
 
     private Dendrologist() {
     }
@@ -33,6 +36,17 @@ public class Dendrologist {
      */
     public static void setShowMethodNames(boolean showMethodNames) {
         Dendrologist.showMethodNames = showMethodNames;
+    }
+
+    /**
+     * Sets when to capture argument values.
+     *
+     * @param duringCall   Capture argument values during call. Default: {@code true}
+     * @param duringReturn Capture argument values during return. Default: {@code true}
+     */
+    public static void setArgumentCapture(boolean duringCall, boolean duringReturn) {
+        Dendrologist.captureArgsDuringCall = duringCall;
+        Dendrologist.captureArgsDuringReturn = duringReturn;
     }
 
     /**
