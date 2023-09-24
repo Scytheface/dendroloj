@@ -52,7 +52,7 @@ class CallTreeLayout {
         addStepAndUpdateGraph();
     }
 
-    public static void colorCurrentNode(Color color) {
+    public static void setCurrentNodeColor(Color color) {
         Node node = graph.getNode(currentNode.getId());
         if (node != null) {
             node.setAttribute("ui.color", color);

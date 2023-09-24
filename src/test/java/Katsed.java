@@ -18,7 +18,7 @@ public class Katsed {
     @Grow
     static int fib(int n) {
         if (seenValues.contains(n)) {
-            //Dendrologist.colorCurrentCall(Color.MAGENTA);
+            Dendrologist.paintCurrentNode(Color.MAGENTA);
         }
         seenValues.add(n);
 
@@ -54,6 +54,7 @@ public class Katsed {
 
     @Grow
     static int[] pööraJupid(int[] massiiv) {
+        Dendrologist.paintCurrentNode(Color.YELLOW);
         if (Math.random() < 0.2) {
             throw new RuntimeException("Random failure");
         }

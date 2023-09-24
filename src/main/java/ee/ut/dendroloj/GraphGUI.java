@@ -43,6 +43,7 @@ class GraphGUI {
                         " text-padding: %f; text-offset: 5, 0;" +
                         "}" +
                         "node.error {" +
+                        " fill-mode: plain;" +
                         " fill-color: #fa4c29;" +
                         "}" +
                         "node:selected {" +

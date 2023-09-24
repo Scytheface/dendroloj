@@ -46,10 +46,9 @@ public class Dendrologist {
      * Colors the node corresponding to the current method call in the given color.
      * <p>
      * Note: This should be called inside a {@link Grow @Grow} annotated method or a method called by a {@link Grow @Grow} annotated method.
-     * TODO: Make this API public
      */
-    private static void colorCurrentCall(Color color) {
-        CallTreeLayout.colorCurrentNode(color);
+    public static void paint(Color color) {
+        CallTreeLayout.setCurrentNodeColor(color);
     }
 
     private static synchronized void init() {
