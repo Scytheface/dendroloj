@@ -27,6 +27,9 @@
  * @author Antoine Dutot <antoine.dutot@graphstream-project.org>
  * @author Guilhelm Savin <guilhelm.savin@graphstream-project.org>
  * @author Hicham Brahimi <hicham.brahimi@graphstream-project.org>
+ * Modified for dendroloj by:
+ * @author FeldrinH
+ * See comments starting with 'DENDROLOJ EDIT' for information about the changes made.
  */
 
 package org.graphstream.ui.swing.renderer.shape.swing;
@@ -140,6 +143,9 @@ class SwingTextBox extends TextBox {
     @Override
     public void render(Backend backend, double xLeft, double yBottom) {
         if (text != null) {
+            // DENDROLOJ EDIT:
+            // Add support for rendering multiple lines of text.
+
             Graphics2D g = backend.graphics2D();
 
             if (bgColor != null) {
@@ -154,8 +160,6 @@ class SwingTextBox extends TextBox {
                 }
             }
 
-            // DENDROLOJ EDIT:
-            // Add support for rendering multiple lines of text.
             g.setColor(textColor);
             yBottom -= getAscent();
             for (TextLayout line : text) {
