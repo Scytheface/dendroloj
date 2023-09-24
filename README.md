@@ -42,7 +42,7 @@ Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda 
 
 ### Tippude värvimine
 
-`@Grow` annotatsiooniga meetodites (ja meetodites mis kutsutakse välja `@Grow` annotatsiooniga meetodites) saab kasutada `Dendrologist.paint(color)` meetodit, et värvida rekursioonipuus sellele väljakutsele vastav tipp antud värvi. See on kasulik näiteks selleks, et tähistada rekursioonipuus huvipakkuvaid tippe.
+`@Grow` annotatsiooniga meetodites (ja meetodites mida kutsutakse `@Grow` annotatsiooniga meetoditest) saab kasutada `Dendrologist.paint(color)` meetodit, et värvida rekursioonipuus sellele väljakutsele vastav tipp antud värvi. See on kasulik näiteks selleks, et tähistada rekursioonipuus huvipakkuvaid tippe.
 
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
