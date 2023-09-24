@@ -9,14 +9,18 @@ import java.util.List;
 class CallTreeNode extends TreeNode {
     private final Method method;
     private final Object[] callArguments;
+    private final boolean[] repeatedArgumentValues;
 
     private boolean hasReturned = false;
     private Object returnValue = null;
     private Throwable thrown = null;
 
-    public CallTreeNode(Method method, Object[] callArguments) {
+    private static final String REPEAT_INDICATOR = "-:-";
+
+    public CallTreeNode(Method method, Object[] callArguments, boolean[] repeatedArgumentValues) {
         this.method = method;
         this.callArguments = callArguments;
+        this.repeatedArgumentValues = repeatedArgumentValues;
     }
 
     public Object[] getCallArguments() {
@@ -44,7 +48,13 @@ class CallTreeNode extends TreeNode {
     }
 
     public String argumentString() {
-        return (Dendrologist.showMethodNames ? method.getName() : "") + '(' + valuesToString(callArguments) + ')';
+        Object[] processedArguments = Arrays.copyOf(callArguments, callArguments.length);
+        for (int i = 0; i < processedArguments.length; i++) {
+            if (repeatedArgumentValues[i]) {
+                processedArguments[i] = REPEAT_INDICATOR;
+            }
+        }
+        return (Dendrologist.showMethodNames ? method.getName() : "") + '(' + valuesToString(processedArguments) + ')';
     }
 
     public String returnValueString() {

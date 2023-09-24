@@ -11,6 +11,7 @@ import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 class CallTreeLayout {
@@ -25,6 +26,18 @@ class CallTreeLayout {
 
     private static final List<List<Element>> steps = new ArrayList<>();
     private static int activeStep = -1;
+
+    private static final Set<Class<?>> NO_REPEAT_CHECK_CLASSES = Set.of(
+        Boolean.class,
+        Character.class,
+        Byte.class,
+        Short.class,
+        Integer.class,
+        Long.class,
+        Float.class,
+        Double.class,
+        Void.class
+    );
 
     public static synchronized void init(Graph graph, JSlider stepSlider) {
         if (CallTreeLayout.graph != null) {
@@ -43,7 +56,18 @@ class CallTreeLayout {
     }
 
     public static void processCall(Method method, Object[] callArguments) {
-        currentNode = currentNode.addChild(new CallTreeNode(method, callArguments));
+        boolean[] repeatedArgumentValues = new boolean[callArguments.length];
+        if (currentNode instanceof CallTreeNode) {
+            Object[] previousArguments = ((CallTreeNode) currentNode).getCallArguments();
+            if (previousArguments.length == callArguments.length) {
+                for (int i = 0; i < callArguments.length; i++) {
+                    if (callArguments[i] == previousArguments[i] && !NO_REPEAT_CHECK_CLASSES.contains(callArguments[i].getClass())) {
+                        repeatedArgumentValues[i] = true;
+                    }
+                }
+            }
+        }
+        currentNode = currentNode.addChild(new CallTreeNode(method, callArguments, repeatedArgumentValues));
         addStepAndUpdateGraph();
     }
 
