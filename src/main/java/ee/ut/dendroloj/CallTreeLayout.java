@@ -32,6 +32,7 @@ class CallTreeLayout {
         }
         CallTreeLayout.graph = graph;
         CallTreeLayout.stepSlider = stepSlider;
+        stepSlider.setEnabled(false);
         stepSlider.setMinimum(0);
         stepSlider.setMaximum(0);
         stepSlider.addChangeListener(event -> {
@@ -63,9 +64,6 @@ class CallTreeLayout {
         // TODO: Investigate why and fix it. (Running Katsed.fib(16) with Dendrologist enabled provides a reproduction of the issue.)
 
         boolean isLatestStepActive = activeStep == steps.size() - 1;
-        if (isLatestStepActive) {
-            activeStep += 1;
-        }
 
         List<Element> newElements = new ArrayList<>();
         double x = 0.0;
@@ -75,8 +73,10 @@ class CallTreeLayout {
         steps.add(newElements);
 
         internalSliderChange = true;
+        stepSlider.setEnabled(true);
         stepSlider.setMaximum(steps.size() - 1);
         if (isLatestStepActive) {
+            activeStep = steps.size() - 1;
             stepSlider.setValue(activeStep);
         }
         internalSliderChange = false;
