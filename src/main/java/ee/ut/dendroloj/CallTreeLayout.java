@@ -26,7 +26,10 @@ class CallTreeLayout {
     private static final List<List<Element>> steps = new ArrayList<>();
     private static int activeStep = -1;
 
-    public static void init(Graph graph, JSlider stepSlider) {
+    public static synchronized void init(Graph graph, JSlider stepSlider) {
+        if (CallTreeLayout.graph != null) {
+            throw new IllegalStateException("Attempt to initialize CallTreeLayout more than once");
+        }
         CallTreeLayout.graph = graph;
         CallTreeLayout.stepSlider = stepSlider;
         stepSlider.setMinimum(0);

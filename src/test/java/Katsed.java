@@ -73,7 +73,7 @@ public class Katsed {
 
     public static void main(String[] args) {
         Dendrologist.setUIScale(1.5);
-        Dendrologist.setShowMethodNames(true);
+        Dendrologist.setShowMethodNames(false);
 
         Dendrologist.wakeUp();
 
