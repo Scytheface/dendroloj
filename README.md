@@ -36,8 +36,8 @@ Paremat hiireklahvi all hoides saab liigutada vaadet.
 Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas dendroloj rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
 
 * `Dendrologist.setUIScale(uiScale)` seab kordaja millega korrutatakse kõikide graafiliste elementide mõõtmed. See on kasulik ennekõike kui vaikesuurusega tekst on lugemiseks liiga väike.
-* `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimis on see sees). See on kasulik, et vähendada visuaalset müra, kui meetodi nimi on pikk või väljakutseid on palju.
-* `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis kui need erinevad väärtustest väljakutsel.
+* `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimis on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
+* `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis, kui need erinevad väärtustest väljakutsel.
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 

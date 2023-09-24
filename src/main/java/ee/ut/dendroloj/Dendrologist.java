@@ -1,7 +1,6 @@
 package ee.ut.dendroloj;
 
 import java.awt.*;
-import java.nio.file.DirectoryNotEmptyException;
 
 public class Dendrologist {
 
@@ -13,7 +12,7 @@ public class Dendrologist {
     private static double uiScale = 1.0;
 
     // Runtime settings
-    protected static boolean showMethodNames = true;
+    protected static boolean showMethodNames = false;
     protected static boolean captureArgsDuringCall = true;
     protected static boolean captureArgsDuringReturn = true;
 
@@ -30,9 +29,9 @@ public class Dendrologist {
     }
 
     /**
-     * Sets whether to show method names in call tree or not.
+     * Sets whether to show method names in call graph or not.
      * <p>
-     * Default: {@code true}
+     * Default: {@code false}
      */
     public static void setShowMethodNames(boolean showMethodNames) {
         Dendrologist.showMethodNames = showMethodNames;
