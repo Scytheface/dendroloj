@@ -18,6 +18,19 @@ Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
 
 
+### Graafilise liidese kasutamine
+
+Liigutades riba akna alumises servas saab vaadata väljakutsete puu ajalugu. Iga samm on kas üks meetodi väljakutse või üks tagastus meetodist.
+
+Vasakut hiireklahvi all hoides saab märgistada tippe (see värvib tipud erksiniseks).
+
+Hiire rullikuga saab suumida sisse ja välja.
+
+Paremat hiireklahvi all hoides saab liigutada vaadet.
+
+`Ctrl+R` või `Ctrl+0` taastab algse vaate asukoha ja suurenduse.
+
+
 ### Seadistamine
 
 Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas dendroloj rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
