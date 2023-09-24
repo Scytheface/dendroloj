@@ -24,7 +24,7 @@ Liigutades riba akna alumises servas saab vaadata väljakutsete puu ajalugu. Iga
 
 Vasakut hiireklahvi all hoides saab märgistada tippe (see värvib tipud erksiniseks).
 
-Paremat hiireklahvi all hoides saab liigutada vaadet. Hiire rullikuga saab suumida sisse ja välja.  
+Hiire rullikuga saab suumida sisse ja välja. Paremat hiireklahvi all hoides saab liigutada vaadet.  
 `Ctrl+R` või `Ctrl+0` taastab algse vaate asukoha ja suurenduse.
 
 
