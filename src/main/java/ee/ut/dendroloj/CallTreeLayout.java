@@ -11,7 +11,6 @@ import java.awt.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 class CallTreeLayout {
@@ -54,9 +53,11 @@ class CallTreeLayout {
     }
 
     public static void setCurrentNodeColor(Color color) {
-        Node node = graph.getNode(currentNode.getId());
-        if (node != null) {
-            node.setAttribute("ui.color", color);
+        if (graph != null) {
+            Node node = graph.getNode(currentNode.getId());
+            if (node != null) {
+                node.setAttribute("ui.color", color);
+            }
         }
     }
 
