@@ -25,6 +25,9 @@ public class Dendrologist {
      * Default: {@code 1.0}
      */
     public static void setUIScale(double uiScale) {
+        if (awake) {
+            throw new IllegalStateException("Cannot set UI scale after dendrologist has woken up");
+        }
         Dendrologist.uiScale = uiScale;
     }
 
