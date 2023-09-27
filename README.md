@@ -1,4 +1,4 @@
-# dendroloj
+# dendrolo*j*
 
 ## Paigaldamine (IntelliJ IDEA)
 1. Lae alla uusim versioon [siit](https://github.com/Scytheface/dendroloj/releases/latest).
