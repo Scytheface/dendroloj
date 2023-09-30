@@ -18,6 +18,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 class GraphGUI {
+    public static boolean isHeadless() {
+        return GraphicsEnvironment.isHeadless();
+    }
+
     public static void init(double uiScale) {
         System.setProperty("org.graphstream.ui", "swing");
         System.setProperty("sun.java2d.uiScale", "1");

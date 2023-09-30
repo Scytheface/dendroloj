@@ -70,10 +70,18 @@ public class Dendrologist {
     private static synchronized void init() {
         if (awake) return;
 
-        initTracing();
-        initGraphics();
+        if (!isHeadless()) {
+            initTracing();
+            initGraphics();
+        } else {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp().");
+        }
 
         awake = true;
+    }
+
+    private static boolean isHeadless() {
+        return GraphGUI.isHeadless();
     }
 
     private static void initTracing() {
