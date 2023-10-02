@@ -94,12 +94,12 @@ public class Katsed {
         // Dendrologist.setArgumentCapture(true, false);
         Dendrologist.wakeUp();
 
-        // unbalancedTree(6, 3);
+         unbalancedTree(6, 3);
         // tree(5, 3);
         // fib3(6);
 
-        // fib(16);
-        // fib(8);
+        // fib(14);
+        fib(8);
         // pööraJupid(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
 
         abi2(new int[3], 0, 3);
