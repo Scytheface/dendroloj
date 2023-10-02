@@ -22,15 +22,22 @@ class GenericTreeLayout {
         if (node == null) {
             return new LayoutResult(1.0, 0.0);
         }
+
         String nodeId = getNodeId(node);
+        boolean visited;
         Node current = graph.getNode(nodeId);
-        if (current != null) {
-            return new LayoutResult(1.0, 0.0);
+        if (current == null) {
+            visited = false;
+            current = graph.addNode(nodeId);
+            current.setAttribute("label", getLabel.apply(node));
+        } else {
+            visited = true;
         }
-        current = graph.addNode(nodeId);
-        current.setAttribute("label", getLabel.apply(node));
         if (parent != null) {
             graph.addEdge(getNewEdgeId(), parent, current, true);
+        }
+        if (visited) {
+            return new LayoutResult(1.0, 0.0);
         }
 
         double width = 0.0, firstChildOffset = 0.0, lastChildOffset = 0.0;
