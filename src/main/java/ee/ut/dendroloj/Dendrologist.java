@@ -5,7 +5,7 @@ import org.graphstream.graph.Graph;
 import java.awt.Color;
 import java.util.function.Function;
 
-public final class Dendrologist {
+public class Dendrologist {
 
     // TODO: Add methods to show an arbitrary graphs and graphs constructed from user-supplied tree classes (A&A 'Tipp' and similar).
 
