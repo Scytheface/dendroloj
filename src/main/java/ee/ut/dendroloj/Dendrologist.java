@@ -61,7 +61,7 @@ public class Dendrologist {
         if (awake) return;
 
         if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp().");
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp.");
         } else {
             // DebuggerTracer.init();
             AgentTracer.init();
@@ -80,14 +80,24 @@ public class Dendrologist {
         CallTreeLayout.setCurrentNodeColor(color);
     }
 
+    /**
+     * TODO: Documentation
+     * <p>
+     * Note: This is an experimental API. It may be changed or removed without warning in future versions.
+     */
     @SuppressWarnings("unchecked")
     public static <T> void drawBinaryTree(T root, Function<T, String> label, Function<T, T> left, Function<T, T> right) {
         drawTree(root, label, n -> (T[]) new Object[]{left.apply(n), right.apply(n)});
     }
 
+    /**
+     * TODO: Documentation
+     * <p>
+     * Note: This is an experimental API. It may be changed or removed without warning in future versions.
+     */
     public static <T> void drawTree(T root, Function<T, String> label, Function<T, T[]> children) {
         if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp().");
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawTree.");
             return;
         }
 
