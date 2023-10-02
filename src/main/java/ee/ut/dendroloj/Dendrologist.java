@@ -1,6 +1,9 @@
 package ee.ut.dendroloj;
 
-import java.awt.*;
+import org.graphstream.graph.Graph;
+
+import java.awt.Color;
+import java.util.function.Function;
 
 public class Dendrologist {
 
@@ -54,8 +57,18 @@ public class Dendrologist {
     /**
      * Wakes up dendrologist.
      */
-    public static void wakeUp() {
-        init();
+    public static synchronized void wakeUp() {
+        if (awake) return;
+
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp().");
+        } else {
+            // DebuggerTracer.init();
+            AgentTracer.init();
+            GraphGUI.initCallTreeGUI(uiScale);
+        }
+
+        awake = true;
     }
 
     /**
@@ -67,30 +80,28 @@ public class Dendrologist {
         CallTreeLayout.setCurrentNodeColor(color);
     }
 
-    private static synchronized void init() {
-        if (awake) return;
+    @SuppressWarnings("unchecked")
+    public static <T> void drawBinaryTree(T root, Function<T, String> label, Function<T, T> left, Function<T, T> right) {
+        drawTree(root, label, n -> (T[]) new Object[]{left.apply(n), right.apply(n)});
+    }
 
-        if (!isHeadless()) {
-            initTracing();
-            initGraphics();
-        } else {
+    public static <T> void drawTree(T root, Function<T, String> label, Function<T, T[]> children) {
+        if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp().");
+            return;
         }
 
-        awake = true;
+        if (root == null) {
+            // TODO: Allow null root node and just show empty graph?
+            throw new NullPointerException("Root node must not be null");
+        }
+
+        Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
+        GraphGUI.initGenericGUI(uiScale, graph);
     }
 
     private static boolean isHeadless() {
         return GraphGUI.isHeadless();
-    }
-
-    private static void initTracing() {
-        // DebuggerTracer.init();
-        AgentTracer.init();
-    }
-
-    private static void initGraphics() {
-        GraphGUI.init(uiScale);
     }
 
 }

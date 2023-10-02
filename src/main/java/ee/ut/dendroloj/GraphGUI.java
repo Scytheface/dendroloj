@@ -1,7 +1,6 @@
 package ee.ut.dendroloj;
 
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.geom.Point2;
 import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
@@ -22,14 +21,41 @@ class GraphGUI {
         return GraphicsEnvironment.isHeadless();
     }
 
-    public static void init(double uiScale) {
-        System.setProperty("org.graphstream.ui", "swing");
-        System.setProperty("sun.java2d.uiScale", "1");
-
-        Graph graph = new SingleGraph("dendroloj");
-        graph.setAttribute("ui.quality");
-        graph.setAttribute("ui.antialias");
+    public static void initGenericGUI(double uiScale, Graph graph) {
+        // TODO: Generic graph stylesheet
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
+                "edge {" +
+                        " size: %fpx;" +
+                        " text-size: %f; text-alignment: center;" +
+                        " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
+                        " text-padding: %f; text-offset: 5, 0;" +
+                        "}" +
+                        "edge .returned {" +
+                        " fill-color: gray;" +
+                        "}" +
+                        "node {" +
+                        " size: %fpx;" +
+                        " fill-mode: plain;" +
+                        " fill-color: rgb(210, 210, 210);" +
+                        " text-size: %f; text-alignment: center;" +
+                        " text-offset: 0px, -%fpx;" +
+                        "}" +
+                        "node.error {" +
+                        " fill-mode: plain;" +
+                        " fill-color: #fa4c29;" +
+                        "}" +
+                        "node:selected {" +
+                        " fill-mode: plain;" +
+                        " fill-color: #0096ff;" +
+                        "}",
+                Math.sqrt(uiScale), uiScale * 12, uiScale + 1,
+                uiScale * 28, uiScale * 12, uiScale * 3));
+
+        init(graph, null);
+    }
+
+    public static void initCallTreeGUI(double uiScale) {
+        CallTreeLayout.graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
                         " size: %fpx;" +
                         " text-size: %f; text-alignment: center;" +
@@ -56,11 +82,15 @@ class GraphGUI {
                         "}",
                 Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
-        JSlider stepSlider = new JSlider();
-        stepSlider.setPaintTicks(true);
-        stepSlider.setMajorTickSpacing(1);
+        init(CallTreeLayout.graph, CallTreeLayout.stepSlider);
+    }
 
-        CallTreeLayout.init(graph, stepSlider);
+    private static void init(Graph graph, JComponent toolbar) {
+        System.setProperty("org.graphstream.ui", "swing");
+        System.setProperty("sun.java2d.uiScale", "1");
+
+        graph.setAttribute("ui.quality");
+        graph.setAttribute("ui.antialias");
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
@@ -173,7 +203,9 @@ class GraphGUI {
 
         root.setLayout(new BorderLayout());
         root.add(viewComponent, BorderLayout.CENTER);
-        root.add(stepSlider, BorderLayout.SOUTH);
+        if (toolbar != null) {
+            root.add(toolbar, BorderLayout.SOUTH);
+        }
         root.addWindowListener((WindowListener) viewComponent);
         root.addComponentListener((ComponentListener) viewComponent);
 

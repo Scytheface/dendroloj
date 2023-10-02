@@ -94,7 +94,7 @@ public class Katsed {
         // Dendrologist.setArgumentCapture(true, false);
         Dendrologist.wakeUp();
 
-         unbalancedTree(6, 3);
+        unbalancedTree(6, 3);
         // tree(5, 3);
         // fib3(6);
 

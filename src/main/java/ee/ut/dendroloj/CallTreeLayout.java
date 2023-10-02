@@ -5,6 +5,7 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Element;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.SingleGraph;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,23 +17,18 @@ import java.util.List;
 class CallTreeLayout {
 
     public static final MetaTreeNode root = new MetaTreeNode();
-    private static TreeNode currentNode = CallTreeLayout.root;
-
-    private static Graph graph = null;
-    private static JSlider stepSlider = null;
+    private static TreeNode currentNode = root;
 
     private static boolean internalSliderChange = false;
 
-    private static final List<List<Element>> steps = new ArrayList<>();
-    private static int activeStep = -1;
+    public static final Graph graph = new SingleGraph("dendroloj");
+    public static final JSlider stepSlider;
 
-    public static synchronized void init(Graph graph, JSlider stepSlider) {
-        if (CallTreeLayout.graph != null) {
-            throw new IllegalStateException("Attempt to initialize CallTreeLayout more than once");
-        }
-        CallTreeLayout.graph = graph;
-        CallTreeLayout.stepSlider = stepSlider;
+    static {
+        stepSlider = new JSlider();
         stepSlider.setEnabled(false);
+        stepSlider.setPaintTicks(true);
+        stepSlider.setMajorTickSpacing(1);
         stepSlider.setMinimum(0);
         stepSlider.setMaximum(0);
         stepSlider.addChangeListener(event -> {
@@ -41,6 +37,9 @@ class CallTreeLayout {
             }
         });
     }
+
+    private static final List<List<Element>> steps = new ArrayList<>();
+    private static int activeStep = -1;
 
     public static void processCall(Method method, Object[] callArguments) {
         currentNode = currentNode.addChild(new CallTreeNode(method, callArguments));
@@ -53,11 +52,9 @@ class CallTreeLayout {
     }
 
     public static void setCurrentNodeColor(Color color) {
-        if (graph != null) {
-            Node node = graph.getNode(currentNode.getId());
-            if (node != null) {
-                node.setAttribute("ui.color", color);
-            }
+        Node node = graph.getNode(currentNode.getId());
+        if (node != null) {
+            node.setAttribute("ui.color", color);
         }
     }
 
@@ -68,10 +65,9 @@ class CallTreeLayout {
         boolean isLatestStepActive = activeStep == steps.size() - 1;
 
         List<Element> newElements = new ArrayList<>();
-        SimpleTreeLayout<CallTreeNode> layout = new SimpleTreeLayout<>(n -> graph.getNode(n.getId()), TreeNode::getChildren, false);
+        double x = 0.0;
         for (CallTreeNode node : root.getChildren()) {
-            updateGraph(node, !isLatestStepActive, newElements, null);
-            layout.layout(node);
+            x += updateGraph(node, !isLatestStepActive, newElements, x, 0.0, 1.0, null).width + 1.0;
         }
         steps.add(newElements);
 
@@ -109,7 +105,8 @@ class CallTreeLayout {
         activeStep = newActiveStep;
     }
 
-    private static void updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements, CallTreeNode parent) {
+    private static LayoutResult updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements,
+                                    double x, double y, double minWidth, CallTreeNode parent) {
         // Currently mutable arguments and return values show the value they had when they were first added to the graph.
         // TODO: Show old values of mutable values when scrolling through history?
 
@@ -174,11 +171,34 @@ class CallTreeLayout {
             }
         }
 
-        for (CallTreeNode child : current.getChildren()) {
-            updateGraph(child, hideNewElements, newElements, current);
-        }
-    }
+        double width = 0.0, firstChildOffset = 0.0, lastChildOffset = 0.0;
+        final List<CallTreeNode> children = current.getChildren();
+        if (children.isEmpty()) {
+            width = minWidth;
+        } else {
+            final boolean isShallow = current.getChildren().stream().allMatch(child -> child.getChildren().isEmpty());
+            final double childrenMinWidth = isShallow ? Math.max(0.4, Math.min(1.0, 1.0 - (current.getChildren().size() - 2) * 0.2)) : 1.0;
 
+            final int leftReferenceNode = (children.size() - 1) / 2;
+            final int rightReferenceNode = children.size() / 2;
+
+            for (int i = 0; i < children.size(); i++) {
+                LayoutResult result = updateGraph(children.get(i), hideNewElements, newElements, x + width, y - 2.0, childrenMinWidth, current);
+                if (i == leftReferenceNode) {
+                    firstChildOffset = width + result.offset;
+                }
+                if (i == rightReferenceNode) {
+                    lastChildOffset = width + result.offset;
+                }
+                width += result.width;
+            }
+        }
+
+        double offset = 0.5 * (firstChildOffset + lastChildOffset);
+        node.setAttribute("xy", x + offset, y);
+
+        return new LayoutResult(width, offset);
+    }
 
 }
 
