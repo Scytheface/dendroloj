@@ -1,7 +1,5 @@
 import ee.ut.dendroloj.Dendrologist;
 
-import java.util.List;
-
 public class TippKatsed {
 
     public static void main(String[] args) {

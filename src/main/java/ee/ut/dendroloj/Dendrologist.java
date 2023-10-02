@@ -5,7 +5,7 @@ import org.graphstream.graph.Graph;
 import java.awt.Color;
 import java.util.function.Function;
 
-public class Dendrologist {
+public final class Dendrologist {
 
     // TODO: Add methods to show an arbitrary graphs and graphs constructed from user-supplied tree classes (A&A 'Tipp' and similar).
 
@@ -15,9 +15,9 @@ public class Dendrologist {
     private static double uiScale = 1.0;
 
     // Runtime settings
-    protected static boolean showMethodNames = false;
-    protected static boolean captureArgsDuringCall = true;
-    protected static boolean captureArgsDuringReturn = true;
+    static boolean showMethodNames = false;
+    static boolean captureArgsDuringCall = true;
+    static boolean captureArgsDuringReturn = true;
 
     private Dendrologist() {
     }
