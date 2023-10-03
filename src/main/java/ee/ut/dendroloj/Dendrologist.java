@@ -46,8 +46,8 @@ public class Dendrologist {
     /**
      * Sets when to capture argument values.
      *
-     * @param duringCall   Capture argument values during call. Default: {@code true}
-     * @param duringReturn Capture argument values during return. Default: {@code true}
+     * @param duringCall   capture argument values during call. Default: {@code true}
+     * @param duringReturn capture argument values during return. Default: {@code true}
      */
     public static void setArgumentCapture(boolean duringCall, boolean duringReturn) {
         Dendrologist.captureArgsDuringCall = duringCall;
@@ -80,10 +80,20 @@ public class Dendrologist {
         CallTreeLayout.setCurrentNodeColor(color);
     }
 
+
     /**
-     * TODO: Documentation
+     * Draws a binary tree.
      * <p>
-     * Note: This is an experimental API. It may be changed or removed without warning in future versions.
+     * Note: Passing in graphs that are not trees is supported but not intended.
+     * In such a case edges that violate the requirements of a tree will be highlighted in red.
+     * <p>
+     * THIS IS AN EXPERIMENTAL API. IT MAY BE CHANGED OR REMOVED WITHOUT WARNING IN FUTURE VERSIONS.
+     *
+     * @param root  root node of the tree
+     * @param label function that takes in a node and returns the label for that node
+     * @param left  function that takes in a node and returns the left child of that node (or null if absent)
+     * @param right function that takes in a node and returns the right child of that node (or null if absent)
+     * @param <T>   type of nodes in the tree
      */
     @SuppressWarnings("unchecked")
     public static <T> void drawBinaryTree(T root, Function<T, String> label, Function<T, T> left, Function<T, T> right) {
@@ -91,9 +101,17 @@ public class Dendrologist {
     }
 
     /**
-     * TODO: Documentation
+     * Draws a tree.
      * <p>
-     * Note: This is an experimental API. It may be changed or removed without warning in future versions.
+     * Note: Passing in graphs that are not trees is supported but not intended.
+     * In such a case edges that violate the requirements of a tree will be highlighted in red.
+     * <p>
+     * THIS IS AN EXPERIMENTAL API. IT MAY BE CHANGED OR REMOVED WITHOUT WARNING IN FUTURE VERSIONS.
+     *
+     * @param root     root node of the tree
+     * @param label    function that takes in a node and returns the label for that node
+     * @param children function that takes in a node and returns the children of that node (children may include null values to indicate empty/missing branches)
+     * @param <T>      type of nodes in the tree
      */
     public static <T> void drawTree(T root, Function<T, String> label, Function<T, T[]> children) {
         if (isHeadless()) {

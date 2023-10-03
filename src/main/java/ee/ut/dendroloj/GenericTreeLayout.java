@@ -37,12 +37,12 @@ class GenericTreeLayout {
         }
         if (parent != null) {
             Edge edge = graph.addEdge(getNewEdgeId(), parent, current, true);
-            if (visited) {
-                edge.setAttribute("ui.class", "error");
-            }
+            // if (visited) {
+            //     edge.setAttribute("ui.class", "error");
+            // }
         }
         if (visited) {
-            // current.enteringEdges().forEach(edge -> edge.setAttribute("ui.class", "error"));
+            current.enteringEdges().forEach(edge -> edge.setAttribute("ui.class", "error"));
             return new LayoutResult(1.0, 0.0);
         }
 
