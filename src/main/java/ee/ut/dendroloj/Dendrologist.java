@@ -86,8 +86,6 @@ public class Dendrologist {
      * <p>
      * Note: Passing in graphs that are not trees is supported but not intended.
      * In such a case edges that violate the requirements of a tree will be highlighted in red.
-     * <p>
-     * THIS IS AN EXPERIMENTAL API. IT MAY BE CHANGED OR REMOVED WITHOUT WARNING IN FUTURE VERSIONS.
      *
      * @param root  root node of the tree
      * @param label function that takes in a node and returns the label for that node
@@ -105,8 +103,6 @@ public class Dendrologist {
      * <p>
      * Note: Passing in graphs that are not trees is supported but not intended.
      * In such a case edges that violate the requirements of a tree will be highlighted in red.
-     * <p>
-     * THIS IS AN EXPERIMENTAL API. IT MAY BE CHANGED OR REMOVED WITHOUT WARNING IN FUTURE VERSIONS.
      *
      * @param root     root node of the tree
      * @param label    function that takes in a node and returns the label for that node
