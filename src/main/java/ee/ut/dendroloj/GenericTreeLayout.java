@@ -1,7 +1,9 @@
 package ee.ut.dendroloj;
 
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -12,7 +14,7 @@ class GenericTreeLayout {
     private static final AtomicLong edgeIdCounter = new AtomicLong(0);
 
     public static <T> Graph assembleGraph(T root, Function<T, String> getLabel, Function<T, T[]> getChildren) {
-        Graph graph = new SingleGraph("dendroloj");
+        Graph graph = new MultiGraph("dendroloj");
         addToGraph(graph, root, null, 0.0, 0.0, getLabel, getChildren);
         return graph;
     }
@@ -34,9 +36,13 @@ class GenericTreeLayout {
             visited = true;
         }
         if (parent != null) {
-            graph.addEdge(getNewEdgeId(), parent, current, true);
+            Edge edge = graph.addEdge(getNewEdgeId(), parent, current, true);
+            if (visited) {
+                edge.setAttribute("ui.class", "error");
+            }
         }
         if (visited) {
+            // current.enteringEdges().forEach(edge -> edge.setAttribute("ui.class", "error"));
             return new LayoutResult(1.0, 0.0);
         }
 

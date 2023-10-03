@@ -30,8 +30,8 @@ class GraphGUI {
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
                         " text-padding: %f; text-offset: 5, 0;" +
                         "}" +
-                        "edge .returned {" +
-                        " fill-color: gray;" +
+                        "edge.error {" +
+                        " fill-color: rgb(255, 0, 0);" +
                         "}" +
                         "node {" +
                         " size: %fpx;" +
@@ -39,10 +39,6 @@ class GraphGUI {
                         " fill-color: rgb(210, 210, 210);" +
                         " text-size: %f; text-alignment: center;" +
                         " text-offset: 0px, -%fpx;" +
-                        "}" +
-                        "node.error {" +
-                        " fill-mode: plain;" +
-                        " fill-color: #fa4c29;" +
                         "}" +
                         "node:selected {" +
                         " fill-mode: plain;" +
@@ -62,7 +58,7 @@ class GraphGUI {
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
                         " text-padding: %f; text-offset: 5, 0;" +
                         "}" +
-                        "edge .returned {" +
+                        "edge.returned {" +
                         " fill-color: gray;" +
                         "}" +
                         "node {" +
