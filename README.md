@@ -19,12 +19,14 @@
 Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
 
-### Puude joonistamine
+### Kahendpuude joonistamine
 
 1. Loo oma puu ja salvesta selle juurtipp muutujasse (nt `tipp`).
 2. Kutsu välja `Dendrologist.drawBinaryTree`. Meetod võtab argumendiks juurtipu ja kolm funktsiooni, mis võtavad kõik sisendiks tipu ja tagastavad vastavalt tipu tähise sõnena, vasaku alamtipu ja parema alamtipu.
 
    Nt. kui tipu tähis on väljas .info, ning vasak ja parem alamtipp vastavalt väljades .v ja .p, siis saab puu joonistada väljakutsega `Dendrologist.drawBinaryTree(tipp, t -> t.info, t -> t.v, t -> t.p)`.
+
+(Kui tegemist ei ole kahendpuuga saab kasutada üldisemat meetodit `Dendrologist.drawTree`. Kasutuse kohta leiab lisainfot meetodi Javadoc kommentaarist.)
 
 Näide kasutaja defineeritud Tipp klassiga:  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/04b18c0b-4281-4c06-b3df-2b12a55b8867)
