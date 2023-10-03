@@ -10,13 +10,24 @@
 
 ## Kasutamine
 
+### Rekursioonipuude visualiseerimine
+
 1. Lisa meetoditele mille rekursioonipuud tahad visualiseerida `@Grow` annotatsioon.
 2. Enne oma rekursiivse meetodi välja kutsumist kutsu välja `Dendrologist.wakeUp()`.
 3. Käita programm ja aken rekursioonipuuga avaneb automaatselt.
 
-Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:
+Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
 
+### Puude joonistamine
+
+1. Loo oma puu ja salvesta selle juurtipp muutujasse (nt `tipp`).
+2. Kutsu välja `Dendrologist.drawBinaryTree`. Meetod võtab argumendiks juurtipu ja kolm funktsiooni, mis võtavad kõik sisendiks tipu ja tagastavad vastavalt tipu tähise sõnena, vasaku alamtipu ja parema alamtipu.
+
+   Nt. kui tipu tähis on väljas .info, ning vasak ja parem alamtipp vastavalt väljades .v ja .p, siis saab puu joonistada väljakutsega `Dendrologist.drawBinaryTree(tipp, t -> t.info, t -> t.v, t -> t.p)`.
+
+Näide kasutaja defineeritud Tipp klassiga:  
+![image](https://github.com/Scytheface/dendroloj/assets/5256211/04b18c0b-4281-4c06-b3df-2b12a55b8867)
 
 ### Graafilise liidese kasutamine
 
@@ -27,9 +38,7 @@ Vasakut hiireklahvi all hoides saab märgistada tippe (see värvib tipud erksini
 Hiire rullikuga saab suumida sisse ja välja. Paremat hiireklahvi all hoides saab liigutada vaadet.  
 `Ctrl+R` või `Ctrl+0` taastab algse vaate asukoha ja suurenduse.
 
-
 ## Lisavõimalused
-
 
 ### Seadistamine
 
@@ -39,11 +48,9 @@ Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda 
 * `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimisi on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
 * `Dendrologist.setArgumentCapture(duringCall, duringReturn)` võimaldab seadistada millal argumentide väärtused talletatakse. Vaikimisi talletatakse argumentide väärtused nii väljakutsel kui ka tagastusel. Väärtused tagastusel kuvatakse ainult siis, kui need erinevad väärtustest väljakutsel.
 
-
 ### Tippude värvimine
 
 `@Grow` annotatsiooniga meetodites (ja meetodites mida kutsutakse `@Grow` annotatsiooniga meetoditest) saab kasutada `Dendrologist.paint(color)` meetodit, et värvida rekursioonipuus sellele väljakutsele vastav tipp antud värvi. See on kasulik näiteks selleks, et tähistada rekursioonipuus huvipakkuvaid tippe.
-
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 
