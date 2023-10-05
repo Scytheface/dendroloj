@@ -11,10 +11,10 @@ import org.graphstream.ui.view.camera.Camera;
 import org.graphstream.ui.view.util.MouseManager;
 import org.graphstream.ui.view.util.ShortcutManager;
 
-import java.util.Locale;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 class GraphGUI {
     public static boolean isHeadless() {
@@ -22,7 +22,6 @@ class GraphGUI {
     }
 
     public static void initGenericGUI(double uiScale, Graph graph) {
-        // TODO: Generic graph stylesheet
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
                         " size: %fpx;" +
