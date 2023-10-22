@@ -154,12 +154,12 @@ public final class Dendrologist {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
         }
-
         for (var row : adjacencyMatrix) {
             if (row.length != adjacencyMatrix.length) {
                 throw new IllegalArgumentException("Adjacency matrix is not square");
             }
         }
+
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             int value = adjacencyMatrix[from][to];
             return value >= 0 ? value : null;
@@ -177,12 +177,12 @@ public final class Dendrologist {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
         }
-
         for (var row : adjacencyMatrix) {
             if (row.length != adjacencyMatrix.length) {
                 throw new IllegalArgumentException("Adjacency matrix is not square");
             }
         }
+
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             double value = adjacencyMatrix[from][to];
             return Double.isFinite(value) ? value : null;
@@ -200,21 +200,36 @@ public final class Dendrologist {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
         }
-
         for (var row : adjacencyMatrix) {
             if (row.length != adjacencyMatrix.length) {
                 throw new IllegalArgumentException("Adjacency matrix is not square");
             }
         }
+
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             float value = adjacencyMatrix[from][to];
             return Float.isFinite(value) ? value : null;
         }, labels);
     }
 
-    private static void drawAdjacencyMatrixGraph(int vertexCount, GenericGraphLayout.WeightProvider weights, String[] labels) {
-        Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, labels);
+    private static void drawAdjacencyMatrixGraph(int vertexCount, WeightProvider weights, String[] labels) {
+        GraphCanvas<Number> graphCanvas = new GraphCanvas<>();
+        for (int i = 0; i < vertexCount; i++) {
+            graphCanvas.drawVertex(i, labels == null ? String.valueOf(i) : labels[i]);
+            for (int j = 0; j < vertexCount; j++) {
+                Number weight = weights.getWeight(i, j);
+                if (weight != null && (i != j || weight.doubleValue() != 0.0)) {
+                    graphCanvas.drawEdge(i, j, weight.toString());
+                }
+            }
+        }
+        Graph graph = GenericGraphLayout.assembleGraph(graphCanvas);
         GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
+    }
+
+    @FunctionalInterface
+    interface WeightProvider {
+        Number getWeight(int from, int to);
     }
 
     private static boolean isHeadless() {

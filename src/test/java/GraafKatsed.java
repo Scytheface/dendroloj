@@ -22,7 +22,7 @@ public class GraafKatsed {
                 {-1, -1, 5, 4, 0}
         };
         Dendrologist.drawGraph(M, nimed);
-        Dendrologist.drawGraph(M, null);
+        // Dendrologist.drawGraph(M, null);
 
         List<Tipp> tipud = new ArrayList<>();
         tipud.add(new Tipp("A"));

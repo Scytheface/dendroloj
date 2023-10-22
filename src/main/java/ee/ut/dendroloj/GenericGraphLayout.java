@@ -8,7 +8,6 @@ import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Function;
 
 class GenericGraphLayout {
 
@@ -18,7 +17,7 @@ class GenericGraphLayout {
         return new SpringBox(false);
     }
 
-    public static <V, E> Graph assembleGraph(GraphCanvas<?> graphCanvas) {
+    public static Graph assembleGraph(GraphCanvas<?> graphCanvas) {
         Graph graph = new MultiGraph("dendroloj");
         for (var vertex : graphCanvas.vertices.entrySet()) {
             Node node = graph.addNode(getNodeId(vertex.getKey()));
@@ -29,47 +28,6 @@ class GenericGraphLayout {
             if (edge.label != null) graphEdge.setAttribute("label", edge.label);
         }
         return graph;
-    }
-
-    public static <V, E> Graph assembleGraph(Iterable<V> vertices, Function<V, Iterable<E>> outgoingEdges, Function<E, V> to,
-                                             Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
-        Graph graph = new MultiGraph("dendroloj");
-        for (V vertex : vertices) {
-            String nodeId = getNodeId(vertex);
-            Node node = graph.addNode(nodeId);
-            if (vertexLabel != null) node.setAttribute("label", vertexLabel.apply(vertex));
-        }
-        for (V vertex : vertices) {
-            String nodeId = getNodeId(vertex);
-            for (E edge : outgoingEdges.apply(vertex)) {
-                Edge graphEdge = graph.addEdge(getNewEdgeId(), nodeId, getNodeId(to.apply(edge)), true);
-                if (edgeLabel != null) graphEdge.setAttribute("label", edgeLabel.apply(edge));
-            }
-        }
-        return graph;
-    }
-
-    public static Graph assembleGraph(int vertexCount, WeightProvider weights, String[] labels) {
-        Graph graph = new MultiGraph("dendroloj");
-        for (int i = 0; i < vertexCount; i++) {
-            Node node = graph.addNode(Integer.toHexString(i));
-            node.setAttribute("label", labels == null ? i : labels[i]);
-        }
-        for (int from = 0; from < vertexCount; from++) {
-            for (int to = 0; to < vertexCount; to++) {
-                Number weight = weights.getWeight(from, to);
-                if (weight != null && (from != to || weight.doubleValue() != 0.0)) {
-                    Edge edge = graph.addEdge(getNewEdgeId(), Integer.toHexString(from), Integer.toHexString(to), true);
-                    edge.setAttribute("label", weight.toString());
-                }
-            }
-        }
-        return graph;
-    }
-
-    @FunctionalInterface
-    interface WeightProvider {
-        Number getWeight(int from, int to);
     }
 
     private static String getNodeId(Object object) {
