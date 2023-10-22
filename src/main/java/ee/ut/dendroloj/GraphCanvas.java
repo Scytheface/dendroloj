@@ -9,7 +9,7 @@ import java.util.Map;
  * <b>EXPERIMENTAL API</b>
  * <p>
  * A helper class for drawing a graph.
- * Can be passed to {@link Dendrologist#drawGraph(GraphCanvas)} to render the drawn graph.
+ * Can be passed to {@link Dendrologist#drawGraph(GraphCanvas)} to render the drawn graph on screen.
  *
  * @param <T> type of graph vertices
  */
