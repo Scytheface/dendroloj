@@ -171,6 +171,9 @@ public final class Dendrologist {
      * <p>
      * Draws a graph based on the provided adjacency matrix.
      * Infinite values and NaN in the adjacency matrix are treated as missing edges.
+     *
+     * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
+     * @param labels          string labels for vertices; pass null to use vertex indices as labels
      */
     public static void drawGraph(double[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
@@ -194,6 +197,9 @@ public final class Dendrologist {
      * <p>
      * Draws a graph based on the provided adjacency matrix.
      * Infinite values and NaN in the adjacency matrix are treated as missing edges.
+     *
+     * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
+     * @param labels          string labels for vertices; pass null to use vertex indices as labels
      */
     public static void drawGraph(float[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
