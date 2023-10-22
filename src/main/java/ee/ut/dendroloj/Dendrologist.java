@@ -127,7 +127,7 @@ public final class Dendrologist {
     /**
      * <b>EXPERIMENTAL API</b>
      * <p>
-     * Draws the graph from the provided graph canvas.
+     * Draws a graph based on the provided graph canvas.
      * Note that vertices and edges drawn to the canvas <i>after</i> calling this method will <i>not</i> appear in the rendered graph.
      */
     public static void drawGraph(GraphCanvas<?> graphCanvas) {
@@ -167,10 +167,10 @@ public final class Dendrologist {
     }
 
     /**
+     * <b>EXPERIMENTAL API</b>
+     * <p>
      * Draws a graph based on the provided adjacency matrix.
      * Infinite values and NaN in the adjacency matrix are treated as missing edges.
-     * <p>
-     * <i>EXPERIMENTAL API</i>
      */
     public static void drawGraph(double[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
@@ -190,10 +190,10 @@ public final class Dendrologist {
     }
 
     /**
+     * <b>EXPERIMENTAL API</b>
+     * <p>
      * Draws a graph based on the provided adjacency matrix.
      * Infinite values and NaN in the adjacency matrix are treated as missing edges.
-     * <p>
-     * <i>EXPERIMENTAL API</i>
      */
     public static void drawGraph(float[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
