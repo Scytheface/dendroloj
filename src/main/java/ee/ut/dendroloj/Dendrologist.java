@@ -1,14 +1,13 @@
 package ee.ut.dendroloj;
 
+import org.graphstream.graph.Graph;
+
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 
-public class Dendrologist {
-
-    // TODO: Add methods to show an arbitrary graphs and graphs constructed from user-supplied tree classes (A&A 'Tipp' and similar).
+public final class Dendrologist {
 
     private static boolean awake = false;
 
@@ -121,54 +120,34 @@ public class Dendrologist {
             throw new NullPointerException("Root node must not be null");
         }
 
-        org.graphstream.graph.Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
+        Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
         GraphGUI.initGenericGUI(uiScale, graph, null);
     }
 
-
     /**
-     * Draws a graph consisting of the provided vertices and edges.
+     * <b>EXPERIMENTAL API</b>
      * <p>
-     * <i>EXPERIMENTAL API</i>
+     * Draws the graph from the provided graph canvas.
+     * Note that vertices and edges drawn to the canvas <i>after</i> calling this method will <i>not</i> appear in the rendered graph.
      */
-    public static <V, E> void drawGraph(Iterable<V> vertices, Iterable<E> edges, Function<E, V> from, Function<E, V> to,
-                                        Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
+    public static void drawGraph(GraphCanvas<?> graphCanvas) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
         }
 
-        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertices, edges, from, to, vertexLabel, edgeLabel);
+        Graph graph = GenericGraphLayout.assembleGraph(graphCanvas);
         GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
     }
 
-    public static void drawGraph(Graph<?> graph) {
-
-    }
-
     /**
-     * Draws a graph consisting of the provided vertices and outgoing edges.
+     * <b>EXPERIMENTAL API</b>
      * <p>
-     * <i>EXPERIMENTAL API</i>
-     */
-    public static <V, E> void drawGraph(Iterable<V> vertices, Function<V, Iterable<E>> outgoingEdges, Function<E, V> to,
-                                        Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
-        if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
-            return;
-        }
-
-        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertices, outgoingEdges, to, vertexLabel, edgeLabel);
-        GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
-    }
-
-    /**
      * Draws a graph based on the provided adjacency matrix.
      * Negative values in the adjacency matrix are treated as missing edges.
-     * <p>
-     * <i>EXPERIMENTAL API</i>
+     *
      * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
-     * @param labels string labels for vertices; pass null to use vertex indices as labels
+     * @param labels          string labels for vertices; pass null to use vertex indices as labels
      */
     public static void drawGraph(int[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
@@ -234,7 +213,7 @@ public class Dendrologist {
     }
 
     private static void drawAdjacencyMatrixGraph(int vertexCount, GenericGraphLayout.WeightProvider weights, String[] labels) {
-        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, labels);
+        Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, labels);
         GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
     }
 

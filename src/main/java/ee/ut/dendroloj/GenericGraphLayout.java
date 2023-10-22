@@ -9,7 +9,6 @@ import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 
 class GenericGraphLayout {
 
@@ -19,16 +18,15 @@ class GenericGraphLayout {
         return new SpringBox(false);
     }
 
-    public static <V, E> Graph assembleGraph(Iterable<V> vertices, Iterable<E> edges, Function<E, V> from, Function<E, V> to,
-                                             Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
+    public static <V, E> Graph assembleGraph(GraphCanvas<?> graphCanvas) {
         Graph graph = new MultiGraph("dendroloj");
-        for (V vertex : vertices) {
-            Node node = graph.addNode(getNodeId(vertex));
-            if (vertexLabel != null) node.setAttribute("label", vertexLabel.apply(vertex));
+        for (var vertex : graphCanvas.vertices.entrySet()) {
+            Node node = graph.addNode(getNodeId(vertex.getKey()));
+            node.setAttribute("label", vertex.getValue());
         }
-        for (E edge : edges) {
-            Edge graphEdge = graph.addEdge(getNewEdgeId(), getNodeId(from.apply(edge)), getNodeId(to.apply(edge)), true);
-            if (edgeLabel != null) graphEdge.setAttribute("label", edgeLabel.apply(edge));
+        for (var edge : graphCanvas.edges) {
+            Edge graphEdge = graph.addEdge(getNewEdgeId(), getNodeId(edge.from), getNodeId(edge.to), true);
+            if (edge.label != null) graphEdge.setAttribute("label", edge.label);
         }
         return graph;
     }
