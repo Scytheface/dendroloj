@@ -4,7 +4,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 
@@ -12,14 +12,14 @@ class GenericTreeLayout {
 
     private static final AtomicLong edgeIdCounter = new AtomicLong(0);
 
-    public static <T> Graph assembleGraph(T root, Function<T, String> getLabel, Function<T, Collection<T>> getChildren) {
+    public static <T> Graph assembleGraph(T root, Function<T, String> getLabel, Function<T, List<T>> getChildren) {
         Graph graph = new MultiGraph("dendroloj");
         addToGraph(graph, root, null, 0.0, 0.0, getLabel, getChildren);
         return graph;
     }
 
     private static <T> LayoutResult addToGraph(Graph graph, T node, Node parent, double x, double y,
-                                               Function<T, String> getLabel, Function<T, Collection<T>> getChildren) {
+                                               Function<T, String> getLabel, Function<T, List<T>> getChildren) {
         if (node == null) {
             return new LayoutResult(1.0, 0.0);
         }
@@ -46,7 +46,7 @@ class GenericTreeLayout {
         }
 
         double width = 0.0, firstChildOffset = 0.0, lastChildOffset = 0.0;
-        final Collection<T> children = getChildren.apply(node);
+        final List<T> children = getChildren.apply(node);
         if (isEmpty(children)) {
             width = 1.0;
         } else {
@@ -73,7 +73,7 @@ class GenericTreeLayout {
         return new LayoutResult(width, offset);
     }
 
-    private static boolean isEmpty(Collection<?> array) {
+    private static boolean isEmpty(List<?> array) {
         for (Object element : array) {
             if (element != null) {
                 return false;

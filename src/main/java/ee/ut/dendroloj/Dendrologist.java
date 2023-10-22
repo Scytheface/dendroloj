@@ -2,9 +2,9 @@ package ee.ut.dendroloj;
 
 import org.graphstream.graph.Graph;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 
 public class Dendrologist {
@@ -111,7 +111,7 @@ public class Dendrologist {
      *                 (children may include null values to indicate empty/missing branches)
      * @param <T>      type of nodes in the tree
      */
-    public static <T> void drawTree(T root, Function<T, String> label, Function<T, Collection<T>> children) {
+    public static <T> void drawTree(T root, Function<T, String> label, Function<T, List<T>> children) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawTree.");
             return;
