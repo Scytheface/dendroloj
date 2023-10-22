@@ -23,7 +23,7 @@ class GraphGUI {
         return GraphicsEnvironment.isHeadless();
     }
 
-    public static void initGenericGUI(double uiScale, Graph graph, boolean autoLayoutGraph) {
+    public static void initGenericGUI(double uiScale, Graph graph, Layout layout) {
         // TODO: Fix edge labels overlapping if there are multiple edges.
 
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
@@ -50,7 +50,7 @@ class GraphGUI {
                 Math.sqrt(uiScale), uiScale * 12, uiScale + 1,
                 uiScale * 28, uiScale * 12, uiScale * 3));
 
-        init(graph, autoLayoutGraph ? new SpringBox(false) : null, null);
+        init(graph, layout, null);
     }
 
     public static void initCallTreeGUI(double uiScale) {

@@ -1,7 +1,5 @@
 package ee.ut.dendroloj;
 
-import org.graphstream.graph.Graph;
-
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
@@ -123,8 +121,8 @@ public class Dendrologist {
             throw new NullPointerException("Root node must not be null");
         }
 
-        Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
-        GraphGUI.initGenericGUI(uiScale, graph, false);
+        org.graphstream.graph.Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
+        GraphGUI.initGenericGUI(uiScale, graph, null);
     }
 
 
@@ -140,8 +138,12 @@ public class Dendrologist {
             return;
         }
 
-        Graph graph = GenericGraphLayout.assembleGraph(vertices, edges, from, to, vertexLabel, edgeLabel);
-        GraphGUI.initGenericGUI(uiScale, graph, true);
+        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertices, edges, from, to, vertexLabel, edgeLabel);
+        GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
+    }
+
+    public static void drawGraph(Graph<?> graph) {
+
     }
 
     /**
@@ -156,8 +158,8 @@ public class Dendrologist {
             return;
         }
 
-        Graph graph = GenericGraphLayout.assembleGraph(vertices, outgoingEdges, to, vertexLabel, edgeLabel);
-        GraphGUI.initGenericGUI(uiScale, graph, true);
+        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertices, outgoingEdges, to, vertexLabel, edgeLabel);
+        GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
     }
 
     /**
@@ -165,8 +167,10 @@ public class Dendrologist {
      * Negative values in the adjacency matrix are treated as missing edges.
      * <p>
      * <i>EXPERIMENTAL API</i>
+     * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
+     * @param labels string labels for vertices; pass null to use vertex indices as labels
      */
-    public static void drawGraph(int[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+    public static void drawGraph(int[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
@@ -180,7 +184,7 @@ public class Dendrologist {
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             int value = adjacencyMatrix[from][to];
             return value >= 0 ? value : null;
-        }, vertexLabel);
+        }, labels);
     }
 
     /**
@@ -189,7 +193,7 @@ public class Dendrologist {
      * <p>
      * <i>EXPERIMENTAL API</i>
      */
-    public static void drawGraph(double[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+    public static void drawGraph(double[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
@@ -203,7 +207,7 @@ public class Dendrologist {
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             double value = adjacencyMatrix[from][to];
             return Double.isFinite(value) ? value : null;
-        }, vertexLabel);
+        }, labels);
     }
 
     /**
@@ -212,7 +216,7 @@ public class Dendrologist {
      * <p>
      * <i>EXPERIMENTAL API</i>
      */
-    public static void drawGraph(float[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+    public static void drawGraph(float[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
@@ -226,12 +230,12 @@ public class Dendrologist {
         drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
             float value = adjacencyMatrix[from][to];
             return Float.isFinite(value) ? value : null;
-        }, vertexLabel);
+        }, labels);
     }
 
-    private static void drawAdjacencyMatrixGraph(int vertexCount, GenericGraphLayout.WeightProvider weights, IntFunction<String> vertexLabel) {
-        Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, vertexLabel);
-        GraphGUI.initGenericGUI(uiScale, graph, true);
+    private static void drawAdjacencyMatrixGraph(int vertexCount, GenericGraphLayout.WeightProvider weights, String[] labels) {
+        org.graphstream.graph.Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, labels);
+        GraphGUI.initGenericGUI(uiScale, graph, GenericGraphLayout.autoLayout());
     }
 
     private static boolean isHeadless() {
