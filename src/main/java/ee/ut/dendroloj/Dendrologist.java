@@ -2,7 +2,9 @@ package ee.ut.dendroloj;
 
 import org.graphstream.graph.Graph;
 
-import java.awt.Color;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.Function;
 
 public class Dendrologist {
@@ -93,9 +95,8 @@ public class Dendrologist {
      * @param right function that takes in a node and returns the right child of that node (or null if absent)
      * @param <T>   type of nodes in the tree
      */
-    @SuppressWarnings("unchecked")
     public static <T> void drawBinaryTree(T root, Function<T, String> label, Function<T, T> left, Function<T, T> right) {
-        drawTree(root, label, n -> (T[]) new Object[]{left.apply(n), right.apply(n)});
+        drawTree(root, label, n -> Arrays.asList(left.apply(n), right.apply(n)));
     }
 
     /**
@@ -106,10 +107,14 @@ public class Dendrologist {
      *
      * @param root     root node of the tree
      * @param label    function that takes in a node and returns the label for that node
-     * @param children function that takes in a node and returns the children of that node (children may include null values to indicate empty/missing branches)
+     * @param children function that takes in a node and returns the children of that node
+     *                 <p>
+     *                 Note that the order of children in the returned collection is significant.
+     *                 <p>
+     *                 Children may include null values to indicate empty/missing branches.
      * @param <T>      type of nodes in the tree
      */
-    public static <T> void drawTree(T root, Function<T, String> label, Function<T, T[]> children) {
+    public static <T> void drawTree(T root, Function<T, String> label, Function<T, Collection<T>> children) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawTree.");
             return;
