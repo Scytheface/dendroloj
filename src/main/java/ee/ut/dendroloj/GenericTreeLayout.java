@@ -83,8 +83,14 @@ class GenericTreeLayout {
     }
 
     private static String getNodeId(Object object) {
-        // TODO: This value is actually not guaranteed to be unique. Figure out a way to guarantee uniqueness.
-        return Integer.toHexString(System.identityHashCode(object));
+        if (object instanceof Number) {
+            // For primitives use value
+            return object.toString();
+        } else {
+            // For classes use reference identity
+            // TODO: This value is actually not guaranteed to be unique. Figure out a way to guarantee uniqueness.
+            return Integer.toHexString(System.identityHashCode(object));
+        }
     }
 
     private static String getNewEdgeId() {

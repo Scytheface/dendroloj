@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 
 public class Dendrologist {
 
@@ -123,7 +124,114 @@ public class Dendrologist {
         }
 
         Graph graph = GenericTreeLayout.assembleGraph(root, label, children);
-        GraphGUI.initGenericGUI(uiScale, graph);
+        GraphGUI.initGenericGUI(uiScale, graph, false);
+    }
+
+
+    /**
+     * Draws a graph consisting of the provided vertices and edges.
+     * <p>
+     * <i>EXPERIMENTAL API</i>
+     */
+    public static <V, E> void drawGraph(Iterable<V> vertices, Iterable<E> edges, Function<E, V> from, Function<E, V> to,
+                                        Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
+            return;
+        }
+
+        Graph graph = GenericGraphLayout.assembleGraph(vertices, edges, from, to, vertexLabel, edgeLabel);
+        GraphGUI.initGenericGUI(uiScale, graph, true);
+    }
+
+    /**
+     * Draws a graph consisting of the provided vertices and outgoing edges.
+     * <p>
+     * <i>EXPERIMENTAL API</i>
+     */
+    public static <V, E> void drawGraph(Iterable<V> vertices, Function<V, Iterable<E>> outgoingEdges, Function<E, V> to,
+                                        Function<V, String> vertexLabel, Function<E, String> edgeLabel) {
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
+            return;
+        }
+
+        Graph graph = GenericGraphLayout.assembleGraph(vertices, outgoingEdges, to, vertexLabel, edgeLabel);
+        GraphGUI.initGenericGUI(uiScale, graph, true);
+    }
+
+    /**
+     * Draws a graph based on the provided adjacency matrix.
+     * Negative values in the adjacency matrix are treated as missing edges.
+     * <p>
+     * <i>EXPERIMENTAL API</i>
+     */
+    public static void drawGraph(int[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
+            return;
+        }
+
+        for (var row : adjacencyMatrix) {
+            if (row.length != adjacencyMatrix.length) {
+                throw new IllegalArgumentException("Adjacency matrix is not square");
+            }
+        }
+        drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
+            int value = adjacencyMatrix[from][to];
+            return value >= 0 ? value : null;
+        }, vertexLabel);
+    }
+
+    /**
+     * Draws a graph based on the provided adjacency matrix.
+     * Infinite values and NaN in the adjacency matrix are treated as missing edges.
+     * <p>
+     * <i>EXPERIMENTAL API</i>
+     */
+    public static void drawGraph(double[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
+            return;
+        }
+
+        for (var row : adjacencyMatrix) {
+            if (row.length != adjacencyMatrix.length) {
+                throw new IllegalArgumentException("Adjacency matrix is not square");
+            }
+        }
+        drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
+            double value = adjacencyMatrix[from][to];
+            return Double.isFinite(value) ? value : null;
+        }, vertexLabel);
+    }
+
+    /**
+     * Draws a graph based on the provided adjacency matrix.
+     * Infinite values and NaN in the adjacency matrix are treated as missing edges.
+     * <p>
+     * <i>EXPERIMENTAL API</i>
+     */
+    public static void drawGraph(float[][] adjacencyMatrix, IntFunction<String> vertexLabel) {
+        if (isHeadless()) {
+            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
+            return;
+        }
+
+        for (var row : adjacencyMatrix) {
+            if (row.length != adjacencyMatrix.length) {
+                throw new IllegalArgumentException("Adjacency matrix is not square");
+            }
+        }
+        drawAdjacencyMatrixGraph(adjacencyMatrix.length, (from, to) -> {
+            float value = adjacencyMatrix[from][to];
+            return Float.isFinite(value) ? value : null;
+        }, vertexLabel);
+    }
+
+    private static void drawAdjacencyMatrixGraph(int vertexCount, GenericGraphLayout.WeightProvider weights, IntFunction<String> vertexLabel) {
+        Graph graph = GenericGraphLayout.assembleGraph(vertexCount, weights, vertexLabel);
+        GraphGUI.initGenericGUI(uiScale, graph, true);
     }
 
     private static boolean isHeadless() {

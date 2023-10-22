@@ -4,6 +4,8 @@ import org.graphstream.graph.Graph;
 import org.graphstream.ui.geom.Point2;
 import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
+import org.graphstream.ui.layout.Layout;
+import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.View;
@@ -21,13 +23,15 @@ class GraphGUI {
         return GraphicsEnvironment.isHeadless();
     }
 
-    public static void initGenericGUI(double uiScale, Graph graph) {
+    public static void initGenericGUI(double uiScale, Graph graph, boolean autoLayoutGraph) {
+        // TODO: Fix edge labels overlapping if there are multiple edges.
+
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
                         " size: %fpx;" +
                         " text-size: %f; text-alignment: center;" +
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
-                        " text-padding: %f; text-offset: 5, 0;" +
+                        " text-padding: %f;" +
                         "}" +
                         "edge.error {" +
                         " fill-color: rgb(255, 0, 0);" +
@@ -46,7 +50,7 @@ class GraphGUI {
                 Math.sqrt(uiScale), uiScale * 12, uiScale + 1,
                 uiScale * 28, uiScale * 12, uiScale * 3));
 
-        init(graph, null);
+        init(graph, autoLayoutGraph ? new SpringBox(false) : null, null);
     }
 
     public static void initCallTreeGUI(double uiScale) {
@@ -77,10 +81,10 @@ class GraphGUI {
                         "}",
                 Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
-        init(CallTreeLayout.graph, CallTreeLayout.stepSlider);
+        init(CallTreeLayout.graph, null, CallTreeLayout.stepSlider);
     }
 
-    private static void init(Graph graph, JComponent toolbar) {
+    private static void init(Graph graph, Layout layout, JComponent toolbar) {
         System.setProperty("org.graphstream.ui", "swing");
         System.setProperty("sun.java2d.uiScale", "1");
 
@@ -89,6 +93,11 @@ class GraphGUI {
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
+        if (layout != null) {
+            // Adding an auto-layout makes dragging nodes feel really choppy and introduces strange rubber banding.
+            // TODO: Figure out why and fix this. (A good starting point might be seeing if official examples have this problem.)
+            viewer.enableAutoLayout(layout);
+        }
         Component viewComponent = (Component) view;
 
         // GraphStream DefaultMouseManager but with event handling enabled only for left click, to prevent interference with panning.
