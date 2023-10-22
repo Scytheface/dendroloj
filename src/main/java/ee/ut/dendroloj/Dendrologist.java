@@ -108,10 +108,7 @@ public class Dendrologist {
      * @param root     root node of the tree
      * @param label    function that takes in a node and returns the label for that node
      * @param children function that takes in a node and returns the children of that node
-     *                 <p>
-     *                 Note that the order of children in the returned collection is significant.
-     *                 <p>
-     *                 Children may include null values to indicate empty/missing branches.
+     *                 (children may include null values to indicate empty/missing branches)
      * @param <T>      type of nodes in the tree
      */
     public static <T> void drawTree(T root, Function<T, String> label, Function<T, Collection<T>> children) {
