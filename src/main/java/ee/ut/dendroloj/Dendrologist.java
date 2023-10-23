@@ -130,8 +130,8 @@ public final class Dendrologist {
      * Draws a graph based on the provided graph canvas.
      *
      * @param graphCanvas canvas containing the graph to draw
-     *                    (Use {@link GraphCanvas} methods to draw the vertices and edges before passing the canvas to this method.
-     *                    Note that vertices and edges drawn to the canvas <i>after</i> calling this method will <i>not</i> appear in the rendered graph.)
+     *                    (use {@link GraphCanvas} methods to draw the vertices and edges before passing the canvas to this method;
+     *                    note that vertices and edges drawn to the canvas <i>after</i> calling this method will <i>not</i> appear in the rendered graph)
      */
     public static void drawGraph(GraphCanvas<?> graphCanvas) {
         if (isHeadless()) {
