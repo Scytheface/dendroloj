@@ -1,6 +1,7 @@
 import ee.ut.dendroloj.Dendrologist;
 import ee.ut.dendroloj.GraphCanvas;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class GraafKatsed {
 
         GraphCanvas<Tipp> lõuend = new GraphCanvas<>();
         for (Tipp tipp : tipud) {
-            lõuend.drawVertex(tipp, tipp.tähis);
+            lõuend.drawVertex(tipp, tipp.tähis, Color.GREEN);
             for (Kaar kaar : tipp.kaared) {
-                lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
+                lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal), Color.MAGENTA);
             }
         }
         Dendrologist.drawGraph(lõuend);

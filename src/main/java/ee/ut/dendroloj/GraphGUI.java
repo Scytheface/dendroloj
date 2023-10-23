@@ -29,6 +29,7 @@ class GraphGUI {
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
                         " size: %fpx;" +
+                        " fill-mode: dyn-plain;" +
                         " text-size: %f; text-alignment: center;" +
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
                         " text-padding: %f;" +
@@ -38,7 +39,7 @@ class GraphGUI {
                         "}" +
                         "node {" +
                         " size: %fpx;" +
-                        " fill-mode: plain;" +
+                        " fill-mode: dyn-plain;" +
                         " fill-color: rgb(210, 210, 210);" +
                         " text-size: %f; text-alignment: center;" +
                         " text-offset: 0px, -%fpx;" +
