@@ -1,16 +1,8 @@
 package ee.ut.dendroloj;
 
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.ui.layout.Layout;
-import org.graphstream.ui.layout.springbox.implementations.SpringBox;
-
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <b>EXPERIMENTAL API</b>

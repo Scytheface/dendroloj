@@ -5,7 +5,6 @@ import org.graphstream.ui.geom.Point2;
 import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.layout.Layout;
-import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.View;
