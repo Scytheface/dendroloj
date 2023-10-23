@@ -56,16 +56,12 @@ public class StyleConstants {
         PX, GU, PERCENTS
     }
 
-    ;
-
     /**
      * How to fill the contents of the element.
      */
     public static enum FillMode {
         NONE, PLAIN, DYN_PLAIN, GRADIENT_RADIAL, GRADIENT_HORIZONTAL, GRADIENT_VERTICAL, GRADIENT_DIAGONAL1, GRADIENT_DIAGONAL2, IMAGE_TILED, IMAGE_SCALED, IMAGE_SCALED_RATIO_MAX, IMAGE_SCALED_RATIO_MIN
     }
-
-    ;
 
     /**
      * How to draw the contour of the element.
@@ -189,16 +185,24 @@ public class StyleConstants {
 
     // Static
 
-    /** A set of colour names mapped to real AWT Colour objects. */
+    /**
+     * A set of colour names mapped to real AWT Colour objects.
+     */
     protected static HashMap<String, Color> colorMap;
 
-    /** Pattern to ensure a "#FFFFFF" colour is recognised. */
+    /**
+     * Pattern to ensure a "#FFFFFF" colour is recognised.
+     */
     protected static Pattern sharpColor1, sharpColor2;
 
-    /** Pattern to ensure a CSS style "rgb(1,2,3)" colour is recognised. */
+    /**
+     * Pattern to ensure a CSS style "rgb(1,2,3)" colour is recognised.
+     */
     protected static Pattern cssColor;
 
-    /** Pattern to ensure a CSS style "rgba(1,2,3,4)" colour is recognised. */
+    /**
+     * Pattern to ensure a CSS style "rgba(1,2,3,4)" colour is recognised.
+     */
     protected static Pattern cssColorA;
 
     /**
@@ -207,10 +211,14 @@ public class StyleConstants {
      */
     protected static Pattern awtColor;
 
-    /** Pattern to ensure an hexadecimal number is a recognised colour. */
+    /**
+     * Pattern to ensure an hexadecimal number is a recognised colour.
+     */
     protected static Pattern hexaColor;
 
-    /** Pattern to ensure a string is a Value in various units. */
+    /**
+     * Pattern to ensure a string is a Value in various units.
+     */
     protected static Pattern numberUnit, number;
 
     static {
@@ -265,8 +273,7 @@ public class StyleConstants {
      * understands colours given as a "rgb(1,10,100)", CSS-like format. If the input
      * value is null, the result is null.
      *
-     * @param anyValue
-     *            The value to convert.
+     * @param anyValue The value to convert.
      * @return the converted colour or null if the conversion failed.
      */
     public static Color convertColor(Object anyValue) {
@@ -384,8 +391,7 @@ public class StyleConstants {
      * this method cuts it to 128 characters. TODO: allow to set the max length of
      * these strings.
      *
-     * @param value
-     *            The value to convert.
+     * @param value The value to convert.
      * @return The corresponding string, or null.
      */
     public static String convertLabel(Object value) {
@@ -413,10 +419,9 @@ public class StyleConstants {
      * float. Else, the -1 value is returned as no width can be negative to indicate
      * the conversion failed. If the input is null, the return value is -1.
      *
-     * @param value
-     *            The input to convert.
+     * @param value The input to convert.
      * @return The value or -1 if the conversion failed. TODO should be named
-     *         convertNumber
+     * convertNumber
      */
     public static float convertWidth(Object value) {
         if (value instanceof CharSequence) {
@@ -441,8 +446,7 @@ public class StyleConstants {
      * form (spaces, number, spaces, unit, spaces). For example "3px", "45gu",
      * "5.5%", " 25.3 gu ", "4", " 28.1 ".
      *
-     * @param value
-     *            A Number or a CharSequence.
+     * @param value A Number or a CharSequence.
      * @return A value.
      */
     public static Value convertValue(Object value) {
@@ -476,7 +480,9 @@ public class StyleConstants {
         throw new RuntimeException(String.format("value is of class %s%n", value.getClass().getName()));
     }
 
-    /** Convert "gu", "px" and "%" to Units.GU, Units.PX, Units.PERCENTS. */
+    /**
+     * Convert "gu", "px" and "%" to Units.GU, Units.PX, Units.PERCENTS.
+     */
     protected static Units convertUnit(String unit) {
         if (unit.equals("gu"))
             return Units.GU;
