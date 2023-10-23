@@ -10,23 +10,23 @@ import java.util.List;
  * A helper class for drawing a graph.
  * Can be passed to {@link Dendrologist#drawGraph(GraphCanvas)} to render the drawn graph on screen.
  *
- * @param <T> type of graph vertices
+ * @param <V> type of graph vertices
  */
-public final class GraphCanvas<T> {
+public final class GraphCanvas<V> {
 
-    final List<Vertex<T>> vertices = new ArrayList<>();
-    final List<Edge<T>> edges = new ArrayList<>();
+    final List<Vertex<V>> vertices = new ArrayList<>();
+    final List<Edge<V>> edges = new ArrayList<>();
 
-    public void drawVertex(T vertex) {
+    public void drawVertex(V vertex) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         drawVertex(vertex, vertex.toString(), null);
     }
 
-    public void drawVertex(T vertex, String label) {
+    public void drawVertex(V vertex, String label) {
         drawVertex(vertex, label, null);
     }
 
-    public void drawVertex(T vertex, String label, Color color) {
+    public void drawVertex(V vertex, String label, Color color) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         vertices.add(new Vertex<>(vertex, label, color));
     }
@@ -34,21 +34,21 @@ public final class GraphCanvas<T> {
     /**
      * Draws an undirected edge from vertex v1 to vertex v2.
      */
-    public void drawEdge(T v1, T v2) {
+    public void drawEdge(V v1, V v2) {
         drawEdge(v1, v2, null, null);
     }
 
     /**
      * Draws an undirected edge from vertex v1 to vertex v2.
      */
-    public void drawEdge(T v1, T v2, String label) {
+    public void drawEdge(V v1, V v2, String label) {
         drawEdge(v1, v2, label, null);
     }
 
     /**
      * Draws an undirected edge from vertex v1 to vertex v2.
      */
-    public void drawEdge(T v1, T v2, String label, Color color) {
+    public void drawEdge(V v1, V v2, String label, Color color) {
         if (v1 == null || v2 == null) throw new NullPointerException("Target vertices must not be null");
         edges.add(new Edge<>(false, v1, v2, label, color));
     }
@@ -56,21 +56,21 @@ public final class GraphCanvas<T> {
     /**
      * Draws a directed edge from vertex v1 to vertex v2.
      */
-    public void drawDirectedEdge(T v1, T v2) {
+    public void drawDirectedEdge(V v1, V v2) {
         drawDirectedEdge(v1, v2, null, null);
     }
 
     /**
      * Draws a directed edge from vertex v1 to vertex v2.
      */
-    public void drawDirectedEdge(T v1, T v2, String label) {
+    public void drawDirectedEdge(V v1, V v2, String label) {
         drawDirectedEdge(v1, v2, label, null);
     }
 
     /**
      * Draws a directed edge from vertex v1 to vertex v2.
      */
-    public void drawDirectedEdge(T v1, T v2, String label, Color color) {
+    public void drawDirectedEdge(V v1, V v2, String label, Color color) {
         if (v1 == null || v2 == null) throw new NullPointerException("Target vertices must not be null");
         edges.add(new Edge<>(true, v1, v2, label, color));
     }
