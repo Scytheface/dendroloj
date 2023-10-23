@@ -80,7 +80,6 @@ public final class Dendrologist {
         CallTreeLayout.setCurrentNodeColor(color);
     }
 
-
     /**
      * Draws a binary tree.
      * <p>
@@ -237,7 +236,7 @@ public final class Dendrologist {
     }
 
     @FunctionalInterface
-    interface WeightProvider {
+    private interface WeightProvider {
         Number getWeight(int from, int to);
     }
 
