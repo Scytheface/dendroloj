@@ -17,11 +17,16 @@ public final class GraphCanvas<T> {
     final List<Vertex<T>> vertices = new ArrayList<>();
     final List<Edge<T>> edges = new ArrayList<>();
 
+    public void drawVertex(T vertex) {
+        drawVertex(vertex, vertex.toString(), null);
+    }
+
     public void drawVertex(T vertex, String label) {
         drawVertex(vertex, label, null);
     }
 
     public void drawVertex(T vertex, String label, Color color) {
+        if (vertex == null) throw new NullPointerException("Vertex must not be null");
         vertices.add(new Vertex<>(vertex, label, color));
     }
 
@@ -34,6 +39,7 @@ public final class GraphCanvas<T> {
     }
 
     public void drawEdge(T from, T to, String label, Color color) {
+        if (from == null || to == null) throw new NullPointerException("Target vertices must not be null");
         edges.add(new Edge<>(from, to, label, color));
     }
 
