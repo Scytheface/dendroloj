@@ -5,6 +5,7 @@ import org.graphstream.graph.Graph;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 public final class Dendrologist {
@@ -224,11 +225,20 @@ public final class Dendrologist {
         GraphCanvas<Number> graphCanvas = new GraphCanvas<>();
         for (int i = 0; i < vertexCount; i++) {
             graphCanvas.drawVertex(i, labels == null ? String.valueOf(i) : labels[i]);
-            for (int j = 0; j < vertexCount; j++) {
+            Number selfWeight = weights.getWeight(i, i);
+            if (selfWeight != null && selfWeight.doubleValue() != 0.0) {
+                graphCanvas.drawEdge(i, i, selfWeight.toString());
+            }
+            for (int j = i + 1; j < vertexCount; j++) {
                 Number weight = weights.getWeight(i, j);
-                if (weight != null && (i != j || weight.doubleValue() != 0.0)) {
-                    graphCanvas.drawEdge(i, j, weight.toString());
+                Number backwardsWeight = weights.getWeight(j, i);
+                if (Objects.equals(weight, backwardsWeight)) {
+                    if (weight != null) graphCanvas.drawEdge(i, j, weight.toString());
+                } else {
+                    if (weight != null) graphCanvas.drawDirectedEdge(i, j, weight.toString());
+                    if (backwardsWeight != null) graphCanvas.drawDirectedEdge(j, i, backwardsWeight.toString());
                 }
+
             }
         }
         Graph graph = GenericGraphLayout.assembleGraph(graphCanvas);

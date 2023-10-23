@@ -20,7 +20,7 @@ public class GraafKatsed {
                 {4, 0, 2, -1, 6},
                 {-1, 2, 0, 3, -1},
                 {12, -1, -1, 0, -1},
-                {-1, -1, 5, 4, 0}
+                {-1, -1, 5, 4, 123}
         };
         Dendrologist.drawGraph(M, nimed);
         // Dendrologist.drawGraph(M, null);

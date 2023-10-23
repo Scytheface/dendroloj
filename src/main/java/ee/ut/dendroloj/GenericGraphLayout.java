@@ -7,8 +7,6 @@ import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.layout.springbox.implementations.SpringBox;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 class GenericGraphLayout {
 
     public static Layout autoLayout() {
@@ -23,7 +21,7 @@ class GenericGraphLayout {
             if (vertex.color != null) node.setAttribute("ui.color", vertex.color);
         }
         for (var edge : graphCanvas.edges) {
-            Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), IdHelper.getNodeId(edge.from), IdHelper.getNodeId(edge.to), true);
+            Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), IdHelper.getNodeId(edge.v1), IdHelper.getNodeId(edge.v2), edge.directed);
             if (edge.label != null) graphEdge.setAttribute("label", edge.label);
             if (edge.color != null) graphEdge.setAttribute("ui.color", edge.color);
         }

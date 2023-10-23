@@ -19,12 +19,11 @@ public final class GraphCanvas<T> {
 
     public void drawVertex(T vertex) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
-        vertices.add(new Vertex<>(vertex, vertex.toString(), null));
+        drawVertex(vertex, vertex.toString(), null);
     }
 
     public void drawVertex(T vertex, String label) {
-        if (vertex == null) throw new NullPointerException("Vertex must not be null");
-        vertices.add(new Vertex<>(vertex, label, null));
+        drawVertex(vertex, label, null);
     }
 
     public void drawVertex(T vertex, String label, Color color) {
@@ -32,19 +31,48 @@ public final class GraphCanvas<T> {
         vertices.add(new Vertex<>(vertex, label, color));
     }
 
-    public void drawEdge(T from, T to) {
-        if (from == null || to == null) throw new NullPointerException("Target vertices must not be null");
-        edges.add(new Edge<>(from, to, null, null));
+    /**
+     * Draws an undirected edge from vertex v1 to vertex v2.
+     */
+    public void drawEdge(T v1, T v2) {
+        drawEdge(v1, v2, null, null);
     }
 
-    public void drawEdge(T from, T to, String label) {
-        if (from == null || to == null) throw new NullPointerException("Target vertices must not be null");
-        edges.add(new Edge<>(from, to, label, null));
+    /**
+     * Draws an undirected edge from vertex v1 to vertex v2.
+     */
+    public void drawEdge(T v1, T v2, String label) {
+        drawEdge(v1, v2, label, null);
     }
 
-    public void drawEdge(T from, T to, String label, Color color) {
-        if (from == null || to == null) throw new NullPointerException("Target vertices must not be null");
-        edges.add(new Edge<>(from, to, label, color));
+    /**
+     * Draws an undirected edge from vertex v1 to vertex v2.
+     */
+    public void drawEdge(T v1, T v2, String label, Color color) {
+        if (v1 == null || v2 == null) throw new NullPointerException("Target vertices must not be null");
+        edges.add(new Edge<>(false, v1, v2, label, color));
+    }
+
+    /**
+     * Draws a directed edge from vertex v1 to vertex v2.
+     */
+    public void drawDirectedEdge(T v1, T v2) {
+        drawDirectedEdge(v1, v2, null, null);
+    }
+
+    /**
+     * Draws a directed edge from vertex v1 to vertex v2.
+     */
+    public void drawDirectedEdge(T v1, T v2, String label) {
+        drawDirectedEdge(v1, v2, label, null);
+    }
+
+    /**
+     * Draws a directed edge from vertex v1 to vertex v2.
+     */
+    public void drawDirectedEdge(T v1, T v2, String label, Color color) {
+        if (v1 == null || v2 == null) throw new NullPointerException("Target vertices must not be null");
+        edges.add(new Edge<>(true, v1, v2, label, color));
     }
 
     static final class Vertex<T> {
@@ -60,14 +88,16 @@ public final class GraphCanvas<T> {
     }
 
     static final class Edge<T> {
-        public final T from;
-        public final T to;
+        public final boolean directed;
+        public final T v1;
+        public final T v2;
         public final String label;
         public final Color color;
 
-        private Edge(T from, T to, String label, Color color) {
-            this.from = from;
-            this.to = to;
+        private Edge(boolean directed, T v1, T v2, String label, Color color) {
+            this.directed = directed;
+            this.v1 = v1;
+            this.v2 = v2;
             this.label = label;
             this.color = color;
         }
