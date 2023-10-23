@@ -5,12 +5,9 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 
 class GenericTreeLayout {
-
-    private static final AtomicLong edgeIdCounter = new AtomicLong(0);
 
     public static <T> Graph assembleGraph(T root, Function<T, String> getLabel, Function<T, List<T>> getChildren) {
         Graph graph = new MultiGraph("dendroloj");
@@ -24,7 +21,7 @@ class GenericTreeLayout {
             return new LayoutResult(1.0, 0.0);
         }
 
-        String nodeId = getNodeId(node);
+        String nodeId = IdHelper.getNodeId(node);
         boolean visited;
         Node current = graph.getNode(nodeId);
         if (current == null) {
@@ -35,7 +32,7 @@ class GenericTreeLayout {
             visited = true;
         }
         if (parent != null) {
-            graph.addEdge(getNewEdgeId(), parent, current, true);
+            graph.addEdge(IdHelper.getNewEdgeId(), parent, current, true);
             // if (visited) {
             //     edge.setAttribute("ui.class", "error");
             // }
@@ -80,21 +77,6 @@ class GenericTreeLayout {
             }
         }
         return true;
-    }
-
-    private static String getNodeId(Object object) {
-        if (object instanceof Number) {
-            // For primitives use value
-            return object.toString();
-        } else {
-            // For classes use reference identity
-            // TODO: This value is actually not guaranteed to be unique. Figure out a way to guarantee uniqueness.
-            return Integer.toHexString(System.identityHashCode(object));
-        }
-    }
-
-    private static String getNewEdgeId() {
-        return Long.toHexString(edgeIdCounter.getAndIncrement());
     }
 
 }

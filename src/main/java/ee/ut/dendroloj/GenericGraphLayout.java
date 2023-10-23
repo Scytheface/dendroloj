@@ -11,8 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 class GenericGraphLayout {
 
-    private static final AtomicLong edgeIdCounter = new AtomicLong(0);
-
     public static Layout autoLayout() {
         return new SpringBox(false);
     }
@@ -20,31 +18,16 @@ class GenericGraphLayout {
     public static Graph assembleGraph(GraphCanvas<?> graphCanvas) {
         Graph graph = new MultiGraph("dendroloj");
         for (var vertex : graphCanvas.vertices) {
-            Node node = graph.addNode(getNodeId(vertex.vertex));
+            Node node = graph.addNode(IdHelper.getNodeId(vertex.vertex));
             node.setAttribute("label", vertex.label);
             if (vertex.color != null) node.setAttribute("ui.color", vertex.color);
         }
         for (var edge : graphCanvas.edges) {
-            Edge graphEdge = graph.addEdge(getNewEdgeId(), getNodeId(edge.from), getNodeId(edge.to), true);
+            Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), IdHelper.getNodeId(edge.from), IdHelper.getNodeId(edge.to), true);
             if (edge.label != null) graphEdge.setAttribute("label", edge.label);
             if (edge.color != null) graphEdge.setAttribute("ui.color", edge.color);
         }
         return graph;
-    }
-
-    private static String getNodeId(Object object) {
-        if (object instanceof Number) {
-            // For primitives use value
-            return object.toString();
-        } else {
-            // For classes use reference identity
-            // TODO: This value is actually not guaranteed to be unique. Figure out a way to guarantee uniqueness.
-            return Integer.toHexString(System.identityHashCode(object));
-        }
-    }
-
-    private static String getNewEdgeId() {
-        return Long.toHexString(edgeIdCounter.getAndIncrement());
     }
 
 }
