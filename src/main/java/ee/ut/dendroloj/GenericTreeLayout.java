@@ -52,7 +52,7 @@ class GenericTreeLayout {
 
             int i = 0;
             for (T child : children) {
-                LayoutResult result = addToGraph(graph, child, current, x + width, y - 2.0, getLabel, getChildren);
+                LayoutResult result = addToGraph(graph, child, current, x + width, y - 1.25, getLabel, getChildren);
                 if (i == leftReferenceNode) {
                     firstChildOffset = width + result.offset;
                 }
