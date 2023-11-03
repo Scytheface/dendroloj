@@ -3,10 +3,10 @@
 ## Paigaldamine (IntelliJ IDEA)
 1. Lae alla uusim versioon [siit](https://github.com/Scytheface/dendroloj/releases/latest).
 2. Ava IntelliJ-s projekt kus soovid dendroloj-d kasutada.
-3. Ava File -> Project Structure -> Modules -> Dependencies.
-4. Vajuta + märgile ning vali 'JARs or Directories...'.
-5. Navigeeri alla laetud dendroloj .jar faili juurde ja vali see.
-6. Vajuta 'OK'.
+3. Kopeeri allalaetud .jar fail oma IntelliJ projekti kausta.
+4. Paremklõpsa IntelliJ-s .jar failil ja vali 'Add as library'.  
+   ![image](https://github.com/Scytheface/dendroloj/assets/5256211/c75a3b4f-92eb-4016-8801-5da6f2464378)
+5. Vajuta avanenud aknas 'OK'.
 
 ## Kasutamine
 
