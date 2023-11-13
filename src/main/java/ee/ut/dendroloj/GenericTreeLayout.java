@@ -18,7 +18,7 @@ class GenericTreeLayout {
     private static <T> LayoutResult addToGraph(Graph graph, T node, Node parent, double x, double y,
                                                Function<T, String> getLabel, Function<T, List<T>> getChildren) {
         if (node == null) {
-            return new LayoutResult(1.0, 0.0);
+            return new LayoutResult(0.5, 0.25);
         }
 
         String nodeId = IdHelper.getNodeId(node);
@@ -39,13 +39,14 @@ class GenericTreeLayout {
         }
         if (visited) {
             current.enteringEdges().forEach(edge -> edge.setAttribute("ui.class", "error"));
-            return new LayoutResult(1.0, 0.0);
+            return new LayoutResult(1.0, 0.5);
         }
 
-        double width = 0.0, firstChildOffset = 0.0, lastChildOffset = 0.0;
+        double width = 0.0, offset = 0.0;
         final List<T> children = getChildren.apply(node);
         if (isEmpty(children)) {
             width = 1.0;
+            offset = 0.5;
         } else {
             final int leftReferenceNode = (children.size() - 1) / 2;
             final int rightReferenceNode = children.size() / 2;
@@ -54,17 +55,17 @@ class GenericTreeLayout {
             for (T child : children) {
                 LayoutResult result = addToGraph(graph, child, current, x + width, y - 1.25, getLabel, getChildren);
                 if (i == leftReferenceNode) {
-                    firstChildOffset = width + result.offset;
-                }
-                if (i == rightReferenceNode) {
-                    lastChildOffset = width + result.offset;
+                    if (leftReferenceNode == rightReferenceNode) {
+                        offset = width + result.offset;
+                    } else {
+                        offset = width + result.width;
+                    }
                 }
                 width += result.width;
                 i += 1;
             }
         }
 
-        double offset = 0.5 * (firstChildOffset + lastChildOffset);
         current.setAttribute("xy", x + offset, y);
 
         return new LayoutResult(width, offset);
