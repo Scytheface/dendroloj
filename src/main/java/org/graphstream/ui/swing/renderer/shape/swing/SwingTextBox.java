@@ -102,7 +102,8 @@ class SwingTextBox extends TextBox {
         this.width = 0.0;
         this.height = 0.0;
         for (int i = 0; i < lines.length; i++) {
-            TextLayout line = new TextLayout(lines[i], font, TextBox.defaultFontRenderContext);
+            // Note: We replace empty lines with a single space, because TextLayout will throw an exception when given an empty string.
+            TextLayout line = new TextLayout(lines[i].isEmpty() ? " " : lines[i], font, TextBox.defaultFontRenderContext);
             this.text[i] = line;
             this.width = Math.max(this.width, line.getBounds().getWidth());
             this.height += line.getAscent() + line.getDescent();
