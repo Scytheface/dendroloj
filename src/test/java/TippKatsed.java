@@ -19,7 +19,7 @@ public class TippKatsed {
     }
 
     public static void main(String[] args) {
-        Dendrologist.setUIScale(1.5);
+        // Dendrologist.setUIScale(1.3);
 
         Tipp tipp = juhuslikPuu(20, new Random(42));
         nummerdaKeskjärjestuses(tipp, 1);

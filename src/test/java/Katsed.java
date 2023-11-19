@@ -89,7 +89,7 @@ public class Katsed {
     }
 
     public static void main(String[] args) {
-        Dendrologist.setUIScale(1.5);
+        // Dendrologist.setUIScale(1.3);
         // Dendrologist.setShowMethodNames(true);
         // Dendrologist.setArgumentCapture(true, false);
         Dendrologist.wakeUp();
