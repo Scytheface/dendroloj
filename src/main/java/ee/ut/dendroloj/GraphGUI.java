@@ -47,8 +47,8 @@ class GraphGUI {
                         " fill-mode: plain;" +
                         " fill-color: #0096ff;" +
                         "}",
-                Math.sqrt(uiScale * 1.5), uiScale * 21, uiScale + 1,
-                uiScale * 42, uiScale * 21, uiScale * 4.5));
+                Math.sqrt(uiScale), uiScale * 14, uiScale + 1,
+                uiScale * 28, uiScale * 14, uiScale * 3));
 
         init(graph, layout, null);
     }
@@ -79,7 +79,7 @@ class GraphGUI {
                         " fill-mode: plain;" +
                         " fill-color: #0096ff;" +
                         "}",
-                Math.sqrt(uiScale * 1.5), uiScale * 18, uiScale + 1, Math.sqrt(uiScale * 1.5) * 10, uiScale * 18, uiScale + 1));
+                Math.sqrt(uiScale), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
         init(CallTreeLayout.graph, null, CallTreeLayout.stepSlider);
     }
