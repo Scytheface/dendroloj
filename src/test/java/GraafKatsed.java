@@ -26,11 +26,11 @@ public class GraafKatsed {
         // Dendrologist.drawGraph(M, null);
 
         List<Tipp> tipud = new ArrayList<>();
-        tipud.add(new Tipp("A"));
-        tipud.add(new Tipp("B"));
-        tipud.add(new Tipp("C"));
-        tipud.add(new Tipp("D"));
-        tipud.add(new Tipp("E"));
+        tipud.add(new Tipp("A", 1, 0));
+        tipud.add(new Tipp("B", 2, 5));
+        tipud.add(new Tipp("C", 0, 1));
+        tipud.add(new Tipp("D", 1, 1));
+        tipud.add(new Tipp("E", 0, 0));
 
         tipud.get(0).kaared.add(new Kaar(11, tipud.get(1)));
         tipud.get(0).kaared.add(new Kaar(22, tipud.get(2)));
@@ -40,9 +40,9 @@ public class GraafKatsed {
 
         GraphCanvas<Tipp> lõuend = new GraphCanvas<>();
         for (Tipp tipp : tipud) {
-            lõuend.drawVertex(tipp, tipp.tähis, Color.GREEN);
+            lõuend.drawFixedVertex(tipp, tipp.tähis, tipp.x, tipp.y);
             for (Kaar kaar : tipp.kaared) {
-                lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal), Color.MAGENTA);
+                lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
             }
         }
         Dendrologist.drawGraph(lõuend);
@@ -50,10 +50,14 @@ public class GraafKatsed {
 
     private static class Tipp {
         public final String tähis;
+        public final double x;
+        public final double y;
         public final List<Kaar> kaared;
 
-        public Tipp(String tähis) {
+        public Tipp(String tähis, double x, double y) {
             this.tähis = tähis;
+            this.x = x;
+            this.y = y;
             this.kaared = new ArrayList<>();
         }
     }

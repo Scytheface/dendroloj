@@ -3,6 +3,7 @@ package ee.ut.dendroloj;
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.geom.Point2;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.swing_viewer.SwingViewer;
@@ -126,6 +127,16 @@ class GraphGUI {
                         // TODO: This enables selecting nodes, but there is nothing that can be done with these selected nodes
                         view.selectionGrowsAt(event.getX(), event.getY());
                     }
+                }
+            }
+
+            @Override
+            protected void mouseButtonReleaseOffElement(GraphicElement element, MouseEvent event) {
+                if (!element.hasAttribute("layout._fixed")) {
+                    view.freezeElement(element, false);
+                }
+                if (event.getButton() != 3) {
+                    element.removeAttribute("ui.clicked");
                 }
             }
         };

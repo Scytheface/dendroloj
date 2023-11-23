@@ -2,7 +2,9 @@ package ee.ut.dendroloj;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <b>EXPERIMENTAL API</b>
@@ -14,21 +16,52 @@ import java.util.List;
  */
 public final class GraphCanvas<V> {
 
+    private final Set<String> drawnVertices = new HashSet<>();
     final List<Vertex<V>> vertices = new ArrayList<>();
     final List<Edge<V>> edges = new ArrayList<>();
 
-    public void drawVertex(V vertex) {
-        if (vertex == null) throw new NullPointerException("Vertex must not be null");
-        drawVertex(vertex, vertex.toString(), null);
-    }
+    // TODO: Add overload that allows drawing a vertex with the vertex itself as a default label.
+    // Note that this will make the order of parameters for drawFixedVertex a little awkward.
+    // Also note that the default label being the vertex itself converted to a string
+    // might be non-obvious for reference types (especially ones that don't override toString).
+
+    // public void drawVertex(V vertex) {
+    //    if (vertex == null) throw new NullPointerException("Vertex must not be null");
+    //    drawVertex(vertex, vertex.toString(), null);
+    // }
 
     public void drawVertex(V vertex, String label) {
-        drawVertex(vertex, label, null);
+        if (vertex == null) throw new NullPointerException("Vertex must not be null");
+        addVertex(new Vertex<>(vertex, label, null));
     }
 
     public void drawVertex(V vertex, String label, Color color) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
-        vertices.add(new Vertex<>(vertex, label, color));
+        addVertex(new Vertex<>(vertex, label, color));
+    }
+
+    // public void drawFixedVertex(V vertex, double x, double y) {
+    //    if (vertex == null) throw new NullPointerException("Vertex must not be null");
+    //    drawVertex(vertex, vertex.toString(), null);
+    // }
+
+    public void drawFixedVertex(V vertex, String label, double x, double y) {
+        if (vertex == null) throw new NullPointerException("Vertex must not be null");
+        addVertex(new Vertex<>(vertex, label, null, x, y));
+    }
+
+    public void drawFixedVertex(V vertex, String label, double x, double y, Color color) {
+        if (vertex == null) throw new NullPointerException("Vertex must not be null");
+        addVertex(new Vertex<>(vertex, label, color, x, y));
+    }
+
+    private void addVertex(Vertex<V> vertex) {
+        String id = IdHelper.getNodeId(vertex.vertex);
+        if (drawnVertices.contains(id)) {
+            throw new IllegalArgumentException("Vertex " + vertex.vertex + " (" + vertex.label + ") has already been drawn");
+        }
+        drawnVertices.add(id);
+        vertices.add(vertex);
     }
 
     /**
@@ -79,11 +112,26 @@ public final class GraphCanvas<V> {
         public final T vertex;
         public final String label;
         public final Color color;
+        public final boolean fixed;
+        public final double x;
+        public final double y;
 
         private Vertex(T vertex, String label, Color color) {
             this.vertex = vertex;
             this.label = label;
             this.color = color;
+            this.fixed = false;
+            this.x = 0.0;
+            this.y = 0.0;
+        }
+
+        private Vertex(T vertex, String label, Color color, double x, double y) {
+            this.vertex = vertex;
+            this.label = label;
+            this.color = color;
+            this.fixed = true;
+            this.x = x;
+            this.y = y;
         }
     }
 

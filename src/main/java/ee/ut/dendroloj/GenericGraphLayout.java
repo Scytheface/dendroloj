@@ -18,6 +18,11 @@ class GenericGraphLayout {
         for (var vertex : graphCanvas.vertices) {
             Node node = graph.addNode(IdHelper.getNodeId(vertex.vertex));
             node.setAttribute("label", vertex.label);
+            if (vertex.fixed) {
+                node.setAttribute("layout._fixed");
+                node.setAttribute("layout.frozen");
+                node.setAttribute("xy", vertex.x, vertex.y);
+            }
             if (vertex.color != null) node.setAttribute("ui.color", vertex.color);
         }
         for (var edge : graphCanvas.edges) {
