@@ -16,7 +16,7 @@
 2. Enne oma rekursiivse meetodi välja kutsumist kutsu välja `Dendrologist.wakeUp()`.
 3. Käita programm ja aken rekursioonipuuga avaneb automaatselt.
 
-Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:  
+Näide rekrusiivse Fibonacci arvude arvutamise meetodiga (vt. [Katsed.java](src/test/java/Katsed.java)):  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/fe3ca679-a942-4e39-8611-f4c8536cdca4)
 
 ### Kahendpuude joonistamine
@@ -28,8 +28,18 @@ Näide rekrusiivse Fibonacci arvude arvutamise meetodiga:
 
 (Kui tegemist ei ole kahendpuuga saab kasutada üldisemat meetodit `Dendrologist.drawTree`. Kasutuse kohta leiab lisainfot meetodi Javadoc kommentaarist.)
 
-Näide kasutaja defineeritud Tipp klassiga:  
+Näide kasutaja defineeritud Tipp klassiga (vt. [TippKatsed.java](src/test/java/TippKatsed.java)):  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/04b18c0b-4281-4c06-b3df-2b12a55b8867)
+
+### Graafide joonistamine
+
+Graafide joonistamiseks saab kasutada klassi `GraphCanvas<V>`, kus `V` on joonistatava graafi tippude tüüp.
+See klass toimib lõuendina, kuhu saab vastavate meetodite abil joonistada graafi servad ja tipud.
+Lõuendi kuvamiseks kutsu välja meetod `Dendrologist.drawGraph(lõuend)`.
+
+Lisainfot leiab `GraphCanvas` klassi ja vastavate meetodite _JavaDoc_ kommentaaridest.
+
+Vaata ka näidet failis [GraafKatsed.java](src/test/java/GraafKatsed.java).
 
 ### Graafilise liidese kasutamine
 

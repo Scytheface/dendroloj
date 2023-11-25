@@ -149,7 +149,9 @@ public final class Dendrologist {
      *
      * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
      * @param labels          string labels for vertices; pass null to use vertex indices as labels
+     * @deprecated THIS API IS EXPERIMENTAL AND MAY EVENTUALLY BE REMOVED
      */
+    @Deprecated
     public static void drawGraph(int[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
@@ -175,7 +177,9 @@ public final class Dendrologist {
      *
      * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
      * @param labels          string labels for vertices; pass null to use vertex indices as labels
+     * @deprecated THIS API IS EXPERIMENTAL AND MAY EVENTUALLY BE REMOVED
      */
+    @Deprecated
     public static void drawGraph(double[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
@@ -201,7 +205,9 @@ public final class Dendrologist {
      *
      * @param adjacencyMatrix graph adjacency matrix; value at [i][j] is treated as the weight of the edge from vertex i to vertex j
      * @param labels          string labels for vertices; pass null to use vertex indices as labels
+     * @deprecated THIS API IS EXPERIMENTAL AND MAY EVENTUALLY BE REMOVED
      */
+    @Deprecated
     public static void drawGraph(float[][] adjacencyMatrix, String[] labels) {
         if (isHeadless()) {
             System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");

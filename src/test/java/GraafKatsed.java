@@ -8,6 +8,7 @@ import java.util.List;
 public class GraafKatsed {
 
     public static void main(String[] args) {
+        // Note: The API for drawing directly from an adjacency matrix is experimental and may eventually be removed.
         String[] nimed = new String[]{
                 "A",
                 "B",
