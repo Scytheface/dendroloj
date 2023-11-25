@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <b>EXPERIMENTAL API</b>
- * <p>
  * A helper class for drawing a graph.
  * Can be passed to {@link Dendrologist#drawGraph(GraphCanvas)} to render the drawn graph on screen.
  *
@@ -30,11 +28,17 @@ public final class GraphCanvas<V> {
     //    drawVertex(vertex, vertex.toString(), null);
     // }
 
+    /**
+     * Draws a vertex with the given label.
+     */
     public void drawVertex(V vertex, String label) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, null));
     }
 
+    /**
+     * Draws a vertex with the given label.
+     */
     public void drawVertex(V vertex, String label, Color color) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, color));
@@ -45,11 +49,17 @@ public final class GraphCanvas<V> {
     //    drawVertex(vertex, vertex.toString(), null);
     // }
 
+    /**
+     * Draws a vertex with the given label at the given coordinates.
+     */
     public void drawFixedVertex(V vertex, String label, double x, double y) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, null, x, y));
     }
 
+    /**
+     * Draws a vertex with the given label at the given coordinates.
+     */
     public void drawFixedVertex(V vertex, String label, double x, double y, Color color) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, color, x, y));

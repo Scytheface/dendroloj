@@ -26,11 +26,26 @@ class GenericGraphLayout {
             if (vertex.color != null) node.setAttribute("ui.color", vertex.color);
         }
         for (var edge : graphCanvas.edges) {
-            Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), IdHelper.getNodeId(edge.v1), IdHelper.getNodeId(edge.v2), edge.directed);
+            Node v1 = graph.getNode(IdHelper.getNodeId(edge.v1));
+            Node v2 = graph.getNode(IdHelper.getNodeId(edge.v2));
+            if (v1 == null && v2 == null) {
+                throw new IllegalArgumentException("Attempt to render edge " + formatEdge(edge) + ", but vertices " + edge.v1 + " and " + edge.v2 + " were not found");
+            }
+            if (v1 == null) {
+                throw new IllegalArgumentException("Attempt to render edge " + formatEdge(edge) + ", but vertex " + edge.v1 + " was not found");
+            }
+            if (v2 == null) {
+                throw new IllegalArgumentException("Attempt to render edge " + formatEdge(edge) + ", but vertex " + edge.v2 + " was not found");
+            }
+            Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), v1, v2, edge.directed);
             if (edge.label != null) graphEdge.setAttribute("label", edge.label);
             if (edge.color != null) graphEdge.setAttribute("ui.color", edge.color);
         }
         return graph;
+    }
+
+    private static String formatEdge(GraphCanvas.Edge<?> edge) {
+        return edge.v1 + (edge.directed ? " -> " : " -- ") + edge.v2;
     }
 
 }

@@ -125,8 +125,6 @@ public final class Dendrologist {
     }
 
     /**
-     * <b>EXPERIMENTAL API</b>
-     * <p>
      * Draws a graph based on the provided graph canvas.
      *
      * @param graphCanvas canvas containing the graph to draw
