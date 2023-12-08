@@ -18,9 +18,8 @@ public final class GraphCanvas<V> {
     final List<Vertex<V>> vertices = new ArrayList<>();
     final List<Edge<V>> edges = new ArrayList<>();
 
-    // TODO: Add overload that allows drawing a vertex with the vertex itself as a default label.
-    // Note that this will make the order of parameters for drawFixedVertex a little awkward.
-    // Also note that the default label being the vertex itself converted to a string
+    // TODO: Add overload that allows drawing a vertex with the vertex itself as a default label?
+    // Note that the default label being the vertex itself converted to a string
     // might be non-obvious for reference types (especially ones that don't override toString).
 
     // public void drawVertex(V vertex) {
@@ -43,6 +42,8 @@ public final class GraphCanvas<V> {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, color));
     }
+
+    // TODO: Reorder arguments so x and y are before label? This would group all visual parameters that users are likely to tweak (label and color) at the end.
 
     // public void drawFixedVertex(V vertex, double x, double y) {
     //    if (vertex == null) throw new NullPointerException("Vertex must not be null");
