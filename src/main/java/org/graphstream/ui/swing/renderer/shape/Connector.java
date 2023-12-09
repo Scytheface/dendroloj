@@ -136,7 +136,7 @@ public class Connector extends HasSkel {
             skel.setPoly(element.getAttribute("ui.points"));
         } else {
             // DENDROLOJ EDIT:
-            // Disabled multi-edge rendering for edges that are marked with ui._collapse.
+            // Disable multi-edge rendering for edges that are marked with ui._collapse.
             positionForLinesAndCurves(skel, element.from.getStyle(), element.from,
                     element.to, element.multi, element.hasAttribute("ui._collapse") ? null : element.getGroup());
         }

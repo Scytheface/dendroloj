@@ -26,6 +26,7 @@ class GraphGUI {
 
     public static void initGenericGUI(double uiScale, Graph graph, Layout layout) {
         // TODO: Fix edge labels overlapping if there are multiple edges.
+        // TODO: Fix arrows appearing outside the edge if the edge is straight and fully inside the node.
 
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
