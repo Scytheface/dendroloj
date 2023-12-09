@@ -30,6 +30,7 @@ class GraphGUI {
         graph.setAttribute("ui.stylesheet", String.format(Locale.ROOT,
                 "edge {" +
                         " size: %fpx;" +
+                        " arrow-size: %fpx, %fpx;" +
                         " fill-mode: dyn-plain;" +
                         " text-size: %f; text-alignment: center;" +
                         " text-background-mode: plain; text-background-color: rgba(255, 255, 255, 180);" +
@@ -39,7 +40,7 @@ class GraphGUI {
                         " fill-color: rgb(255, 0, 0);" +
                         "}" +
                         "edge.arrowonly {" +
-                        " text-mode: hidden;"+
+                        " text-mode: hidden;" +
                         " size: 0px;" +
                         "}" +
                         "node {" +
@@ -53,7 +54,9 @@ class GraphGUI {
                         " fill-mode: plain;" +
                         " fill-color: #0096ff;" +
                         "}",
-                Math.max(0.8, Math.sqrt(uiScale)), uiScale * 14, uiScale + 1,
+                Math.max(0.8, Math.sqrt(uiScale)),
+                (uiScale > 1 ? Math.sqrt(uiScale) : uiScale) * 8, (uiScale > 1 ? Math.sqrt(uiScale) : uiScale) * 4,
+                uiScale * 14, uiScale + 1,
                 uiScale * 28, uiScale * 14, uiScale * 3));
 
         init(graph, layout, null);
@@ -99,6 +102,9 @@ class GraphGUI {
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
+
+        System.out.println("ARROW SIZE: " + viewer.getGraphicGraph().getStyleSheet().getDefaultGraphStyle().getArrowSize());
+
         if (layout != null) {
             // Adding an auto-layout makes dragging nodes feel really choppy and introduces strange rubber banding.
             // TODO: Figure out why and fix this. (A good starting point might be seeing if official examples have this problem.)
