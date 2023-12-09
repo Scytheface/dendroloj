@@ -1,8 +1,8 @@
-# dendrolo*j*
+# _dendroloj_
 
 ## Paigaldamine (IntelliJ IDEA)
 1. Lae alla uusim versioon [siit](https://github.com/Scytheface/dendroloj/releases/latest).
-2. Ava IntelliJ-s projekt kus soovid dendroloj-d kasutada.
+2. Ava IntelliJ-s projekt kus soovid _dendroloj_-d kasutada.
 3. Kopeeri allalaetud .jar fail oma IntelliJ projekti kausta.
 4. Paremklõpsa IntelliJ-s .jar failil ja vali 'Add as library'.  
    ![image](https://github.com/Scytheface/dendroloj/assets/5256211/c75a3b4f-92eb-4016-8801-5da6f2464378)
@@ -54,7 +54,7 @@ Hiire rullikuga saab suumida sisse ja välja. Paremat hiireklahvi all hoides saa
 
 ### Seadistamine
 
-Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas dendroloj rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
+Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda kuidas _dendroloj_ rekursioonipuid kuvab. Seadete muutmiseks on `Dendrologist` klassil klassimeetodid mida peaks kutsuma enne `Dendrologist.wakeUp()` meetodit.
 
 * `Dendrologist.setUIScale(uiScale)` seab kordaja millega korrutatakse kõikide graafiliste elementide mõõtmed. See on kasulik ennekõike kui vaikesuurusega tekst on lugemiseks liiga väike.
 * `Dendrologist.setShowMethodNames(showMethodNames)` lülitab sisse või välja meetodite nimede kuvamise rekursioonipuus (vaikimisi on see väljas). See on kasulik, et vältida segadust, kui rekursioonipuus on mitu erinevat meetodit.
@@ -66,6 +66,6 @@ Soovi korral on võimalik seadistada mõningaid parameetreid, mis muudavad seda 
 
 ### Kasutamine koos siluriga (IntelliJ IDEA)
 
-Kui tahad, et dendroloj toimiks sel ajal kui silur programmi jooksutamise pausile on pannud siis paremklõpsa *breakpointil* ja vali 'Suspend: Thread' ja seejärel vajuta 'Make Default'. Kui sul on mitu *breakpointi* juba lisatud siis pead 'Suspend: Thread' valima kõigil, kuid uute *breakpointide* lisamisel seda enam käsitsi vahetama ei pea.
+Kui tahad, et _dendroloj_ toimiks sel ajal kui silur programmi jooksutamise pausile on pannud siis paremklõpsa *breakpointil* ja vali 'Suspend: Thread' ja seejärel vajuta 'Make Default'. Kui sul on mitu *breakpointi* juba lisatud siis pead 'Suspend: Thread' valima kõigil, kuid uute *breakpointide* lisamisel seda enam käsitsi vahetama ei pea.
 
-See tagab, et silur paneb pausile ainult vaadeldava lõime ja teised lõimed sh dendroloj lõim jooksevad edasi.
+See tagab, et silur paneb pausile ainult vaadeldava lõime ja teised lõimed sh _dendroloj_ lõim jooksevad edasi.
