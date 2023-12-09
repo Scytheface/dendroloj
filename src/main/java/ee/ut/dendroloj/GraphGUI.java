@@ -103,9 +103,6 @@ class GraphGUI {
 
         SwingViewer viewer = new SwingViewer(graph, SwingViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
-
-        System.out.println("ARROW SIZE: " + viewer.getGraphicGraph().getStyleSheet().getDefaultGraphStyle().getArrowSize());
-
         if (layout != null) {
             // Adding an auto-layout makes dragging nodes feel really choppy and introduces strange rubber banding.
             // TODO: Figure out why and fix this. (A good starting point might be seeing if official examples have this problem.)
