@@ -9,6 +9,7 @@ import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.View;
+import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.camera.Camera;
 import org.graphstream.ui.view.util.MouseManager;
 import org.graphstream.ui.view.util.ShortcutManager;
@@ -36,6 +37,10 @@ class GraphGUI {
                         "}" +
                         "edge.error {" +
                         " fill-color: rgb(255, 0, 0);" +
+                        "}" +
+                        "edge.arrowonly {" +
+                        " text-mode: hidden;"+
+                        " size: 0px;" +
                         "}" +
                         "node {" +
                         " size: %fpx;" +

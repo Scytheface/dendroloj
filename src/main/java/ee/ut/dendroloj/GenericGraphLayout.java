@@ -40,6 +40,8 @@ class GenericGraphLayout {
             Edge graphEdge = graph.addEdge(IdHelper.getNewEdgeId(), v1, v2, edge.directed);
             if (edge.label != null) graphEdge.setAttribute("label", edge.label);
             if (edge.color != null) graphEdge.setAttribute("ui.color", edge.color);
+            if (edge.collapsed) graphEdge.setAttribute("ui._collapse");
+            if (edge.arrowOnly) graphEdge.setAttribute("ui.class", "arrowonly");
         }
         return graph;
     }

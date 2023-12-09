@@ -1,10 +1,8 @@
 package ee.ut.dendroloj;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A helper class for drawing a graph.
@@ -14,6 +12,7 @@ import java.util.Set;
  */
 public final class GraphCanvas<V> {
 
+    private final Map<IdPair, Edge<V>> collapsibleEdges = new HashMap<>();
     private final Set<String> drawnVertices = new HashSet<>();
     final List<Vertex<V>> vertices = new ArrayList<>();
     final List<Edge<V>> edges = new ArrayList<>();
@@ -116,7 +115,40 @@ public final class GraphCanvas<V> {
      */
     public void drawDirectedEdge(V v1, V v2, String label, Color color) {
         if (v1 == null || v2 == null) throw new NullPointerException("Target vertices must not be null");
-        edges.add(new Edge<>(true, v1, v2, label, color));
+        String v1id = IdHelper.getNodeId(v1);
+        String v2id = IdHelper.getNodeId(v2);
+        Edge<V> edge = new Edge<>(true, v1, v2, label, color);
+        Edge<V> collapsibleEdge = collapsibleEdges.get(new IdPair(v2id, v1id));
+        edges.add(edge);
+        collapsibleEdges.putIfAbsent(new IdPair(v1id, v2id), edge);
+        if (collapsibleEdge != null && !collapsibleEdge.collapsed && Objects.equals(collapsibleEdge.label, label)) {
+            edge.collapsed = true;
+            edge.arrowOnly = true;
+            collapsibleEdge.collapsed = true;
+        }
+    }
+
+    private static class IdPair {
+        public final String v1;
+        public final String v2;
+
+        public IdPair(String v1, String v2) {
+            this.v1 = v1;
+            this.v2 = v2;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            IdPair idPair = (IdPair) o;
+            return Objects.equals(v1, idPair.v1) && Objects.equals(v2, idPair.v2);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(v1, v2);
+        }
     }
 
     static final class Vertex<T> {
@@ -148,6 +180,8 @@ public final class GraphCanvas<V> {
 
     static final class Edge<T> {
         public final boolean directed;
+        public boolean collapsed = false;
+        public boolean arrowOnly = false;
         public final T v1;
         public final T v2;
         public final String label;

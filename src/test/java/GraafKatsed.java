@@ -23,8 +23,18 @@ public class GraafKatsed {
                 {12, -1, -1, 0, -1},
                 {-1, -1, 5, 4, 123}
         };
-        Dendrologist.drawGraph(M, nimed);
-        // Dendrologist.drawGraph(M, null);
+        {
+            GraphCanvas<Integer> lõuend = new GraphCanvas<>();
+            for (int i = 0; i < M.length; i++) {
+                lõuend.drawVertex(i, nimed[i]);
+            }
+            for (int i = 0; i < M.length; i++) {
+                for (int j = 0; j < M.length; j++) {
+                    if (i != j && M[i][j] != - 1) lõuend.drawDirectedEdge(i, j, String.valueOf(M[i][j]));
+                }
+            }
+            Dendrologist.drawGraph(lõuend);
+        }
 
         List<Tipp> tipud = new ArrayList<>();
         tipud.add(new Tipp("A", 1, 0));
@@ -39,14 +49,16 @@ public class GraafKatsed {
         tipud.get(4).kaared.add(new Kaar(0, tipud.get(4)));
         tipud.get(4).kaared.add(new Kaar(7, tipud.get(2)));
 
-        GraphCanvas<Tipp> lõuend = new GraphCanvas<>();
-        for (Tipp tipp : tipud) {
-            lõuend.drawFixedVertex(tipp, tipp.tähis, tipp.x, tipp.y);
-            for (Kaar kaar : tipp.kaared) {
-                lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
+        {
+            GraphCanvas<Tipp> lõuend = new GraphCanvas<>();
+            for (Tipp tipp : tipud) {
+                lõuend.drawFixedVertex(tipp, tipp.tähis, tipp.x, tipp.y);
+                for (Kaar kaar : tipp.kaared) {
+                    lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
+                }
             }
+            Dendrologist.drawGraph(lõuend);
         }
-        Dendrologist.drawGraph(lõuend);
     }
 
     private static class Tipp {
