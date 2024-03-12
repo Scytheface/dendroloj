@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation("net.bytebuddy:byte-buddy:1.14.4")
-    implementation("net.bytebuddy:byte-buddy-agent:1.14.4")
+    implementation("net.bytebuddy:byte-buddy:1.14.12")
+    implementation("net.bytebuddy:byte-buddy-agent:1.14.12")
     implementation("org.graphstream:gs-core:2.0")
     implementation("org.graphstream:gs-ui-swing:2.0")
     // implementation("net.java.dev.jna:jna:5.12.1")
