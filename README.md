@@ -26,7 +26,7 @@ Näide rekrusiivse Fibonacci arvude arvutamise meetodiga (vt. [Katsed.java](src/
 
    Nt. kui tipu tähis on väljas .info, ning vasak ja parem alamtipp vastavalt väljades .v ja .p, siis saab puu joonistada väljakutsega `Dendrologist.drawBinaryTree(tipp, t -> t.info, t -> t.v, t -> t.p)`.
 
-(Kui tegemist ei ole kahendpuuga saab kasutada üldisemat meetodit `Dendrologist.drawTree`. Kasutuse kohta leiab lisainfot meetodi Javadoc kommentaarist.)
+(Kui tegemist ei ole kahendpuuga saab kasutada üldisemat meetodit `Dendrologist.drawTree`. Kasutuse kohta leiab lisainfot meetodi __Javadoc__ kommentaarist.)
 
 Näide kasutaja defineeritud Tipp klassiga (vt. [TippKatsed.java](src/test/java/TippKatsed.java)):  
 ![image](https://github.com/Scytheface/dendroloj/assets/5256211/04b18c0b-4281-4c06-b3df-2b12a55b8867)
@@ -37,7 +37,7 @@ Graafide joonistamiseks saab kasutada klassi `GraphCanvas<V>`, kus `V` on joonis
 See klass toimib lõuendina, kuhu saab vastavate meetodite abil joonistada graafi servad ja tipud.
 Lõuendi kuvamiseks kutsu välja meetod `Dendrologist.drawGraph(lõuend)`.
 
-Lisainfot leiab `GraphCanvas` klassi ja vastavate meetodite _JavaDoc_ kommentaaridest.
+Lisainfot leiab `GraphCanvas` klassi ja vastavate meetodite _Javadoc_ kommentaaridest.
 
 Vaata ka näidet failis [GraafKatsed.java](src/test/java/GraafKatsed.java).
 
