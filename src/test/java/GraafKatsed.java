@@ -51,7 +51,7 @@ public class GraafKatsed {
 
             GraphCanvas<Tipp> lõuend = new GraphCanvas<>();
             for (Tipp tipp : tipud) {
-                lõuend.drawFixedVertex(tipp, tipp.tähis, tipp.x, tipp.y);
+                lõuend.drawFixedVertex(tipp, tipp.x, tipp.y, tipp.tähis);
                 for (Kaar kaar : tipp.kaared) {
                     lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
                 }

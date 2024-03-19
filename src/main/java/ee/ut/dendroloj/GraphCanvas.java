@@ -42,8 +42,6 @@ public final class GraphCanvas<V> {
         addVertex(new Vertex<>(vertex, label, color));
     }
 
-    // TODO: Reorder arguments so x and y are before label? This would group all visual parameters that users are likely to tweak (label and color) at the end.
-
     // public void drawFixedVertex(V vertex, double x, double y) {
     //    if (vertex == null) throw new NullPointerException("Vertex must not be null");
     //    drawVertex(vertex, vertex.toString(), null);
@@ -52,7 +50,7 @@ public final class GraphCanvas<V> {
     /**
      * Draws a vertex with the given label at the given coordinates.
      */
-    public void drawFixedVertex(V vertex, String label, double x, double y) {
+    public void drawFixedVertex(V vertex, double x, double y, String label) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, null, x, y));
     }
@@ -60,9 +58,25 @@ public final class GraphCanvas<V> {
     /**
      * Draws a vertex with the given label at the given coordinates.
      */
-    public void drawFixedVertex(V vertex, String label, double x, double y, Color color) {
+    public void drawFixedVertex(V vertex, double x, double y, String label, Color color) {
         if (vertex == null) throw new NullPointerException("Vertex must not be null");
         addVertex(new Vertex<>(vertex, label, color, x, y));
+    }
+
+    /**
+     * @deprecated use {@link #drawFixedVertex(V, double, double, String)} instead
+     */
+    @Deprecated
+    public void drawFixedVertex(V vertex, String label, double x, double y) {
+        drawFixedVertex(vertex, x, y, label);
+    }
+
+    /**
+     * @deprecated use {@link #drawFixedVertex(V, double, double, String, Color)} instead
+     */
+    @Deprecated
+    public void drawFixedVertex(V vertex, String label, double x, double y, Color color) {
+        drawFixedVertex(vertex, x, y, label, color);
     }
 
     private void addVertex(Vertex<V> vertex) {
