@@ -9,7 +9,6 @@ import org.graphstream.ui.layout.Layout;
 import org.graphstream.ui.swing_viewer.SwingViewer;
 import org.graphstream.ui.swing_viewer.util.DefaultMouseManager;
 import org.graphstream.ui.view.View;
-import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.camera.Camera;
 import org.graphstream.ui.view.util.MouseManager;
 import org.graphstream.ui.view.util.ShortcutManager;
@@ -20,6 +19,23 @@ import java.awt.event.*;
 import java.util.Locale;
 
 class GraphGUI {
+
+    static {
+        System.setProperty("org.graphstream.ui", "swing");
+        System.setProperty("sun.java2d.uiScale", "1");
+    }
+
+    /**
+     * Initializes global Swing and GraphStream properties.
+     * This will be called automatically when the GUI is initialized.
+     * You should call this manually before creating Swing objects
+     * if you create Swing objects before GUI is initialized.
+     */
+    public static void initProperties() {
+        // The actual initialization happens inside the static block above
+        // Calling this method ensures that the static block has been executed
+    }
+
     public static boolean isHeadless() {
         return GraphicsEnvironment.isHeadless();
     }
@@ -60,7 +76,7 @@ class GraphGUI {
                 uiScale * 14, uiScale + 1,
                 uiScale * 28, uiScale * 14, uiScale * 3));
 
-        init(graph, layout, null);
+        initGUI(graph, layout, null);
     }
 
     public static void initCallTreeGUI(double uiScale) {
@@ -91,13 +107,10 @@ class GraphGUI {
                         "}",
                 Math.max(0.8, Math.sqrt(uiScale)), uiScale * 12, uiScale + 1, Math.sqrt(uiScale) * 10, uiScale * 12, uiScale + 1));
 
-        init(CallTreeLayout.graph, null, CallTreeLayout.stepSlider);
+        initGUI(CallTreeLayout.graph, null, CallTreeLayout.stepSlider);
     }
 
-    private static void init(Graph graph, Layout layout, JComponent toolbar) {
-        System.setProperty("org.graphstream.ui", "swing");
-        System.setProperty("sun.java2d.uiScale", "1");
-
+    private static void initGUI(Graph graph, Layout layout, JComponent toolbar) {
         graph.setAttribute("ui.quality");
         graph.setAttribute("ui.antialias");
 
@@ -246,4 +259,5 @@ class GraphGUI {
 
         root.setVisible(true);
     }
+
 }

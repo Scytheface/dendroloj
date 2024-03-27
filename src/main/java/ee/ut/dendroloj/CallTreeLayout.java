@@ -16,6 +16,10 @@ import java.util.List;
 
 class CallTreeLayout {
 
+    static {
+        GraphGUI.initProperties();
+    }
+
     public static final MetaTreeNode root = new MetaTreeNode();
     private static TreeNode currentNode = root;
 
@@ -106,7 +110,7 @@ class CallTreeLayout {
     }
 
     private static LayoutResult updateGraph(CallTreeNode current, boolean hideNewElements, List<Element> newElements,
-                                    double x, double y, double minWidth, CallTreeNode parent) {
+                                            double x, double y, double minWidth, CallTreeNode parent) {
         // Currently mutable arguments and return values show the value they had when they were first added to the graph.
         // TODO: Show old values of mutable values when scrolling through history?
 
@@ -201,5 +205,3 @@ class CallTreeLayout {
     }
 
 }
-
-

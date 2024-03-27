@@ -11,7 +11,8 @@ import net.bytebuddy.matcher.ElementMatchers;
 import java.lang.instrument.Instrumentation;
 
 class AgentTracer {
-    static void init() {
+
+    public static void init() {
         Instrumentation inst = ByteBuddyAgent.install();
 
         // TraceProcessor is originally private to ensure that users cannot access it. It is marked public here, because generated code needs to access it from outside.
@@ -34,5 +35,6 @@ class AgentTracer {
                 )
                 .installOn(inst);
     }
+
 }
 
