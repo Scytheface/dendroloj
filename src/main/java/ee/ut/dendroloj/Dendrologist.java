@@ -13,7 +13,7 @@ public final class Dendrologist {
     private static boolean awake = false;
 
     // Startup settings
-    private static double uiScale = 1.5;
+    private static double uiScale = 2.0;
 
     // Runtime settings
     static boolean showMethodNames = false;
@@ -26,7 +26,7 @@ public final class Dendrologist {
     /**
      * Sets multiplier for size of UI elements (text, nodes, etc.).
      * <p>
-     * Default: {@code 1.5}
+     * Default: {@code 2.0}
      */
     public static void setUIScale(double uiScale) {
         if (awake) {
