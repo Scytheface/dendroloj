@@ -26,10 +26,8 @@ class GraphGUI {
     }
 
     /**
-     * Initializes global Swing and GraphStream properties.
-     * This will be called automatically when the GUI is initialized.
-     * You should call this manually before creating Swing objects
-     * if you create Swing objects before GUI is initialized.
+     * Initializes global Swing and GraphStream properties. This will be called automatically when the GUI is initialized.
+     * To avoid issues this should also be called manually before any initialization code that might create Swing objects.
      */
     public static void initProperties() {
         // The actual initialization happens inside the static block above

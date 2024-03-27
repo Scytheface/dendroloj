@@ -5,10 +5,14 @@ import org.graphstream.graph.Graph;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 
 public final class Dendrologist {
+
+    static {
+        // Initialize global Swing and GraphStream properties as soon as possible
+        GraphGUI.initProperties();
+    }
 
     private static boolean awake = false;
 

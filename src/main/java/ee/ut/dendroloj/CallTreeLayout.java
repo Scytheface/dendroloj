@@ -16,10 +16,6 @@ import java.util.List;
 
 class CallTreeLayout {
 
-    static {
-        GraphGUI.initProperties();
-    }
-
     public static final MetaTreeNode root = new MetaTreeNode();
     private static TreeNode currentNode = root;
 
@@ -29,12 +25,10 @@ class CallTreeLayout {
     public static final JSlider stepSlider;
 
     static {
-        stepSlider = new JSlider();
+        stepSlider = new JSlider(0, 0, 0);
         stepSlider.setEnabled(false);
         stepSlider.setPaintTicks(true);
         stepSlider.setMajorTickSpacing(1);
-        stepSlider.setMinimum(0);
-        stepSlider.setMaximum(0);
         stepSlider.addChangeListener(event -> {
             if (!internalSliderChange) {
                 setActiveStep(stepSlider.getValue());
