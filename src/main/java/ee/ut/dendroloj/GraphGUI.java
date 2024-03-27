@@ -21,7 +21,7 @@ import java.util.Locale;
 class GraphGUI {
 
     static {
-        // NB: These need to be set before any Swing objects are created, otherwise OS UI scaling will break the GUI
+        // NB: This needs to be set before any Swing objects are created, otherwise OS UI scaling will break the GUI
         System.setProperty("sun.java2d.uiScale", "1");
         System.setProperty("org.graphstream.ui", "swing");
     }
