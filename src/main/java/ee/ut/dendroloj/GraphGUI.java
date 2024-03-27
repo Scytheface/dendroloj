@@ -22,8 +22,8 @@ class GraphGUI {
 
     static {
         // NB: These need to be set before any Swing objects are created, otherwise OS UI scaling will break the GUI
-        System.setProperty("org.graphstream.ui", "swing");
         System.setProperty("sun.java2d.uiScale", "1");
+        System.setProperty("org.graphstream.ui", "swing");
     }
 
     /**
@@ -233,6 +233,9 @@ class GraphGUI {
         viewComponent.addMouseWheelListener(zoomAndPanAdapter);
 
         JFrame root = new JFrame();
+        // URL icon = GraphGUI.class.getResource("ee/ut/dendroloj/icon.png");
+        // if (icon == null) throw new RuntimeException("Icon file not found");
+        // root.setIconImage(Toolkit.getDefaultToolkit().getImage(icon));
         root.setTitle("dendroloj");
         root.setSize(800, 600);
         root.setLocationRelativeTo(null);
