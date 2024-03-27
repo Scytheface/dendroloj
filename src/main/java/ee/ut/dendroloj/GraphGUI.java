@@ -21,13 +21,14 @@ import java.util.Locale;
 class GraphGUI {
 
     static {
+        // NB: These need to be set before any Swing objects are created, otherwise OS UI scaling will break the GUI
         System.setProperty("org.graphstream.ui", "swing");
         System.setProperty("sun.java2d.uiScale", "1");
     }
 
     /**
      * Initializes global Swing and GraphStream properties. This will be called automatically when the GUI is initialized.
-     * To avoid issues this should also be called manually before any initialization code that might create Swing objects.
+     * To avoid issues this should also be called manually before any code that might create Swing objects is executed.
      */
     public static void initProperties() {
         // The actual initialization happens inside the static block above

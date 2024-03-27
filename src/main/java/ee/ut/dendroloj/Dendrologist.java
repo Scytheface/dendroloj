@@ -10,7 +10,8 @@ import java.util.function.Function;
 public final class Dendrologist {
 
     static {
-        // Initialize global Swing and GraphStream properties as soon as possible
+        // Initialize global Swing and GraphStream properties before anything else is called or initialized.
+        // Doing this before everything else helps avoid issues when Swing objects are created in unexpected places.
         GraphGUI.initProperties();
     }
 
