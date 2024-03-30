@@ -43,7 +43,7 @@ tasks {
     shadowJar {
         archiveClassifier.set("") // Set classifier to empty to replace the default JAR
         mergeServiceFiles() // Merge service files
-        exclude("/META-INF/LICENSE") // Exclude any LICENSE files from dependencies to avoid duplicate files
+        exclude("/META-INF/LICENSE") // Exclude any files from dependencies that have the path /META-INF/LICENSE to avoid duplicate files
         into("/META-INF") {
             from(rootProject.file("LICENSE")) // Include dendroloj license
         }
