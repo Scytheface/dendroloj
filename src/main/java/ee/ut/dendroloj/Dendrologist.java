@@ -66,9 +66,7 @@ public final class Dendrologist {
     public static synchronized void wakeUp() {
         if (awake) return;
 
-        if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to wakeUp.");
-        } else {
+        if (!isHeadless()) {
             // DebuggerTracer.init();
             AgentTracer.init();
             GraphGUI.initCallTreeGUI(uiScale);
@@ -116,7 +114,6 @@ public final class Dendrologist {
      */
     public static <T> void drawTree(T root, Function<T, String> label, Function<T, List<T>> children) {
         if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawTree.");
             return;
         }
 
@@ -138,7 +135,6 @@ public final class Dendrologist {
      */
     public static void drawGraph(GraphCanvas<?> graphCanvas) {
         if (isHeadless()) {
-            System.err.println("Dendrologist: Running in headless environment. Ignoring call to drawGraph.");
             return;
         }
 
