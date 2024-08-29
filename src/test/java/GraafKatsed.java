@@ -30,7 +30,7 @@ public class GraafKatsed {
             }
             for (int i = 0; i < M.length; i++) {
                 for (int j = 0; j < M.length; j++) {
-                    if (i != j && M[i][j] != -1) lõuend.drawDirectedEdge(i, j, String.valueOf(M[i][j]));
+                    if (i != j && M[i][j] != -1) lõuend.drawDirectedEdge(i, j, M[i][j]);
                 }
             }
             Dendrologist.drawGraph(lõuend);
@@ -53,7 +53,7 @@ public class GraafKatsed {
             for (Tipp tipp : tipud) {
                 lõuend.drawFixedVertex(tipp, tipp.x, tipp.y, tipp.tähis);
                 for (Kaar kaar : tipp.kaared) {
-                    lõuend.drawEdge(tipp, kaar.lõppTipp, String.valueOf(kaar.kaal));
+                    lõuend.drawEdge(tipp, kaar.lõppTipp, kaar.kaal);
                 }
             }
             Dendrologist.drawGraph(lõuend);

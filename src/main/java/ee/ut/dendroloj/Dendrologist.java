@@ -96,7 +96,7 @@ public final class Dendrologist {
      * @param right function that takes in a node and returns the right child of that node (or null if absent)
      * @param <T>   type of nodes in the tree
      */
-    public static <T> void drawBinaryTree(T root, Function<T, String> label, Function<T, T> left, Function<T, T> right) {
+    public static <T> void drawBinaryTree(T root, Function<T, Object> label, Function<T, T> left, Function<T, T> right) {
         drawTree(root, label, n -> Arrays.asList(left.apply(n), right.apply(n)));
     }
 
@@ -112,7 +112,7 @@ public final class Dendrologist {
      *                 (children may include null values to indicate empty/missing branches)
      * @param <T>      type of nodes in the tree
      */
-    public static <T> void drawTree(T root, Function<T, String> label, Function<T, List<T>> children) {
+    public static <T> void drawTree(T root, Function<T, Object> label, Function<T, List<T>> children) {
         if (isHeadless()) {
             return;
         }

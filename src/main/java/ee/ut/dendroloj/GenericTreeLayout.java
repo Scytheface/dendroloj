@@ -9,14 +9,14 @@ import java.util.function.Function;
 
 class GenericTreeLayout {
 
-    public static <T> Graph assembleGraph(T root, Function<T, String> getLabel, Function<T, List<T>> getChildren) {
+    public static <T> Graph assembleGraph(T root, Function<T, Object> getLabel, Function<T, List<T>> getChildren) {
         Graph graph = new MultiGraph("dendroloj");
         addToGraph(graph, root, null, 0.0, 0.0, getLabel, getChildren);
         return graph;
     }
 
     private static <T> LayoutResult addToGraph(Graph graph, T node, Node parent, double x, double y,
-                                               Function<T, String> getLabel, Function<T, List<T>> getChildren) {
+                                               Function<T, Object> getLabel, Function<T, List<T>> getChildren) {
         if (node == null) {
             return new LayoutResult(1.0, 0.0);
         }
@@ -27,7 +27,8 @@ class GenericTreeLayout {
         if (current == null) {
             visited = false;
             current = graph.addNode(nodeId);
-            current.setAttribute("label", getLabel.apply(node));
+            Object label = getLabel.apply(node);
+            current.setAttribute("label", label == null ? null : label.toString());
         } else {
             visited = true;
         }

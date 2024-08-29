@@ -20,7 +20,7 @@ public class KuhjaKatsed {
         List<Integer> kuhi = List.of(10, 6, 7, 3, 5, 2, 3, 9, 4, 12, 5, -7, 5, 3, 6, 6, 5, 16);
         Dendrologist.drawBinaryTree(
                 0,
-                i -> String.valueOf(kuhi.get(i)),
+                kuhi::get,
                 i -> vasakAlluv(kuhi, i) == -1 ? null : vasakAlluv(kuhi, i),
                 i -> paremAlluv(kuhi, i) == -1 ? null : paremAlluv(kuhi, i)
         );
