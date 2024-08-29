@@ -66,7 +66,7 @@ public final class GraphCanvas<V> {
     /**
      * @deprecated use {@link #drawFixedVertex(V, double, double, Object)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public void drawFixedVertex(V vertex, Object label, double x, double y) {
         drawFixedVertex(vertex, x, y, label);
     }
@@ -74,7 +74,7 @@ public final class GraphCanvas<V> {
     /**
      * @deprecated use {@link #drawFixedVertex(V, double, double, Object, Color)} instead
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public void drawFixedVertex(V vertex, Object label, double x, double y, Color color) {
         drawFixedVertex(vertex, x, y, label, color);
     }
