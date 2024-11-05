@@ -100,6 +100,7 @@ public final class Dendrologist {
         drawTree(root, label, n -> Arrays.asList(left.apply(n), right.apply(n)));
     }
 
+    // TODO: Make `children` return T[] instead of List<T>, because we generally use T[]?
     /**
      * Draws a tree.
      * <p>
