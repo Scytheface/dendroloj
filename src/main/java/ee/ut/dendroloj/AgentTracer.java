@@ -8,12 +8,25 @@ import net.bytebuddy.description.modifier.SyntheticState;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.matcher.ElementMatchers;
 
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
 
 class AgentTracer {
 
     public static void init() {
-        Instrumentation inst = ByteBuddyAgent.install();
+        // Void System.err during install to suppress warning about dynamic agent loading.
+        // This is a temporary hack. See https://github.com/Scytheface/dendroloj/issues/1 for more info.
+        PrintStream originalErr = System.err;
+        System.setErr(new PrintStream(OutputStream.nullOutputStream()));
+        Instrumentation inst;
+        try {
+            inst = ByteBuddyAgent.install();
+        } finally {
+            // Restore original System.err.
+            // Thread safety: We expect that there are no other threads manipulating System.err during the agent install.
+            System.setErr(originalErr);
+        }
 
         // TraceProcessor is originally private to ensure that users cannot access it. It is marked public here, because generated code needs to access it from outside.
         // TraceProcessor and its methods are marked synthetic to ensure that they are skipped by default when stepping through code during debugging.
