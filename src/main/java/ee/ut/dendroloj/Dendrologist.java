@@ -67,7 +67,6 @@ public final class Dendrologist {
         if (awake) return;
 
         if (!isHeadless()) {
-            // DebuggerTracer.init();
             AgentTracer.init();
             GraphGUI.initCallTreeGUI(uiScale);
         }
