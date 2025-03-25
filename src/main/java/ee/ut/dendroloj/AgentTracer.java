@@ -1,16 +1,20 @@
 package ee.ut.dendroloj;
 
+import net.bytebuddy.ClassFileVersion;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.asm.ModifierAdjustment;
 import net.bytebuddy.description.modifier.SyntheticState;
 import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.implementation.bytecode.assign.Assigner;
 import net.bytebuddy.matcher.ElementMatchers;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Method;
+import java.util.concurrent.ExecutionException;
 
 class AgentTracer {
 
@@ -38,6 +42,16 @@ class AgentTracer {
                 )
                 .installOn(inst);
 
+        if (!TraceProcessor.class.isSynthetic()) {
+            if (Runtime.version().feature() > ClassFileVersion.latest().getJavaVersion()) {
+                throw new RuntimeException("This version of dendroloj only supports Java up to version " + ClassFileVersion.latest().getJavaVersion()
+                        + ". You are using Java version " + Runtime.version().feature()
+                        + ". Either update dendroloj or use an older version of Java.");
+            } else {
+                throw new RuntimeException("Failed to transform class. Unknown error.");
+            }
+        }
+
         new AgentBuilder.Default()
                 .disableClassFormatChanges()
                 .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
@@ -47,6 +61,24 @@ class AgentTracer {
                                 .on(ElementMatchers.isAnnotatedWith(Grow.class)))
                 )
                 .installOn(inst);
+    }
+
+    private static class TraceAdvice {
+        @Advice.OnMethodEnter
+        public static void onEnter(
+                @Advice.Origin Method method,
+                @Advice.AllArguments Object[] callArguments
+        ) throws InterruptedException, ExecutionException {
+            TraceProcessor.processEntry(method, callArguments);
+        }
+
+        @Advice.OnMethodExit(onThrowable = RuntimeException.class)
+        public static void onExit(
+                @Advice.Return(typing = Assigner.Typing.DYNAMIC) Object returnValue,
+                @Advice.Thrown Throwable throwable
+        ) throws ExecutionException, InterruptedException {
+            TraceProcessor.processExit(returnValue, throwable);
+        }
     }
 
 }
