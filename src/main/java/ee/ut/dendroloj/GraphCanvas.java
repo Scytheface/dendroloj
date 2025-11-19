@@ -133,10 +133,11 @@ public final class GraphCanvas<V> {
         String v2Id = IdHelper.getNodeId(v2);
         Edge<V> edge = new Edge<>(true, v1, v2, label == null ? null : label.toString(), color);
         Edge<V> collapsibleEdge = collapsibleEdges.get(new IdPair(v2Id, v1Id));
-        if (collapsibleEdge != null && !collapsibleEdge.collapsed && Objects.equals(collapsibleEdge.label, edge.label)) {
+        if (collapsibleEdge != null && !collapsibleEdge.collapsed
+                && Objects.equals(collapsibleEdge.label, edge.label) && Objects.equals(collapsibleEdge.color, edge.color)) {
+            collapsibleEdge.collapsed = true;
             edge.collapsed = true;
             edge.arrowOnly = true;
-            collapsibleEdge.collapsed = true;
         }
         edges.add(edge);
         collapsibleEdges.putIfAbsent(new IdPair(v1Id, v2Id), edge);
